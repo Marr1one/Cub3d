@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: maissat <maissat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 19:11:23 by root              #+#    #+#             */
-/*   Updated: 2025/04/15 15:50:57 by root             ###   ########.fr       */
+/*   Updated: 2025/04/19 18:01:37 by maissat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,12 @@ char *ft_strduptext(char *str)
 	return (dup);
 }
 
-char *ft_strdup(char *str)
+char *ft_strduptab(char *str, t_map *map)
 {
 	int	i;
 	char *dup;
 
-	dup = malloc(sizeof(char) * (ft_strlen(str) + 1));
+	dup = malloc(sizeof(char) * (map->width + 1));
 	if (!dup)
 		return (NULL);
 	i = 0;
@@ -146,7 +146,15 @@ void	show_tab(char **tab)
 	}
 }
 
-int	get_height(char *map_name)
+int	ft_max(int a, int b)
+{
+	if (a > b)
+		return (a);
+	else
+		return (b);
+}
+
+int	get_height(char *map_name, t_map *map)
 {
 	int	fd;
 	char *line;
@@ -161,13 +169,13 @@ int	get_height(char *map_name)
 	line = get_next_line(fd);
 	while (line)
     {
-        // Si on a trouvé une ligne commençant par '1', on a commencé la carte
         if (line[0] == '1')
             map_started = 1;
-        
-        // On ne compte que les lignes après avoir commencé la carte
         if (map_started)
+		{
+			map->width = ft_max(map->width, ft_strlen(line));
             count++;
+		}
         
         free(line);  // Toujours libérer la ligne
         line = get_next_line(fd);

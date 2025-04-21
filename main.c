@@ -3,51 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: maissat <maissat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 18:48:51 by root              #+#    #+#             */
-/*   Updated: 2025/04/16 03:30:50 by root             ###   ########.fr       */
+/*   Updated: 2025/04/21 19:02:53 by maissat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-
-void	fill_tab(t_map *map)
-{
-	char	*line;
-	char	**tab;
-	int		fd;
-	int		i;
-	int		j;
-
-	tab = malloc(sizeof(char *) * (map->height + 1));
-	if (!tab)
-		return ;
-	map->tab = tab;
-	fd = open(map->name, O_RDONLY);
-	if (fd < 0)
-		return ;
-	i = 0;
-	j = 0;
-	line = get_next_line(fd);
-	while (line)
-	{
-		if (line[0] && line[0] != '1')
-			i++;
-		else
-		{
-			map->tab[j++] = ft_strdup(line);
-			i++;
-		}
-		free(line);
-		line = get_next_line(fd);
-	}
-	map->tab[j] = NULL;
-	close(fd);
-}
-
-
 
 void fill_texture(t_map *map, char *trimmed)
 {
@@ -113,7 +76,8 @@ int	is_color_line(char *line)
 		return ('F');
 	else if (str_in_str(line, "C"))
 		return ('C');
-	return (0);
+	else
+		return (0);
 }
 
 void	show_int_tab(int *tab)
@@ -130,9 +94,9 @@ void	show_int_tab(int *tab)
 
 int	parse_texture(t_map *map)
 {
-	int	fd;
-	char *line;
-	char *trimmed;
+	int		fd;
+	char	*line;
+	char 	*trimmed;
 	char	choice;
 	
 	fd = open(map->name, O_RDONLY);
@@ -146,11 +110,14 @@ int	parse_texture(t_map *map)
 			trimmed = skip_spaces(line);
 			fill_texture(map, trimmed);
 		}
-		else if (is_color_line(line) != '0')
+		else if (is_color_line(line) != 0)
 		{
 			choice = is_color_line(line);
 			if (space_before(line))
+			{
+				printf("line > {%s}\n", line);
 				return (printf("Error\nSpace before color\n"), 1);
+			}
 			trimmed = skip_spaces(line);
 			fill_color(map, trimmed, choice);
 		}
@@ -176,13 +143,11 @@ int	main(int argc, char **argv)
 		return (printf("Usage: ./cube3d map.cub\n"), 1);
 	if (check_map(argv[1], &map) == 1)
 		return (1);
-	fill_tab(&map);
+	printf("map.width => %d\n", map.width);
+	create_tab(&map);
+	show_tab(map.tab);
 	if (parse_texture(&map) != 0)
 		return (1);
-	printf("map.floor_color\n");
-	show_int_tab(map.floor_color);
-	printf("map.ceiling_color\n");
-	show_int_tab(map.ceiling_color);
 	if (check_borders(map) != 0)
 		return (1);
 	return (0);

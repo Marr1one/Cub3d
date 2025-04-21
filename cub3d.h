@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: maissat <maissat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 18:50:38 by root              #+#    #+#             */
-/*   Updated: 2025/04/15 20:40:29 by root             ###   ########.fr       */
+/*   Updated: 2025/04/19 15:43:46 by maissat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,15 @@ typedef struct s_map
 }	t_map;
 
 //UTILS
+void	create_tab(t_map *map);
 int		ft_strlen(char *str);
 int		ft_strcmp(char *s1, char *s2);
 int		ft_strlcmp(char *s1, char *s2);
 void	*ft_memset(void *b, int c, size_t len);
 char 	*ft_strdup(char *str);
+char 	*ft_strduptab(char *str, t_map *map);
 void	show_tab(char **tab);
-int		get_height(char *map_name);
+int		get_height(char *map_name, t_map *map);
 int		ft_strncmp(char *s1, char *s2, int n );
 char 	*ft_strduptext(char *str);
 char 	*skip_spaces(char *str);
