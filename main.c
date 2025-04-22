@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 18:48:51 by root              #+#    #+#             */
-/*   Updated: 2025/04/22 23:38:09 by root             ###   ########.fr       */
+/*   Updated: 2025/04/23 00:43:09 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,13 +140,6 @@ int	main(int argc, char **argv)
 	if (argc != 2)
 		return (printf("Usage: ./cube3d map.cub\n"), 1);
 	if (check_map(argv[1], &map) == 1)
-		return (1);
-	create_tab(&map);
-	if (parse_texture(&map) != 0)
-		return (1);
-	if (check_chars(map) != 0)
-		return (1);
-	if (check_borders(map) != 0)
 		return (1);
 	show_struct_map(map);
 	return (0);

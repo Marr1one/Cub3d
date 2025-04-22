@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 18:50:38 by root              #+#    #+#             */
-/*   Updated: 2025/04/22 19:37:28 by root             ###   ########.fr       */
+/*   Updated: 2025/04/23 00:44:31 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,5 +58,6 @@ int	check_chars(t_map map);
 int	check_name(char *str);
 int	check_map(char *map_name, t_map *map);
 int	check_borders(t_map map);
+int	parse_texture(t_map *map);
 
 #endif

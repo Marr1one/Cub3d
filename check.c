@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 18:34:05 by root              #+#    #+#             */
-/*   Updated: 2025/04/22 23:38:49 by root             ###   ########.fr       */
+/*   Updated: 2025/04/23 00:45:45 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,6 +200,13 @@ int	check_map(char *map_name, t_map *map)
 	map->name = map_name;
 	map->height = get_height(map_name, map);
 	if (map->height < 0)
+		return (1);
+	create_tab(map);
+	if (parse_texture(map) != 0)
+		return (1);
+	if (check_chars(*map) != 0)
+		return (1);
+	if (check_borders(*map) != 0)
 		return (1);
 	return (0);
 }
