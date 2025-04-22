@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maissat <maissat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 19:11:23 by root              #+#    #+#             */
-/*   Updated: 2025/04/19 18:01:37 by maissat          ###   ########.fr       */
+/*   Updated: 2025/04/22 18:06:35 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,6 +146,24 @@ void	show_tab(char **tab)
 	}
 }
 
+void	show_struct_map(t_map map)
+{
+	printf("map height => %d\n", map.height);
+	printf("map width => %d\n", map.width);
+	printf("map name => %s\n", map.name);
+	printf("la map ! -----------------\n");
+	show_tab(map.tab);
+	printf("---------\n");
+	printf("no texture => {%s}\n", map.no_texture);
+	printf("so texture => {%s}\n", map.so_texture);
+	printf("we texture => {%s}\n", map.we_texture);
+	printf("ea texture => {%s}\n", map.ea_texture);
+	printf("ceiling color !------\n");
+	show_int_tab(map.ceiling_color);
+	printf("floor color !------\n");
+	show_int_tab(map.floor_color);
+}
+
 int	ft_max(int a, int b)
 {
 	if (a > b)
@@ -156,28 +174,42 @@ int	ft_max(int a, int b)
 
 int	get_height(char *map_name, t_map *map)
 {
-	int	fd;
-	char *line;
-	int	count;
-	int	map_started;
+	int		fd;
+	char	*line;
+	int		count;
+	int		i;
+	int		map_started;
 
 	map_started = 0;
 	fd = open(map_name, O_RDONLY);
 	if (fd < 0)
-		return (printf("Impossible to open the map!\n"), -1);
+		return (printf("Error\nImpossible to open the map!\n"), -1);
 	count = 0;
 	line = get_next_line(fd);
 	while (line)
     {
-        if (line[0] == '1')
-            map_started = 1;
-        if (map_started)
+		i = 0;
+		if (map_started == 0)
 		{
+			while (line[i] == ' ')
+					i++;
+			if (line[i] == '1')
+				map_started = 1;
+		}
+		if (map_started)
+		{
+			i = 0;
+			while (line[i] == ' ')
+				i++;
+			if (line[i] != '1')
+			{
+				free(line);
+				break;
+			}
 			map->width = ft_max(map->width, ft_strlen(line));
             count++;
 		}
-        
-        free(line);  // Toujours libérer la ligne
+        free(line);
         line = get_next_line(fd);
     }
 	close(fd);

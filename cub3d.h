@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maissat <maissat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 18:50:38 by root              #+#    #+#             */
-/*   Updated: 2025/04/19 15:43:46 by maissat          ###   ########.fr       */
+/*   Updated: 2025/04/22 18:06:50 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ int 	str_in_str(char *str, char *to_find);
 int		space_before(char *line);
 char 	*ft_substr(char *str, int start, int end);
 int		ft_atoi(char *str);
+void	show_int_tab(int *tab);
+void	show_struct_map(t_map map);
 
 //CHECKERS
 

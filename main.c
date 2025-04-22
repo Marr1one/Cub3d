@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maissat <maissat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 18:48:51 by root              #+#    #+#             */
-/*   Updated: 2025/04/21 19:02:53 by maissat          ###   ########.fr       */
+/*   Updated: 2025/04/22 18:07:08 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,7 @@ int	parse_texture(t_map *map)
 	}
 	close(fd);
 	return (0);
+	
 }
 
 int	main(int argc, char **argv)
@@ -143,12 +144,11 @@ int	main(int argc, char **argv)
 		return (printf("Usage: ./cube3d map.cub\n"), 1);
 	if (check_map(argv[1], &map) == 1)
 		return (1);
-	printf("map.width => %d\n", map.width);
 	create_tab(&map);
-	show_tab(map.tab);
 	if (parse_texture(&map) != 0)
 		return (1);
 	if (check_borders(map) != 0)
 		return (1);
+	show_struct_map(map);
 	return (0);
 }

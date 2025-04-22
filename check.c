@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maissat <maissat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 18:34:05 by root              #+#    #+#             */
-/*   Updated: 2025/04/21 20:38:03 by maissat          ###   ########.fr       */
+/*   Updated: 2025/04/22 16:00:46 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,17 +105,31 @@ int	check_borders(t_map map)
 		while (map.tab[0][j] == ' ')
 			j++;
 		if (map.tab[0][j] != '1')
-			return (printf("Top not closed\n"), 1);
+			return (printf("Error\nTop not closed\n"), 1);
 		j++;
 	}
 	j = 0;
-	while (map.tab[map.height][j])
+	while (map.tab[map.height - 1][j])
 	{
-		while (map.tab[map.height][j] == ' ')
+		while (map.tab[map.height - 1][j] == ' ')
 			j++;
-		if (map.tab[map.height ][j] != '1')
-			return (printf("Bottom not closed\n"), 1);
+		if (map.tab[map.height - 1][j] != '1')
+		{
+			if (map.tab[map.height - 1][j] == '\n')
+				break;
+			return (printf("Error\nBottom not closed\n"), 1);
+		}
 		j++;
+	}
+	i = 0;
+	while (map.tab[i])
+	{
+		j = 0;
+		while (map.tab[i][j] != '\0' &&  map.tab[i][j] != '\n')
+			j++;
+		if (j > 2 && map.tab[i][j - 1] != '1')
+			return (printf("Error\nRight segment not closed on line %d\n", i), 1);
+		i++;
 	}
 	i = 0;
 	while (map.tab[i])
@@ -126,7 +140,13 @@ int	check_borders(t_map map)
 			if (map.tab[i][j] == '0')
 			{
 				if (map.tab[i - 1] && (ft_strlen(map.tab[i - 1]) < j))
-					return (printf("map no closed on line %d\n", i), 1);
+					return (printf("Error\nmap no closed on line %d\n", i), 1);
+				if (map.tab[i + 1] && (ft_strlen(map.tab[i + 1]) < j))
+					return (printf("Error\nmap no closed on line %d\n", i), 1);
+				if (map.tab[i + 1] && (map.tab[i + 1][j] != '1' && map.tab[i + 1][j] != '0'))
+					return (printf("Error\nmap no closed on line %d\n", i), 1);
+				if (map.tab[i + -1] && (map.tab[i - 1][j] != '1' && map.tab[i - 1][j] != '0'))
+					return (printf("Error\nmap no closed on line %d\n", i), 1);
 			}
 			j++;
 		}
@@ -153,7 +173,7 @@ int	check_name(char *str)
 int	check_map(char *map_name, t_map *map)
 {
 	if (check_name(map_name) == 1)
-		return (printf("Name not valid!\n"), 1);
+		return (printf("Error\nName not valid!\n"), 1);
 	map->name = map_name;
 	map->height = get_height(map_name, map);
 	if (map->height < 0)
