@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 18:50:38 by root              #+#    #+#             */
-/*   Updated: 2025/04/22 18:06:50 by root             ###   ########.fr       */
+/*   Updated: 2025/04/22 19:37:28 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void	show_struct_map(t_map map);
 
 //CHECKERS
 
+int	check_chars(t_map map);
 int	check_name(char *str);
 int	check_map(char *map_name, t_map *map);
 int	check_borders(t_map map);

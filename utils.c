@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 19:11:23 by root              #+#    #+#             */
-/*   Updated: 2025/04/22 18:06:35 by root             ###   ########.fr       */
+/*   Updated: 2025/04/22 23:45:26 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,8 +203,14 @@ int	get_height(char *map_name, t_map *map)
 				i++;
 			if (line[i] != '1')
 			{
+				if (line[i] == '\n' || line[i] == '\0')
+				{
+					free(line);
+					break;
+				}
+				printf("Error\nLeft segment open\n");
 				free(line);
-				break;
+				return (-1);
 			}
 			map->width = ft_max(map->width, ft_strlen(line));
             count++;

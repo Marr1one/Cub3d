@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 18:48:51 by root              #+#    #+#             */
-/*   Updated: 2025/04/22 18:07:08 by root             ###   ########.fr       */
+/*   Updated: 2025/04/22 23:38:09 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,10 +114,7 @@ int	parse_texture(t_map *map)
 		{
 			choice = is_color_line(line);
 			if (space_before(line))
-			{
-				printf("line > {%s}\n", line);
 				return (printf("Error\nSpace before color\n"), 1);
-			}
 			trimmed = skip_spaces(line);
 			fill_color(map, trimmed, choice);
 		}
@@ -146,6 +143,8 @@ int	main(int argc, char **argv)
 		return (1);
 	create_tab(&map);
 	if (parse_texture(&map) != 0)
+		return (1);
+	if (check_chars(map) != 0)
 		return (1);
 	if (check_borders(map) != 0)
 		return (1);
