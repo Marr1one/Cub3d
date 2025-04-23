@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 18:50:38 by root              #+#    #+#             */
-/*   Updated: 2025/04/23 00:44:31 by root             ###   ########.fr       */
+/*   Updated: 2025/04/23 16:42:06 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,18 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "good_gnl/get_next_line.h" 
+#include "good_gnl/get_next_line.h"
+#include "math.h"
+#include "minilibx-linux/mlx.h"
+
+#define WIDTH 1280
+#define HEIGHT 720
+
+typedef struct s_game
+{
+	void	*mlx;
+	void	*win;
+} t_game;
 
 typedef struct s_map
 {

@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 18:48:51 by root              #+#    #+#             */
-/*   Updated: 2025/04/23 00:43:09 by root             ###   ########.fr       */
+/*   Updated: 2025/04/23 16:47:13 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,15 +132,31 @@ int	parse_texture(t_map *map)
 	
 }
 
+void	init_game(t_game *game)
+{
+	game->mlx = mlx_init();
+	if (!game->mlx)
+	{
+		printf("Erreur : mlx_init a échoué\n");
+		exit(1);
+	}
+	game->win = mlx_new_window(game->mlx, WIDTH, HEIGHT, "CUB3D");
+}
+
 int	main(int argc, char **argv)
 {
 	t_map map;
+	t_game game;
 	
+	ft_memset(&game, 0, sizeof(t_game));
 	ft_memset(&map, 0, sizeof(t_map));
 	if (argc != 2)
 		return (printf("Usage: ./cube3d map.cub\n"), 1);
 	if (check_map(argv[1], &map) == 1)
 		return (1);
+	printf("on arrive ici sans encombre!\n");
+	init_game(&game);
+	mlx_loop(game.mlx);
 	show_struct_map(map);
 	return (0);
 }
