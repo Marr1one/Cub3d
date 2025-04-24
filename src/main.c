@@ -6,11 +6,11 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 18:48:51 by root              #+#    #+#             */
-/*   Updated: 2025/04/23 16:47:13 by root             ###   ########.fr       */
+/*   Updated: 2025/04/24 22:05:59 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../cub3d.h"
 
 void fill_texture(t_map *map, char *trimmed)
 {
@@ -132,16 +132,6 @@ int	parse_texture(t_map *map)
 	
 }
 
-void	init_game(t_game *game)
-{
-	game->mlx = mlx_init();
-	if (!game->mlx)
-	{
-		printf("Erreur : mlx_init a échoué\n");
-		exit(1);
-	}
-	game->win = mlx_new_window(game->mlx, WIDTH, HEIGHT, "CUB3D");
-}
 
 int	main(int argc, char **argv)
 {
@@ -156,6 +146,7 @@ int	main(int argc, char **argv)
 		return (1);
 	printf("on arrive ici sans encombre!\n");
 	init_game(&game);
+	draw_square(WIDTH / 2, HEIGHT / 2, 0x0000FF, 10, &game);
 	mlx_loop(game.mlx);
 	show_struct_map(map);
 	return (0);

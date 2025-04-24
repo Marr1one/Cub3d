@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 18:50:38 by root              #+#    #+#             */
-/*   Updated: 2025/04/23 16:42:06 by root             ###   ########.fr       */
+/*   Updated: 2025/04/24 20:30:08 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "good_gnl/get_next_line.h"
+#include "src/good_gnl/get_next_line.h"
 #include "math.h"
 #include "minilibx-linux/mlx.h"
 
@@ -26,6 +26,12 @@ typedef struct s_game
 {
 	void	*mlx;
 	void	*win;
+	void	*img;
+	int		size_line;
+	int		bbp;
+	int		endian;
+	char	*data;
+
 } t_game;
 
 typedef struct s_map
@@ -41,6 +47,12 @@ typedef struct s_map
 	int		floor_color[3];
 	int		ceiling_color[3];
 }	t_map;
+
+//RAYCASTING
+
+void	init_game(t_game *game);
+void	draw_square(int x, int y, int color, int size, t_game *game);
+void	put_pixel(int x, int y, int color, t_game *game);
 
 //UTILS
 void	create_tab(t_map *map);

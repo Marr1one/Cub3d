@@ -6,93 +6,12 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 18:34:05 by root              #+#    #+#             */
-/*   Updated: 2025/04/23 16:07:08 by root             ###   ########.fr       */
+/*   Updated: 2025/04/24 19:54:41 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../cub3d.h"
 
-//int	check_borders(t_map map)
-//{
-//	int	i;
-//	int	j;
-
-//	j = 0;
-//	while (map.tab[0][j] && map.tab[0][j] != '\n')
-//	{
-//		if (map.tab[0][j] != '1')
-//			return (printf("Top not closed\n"), 1);
-//		j++;
-//	}
-//	j = 0;
-//	while (map.tab[map.height - 1][j])
-//	{
-//		if (map.tab[map.height - 1][j] != '1')
-//			return (printf("Bottom not closed\n"), 1);
-//		j++;
-//	}
-//	i = 0;
-//	while (map.tab[i])
-//	{
-//		j = 0;int	check_borders(t_map map)
-//{
-//	int	i;
-//	int	j;
-
-//	j = 0;
-//	while (map.tab[0][j] && map.tab[0][j] != '\n')
-//	{
-//		if (map.tab[0][j] != '1')
-//			return (printf("Top not closed\n"), 1);
-//		j++;
-//	}
-//	j = 0;
-//	while (map.tab[map.height - 1][j])
-//	{
-//		if (map.tab[map.height - 1][j] != '1')
-//			return (printf("Bottom not closed\n"), 1);
-//		j++;
-//	}
-//	i = 0;
-//	while (map.tab[i])
-//	{
-//		j = 0;
-//		while (map.tab[i][j] == ' ')
-//			j++;
-//		if (map.tab[i][j] != '1')
-//			return (printf("Left segment not closed\n"), 1);
-//		i++;
-//	}
-//	i = 0;
-//	while (map.tab[i])
-//	{
-//		j = 0;
-//		while (map.tab[i][j] != '\0' &&  map.tab[i][j] != '\n')
-//			j++;
-//		if (j > 2 && map.tab[i][j - 1] != '1')
-//			return (printf("Right segment not closed\n"), 1);
-//		i++;
-//	}
-//	return (0);
-//}
-//		while (map.tab[i][j] == ' ')
-//			j++;
-//		if (map.tab[i][j] != '1')
-//			return (printf("Left segment not closed\n"), 1);
-//		i++;
-//	}
-//	i = 0;
-//	while (map.tab[i])
-//	{
-//		j = 0;
-//		while (map.tab[i][j] != '\0' &&  map.tab[i][j] != '\n')
-//			j++;
-//		if (j > 2 && map.tab[i][j - 1] != '1')
-//			return (printf("Right segment not closed\n"), 1);
-//		i++;
-//	}
-//	return (0);
-//}
 
 int	is_direction(char c)
 {
