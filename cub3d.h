@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: maissat <maissat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 18:50:38 by root              #+#    #+#             */
-/*   Updated: 2025/04/24 20:30:08 by root             ###   ########.fr       */
+/*   Updated: 2025/04/25 18:29:30 by maissat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,25 +19,33 @@
 #include "math.h"
 #include "minilibx-linux/mlx.h"
 
-#define WIDTH 1280
-#define HEIGHT 720
+# define WIDTH 1280
+# define HEIGHT 720
+# define W 119
+# define A 97 	
+# define S 115
+# define D 100
+# define PI 3.1415926535
+# define ROT_LEFT 65361
+# define ROT_RIGHT 65363
 
 typedef struct s_game
 {
-	void	*mlx;
-	void	*win;
-	void	*img;
-	int		size_line;
-	int		bbp;
-	int		endian;
-	char	*data;
-
+	void			*mlx;
+	void			*win;
+	void			*img;
+	int				size_line;
+	int				bbp;
+	int				endian;
+	char			*data;
+	struct s_player *player;
+	struct s_map	*map;
 } t_game;
 
 typedef struct s_map
 {
-	int	height;
-	int	width;
+	int		height;
+	int		width;
 	char	*name;
 	char 	**tab;
 	char	*no_texture;
@@ -48,10 +56,34 @@ typedef struct s_map
 	int		ceiling_color[3];
 }	t_map;
 
+typedef struct s_player
+{
+	float	x;
+	float	y;
+	float	angle;
+	int		key_up;
+	int		key_down;
+	int		key_left;
+	int		key_right;
+	int		left_rotate;
+	int		right_rotate;
+}	t_player;
+
+//DRAW
+
+void	draw_square(int x, int y, int color, int size, t_game *game);
+int		draw_loop(t_game *game);
+
+//PLAYER
+
+void	init_player(t_player *player);
+int 	key_press(int keycode, t_player *player);
+int 	key_release(int keycode, t_player *player);
+void	move_player(t_player *player);
+
 //RAYCASTING
 
 void	init_game(t_game *game);
-void	draw_square(int x, int y, int color, int size, t_game *game);
 void	put_pixel(int x, int y, int color, t_game *game);
 
 //UTILS
@@ -77,10 +109,10 @@ void	show_struct_map(t_map map);
 
 //CHECKERS
 
-int	check_chars(t_map map);
-int	check_name(char *str);
-int	check_map(char *map_name, t_map *map);
-int	check_borders(t_map map);
-int	parse_texture(t_map *map);
+int		check_chars(t_map map);
+int		check_name(char *str);
+int		check_map(char *map_name, t_map *map);
+int		check_borders(t_map map);
+int		parse_texture(t_map *map);
 
 #endif

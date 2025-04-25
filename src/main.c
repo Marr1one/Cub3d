@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: maissat <maissat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 18:48:51 by root              #+#    #+#             */
-/*   Updated: 2025/04/24 22:05:59 by root             ###   ########.fr       */
+/*   Updated: 2025/04/25 17:52:33 by maissat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,8 +145,11 @@ int	main(int argc, char **argv)
 	if (check_map(argv[1], &map) == 1)
 		return (1);
 	printf("on arrive ici sans encombre!\n");
+	game.map = &map;
 	init_game(&game);
-	draw_square(WIDTH / 2, HEIGHT / 2, 0x0000FF, 10, &game);
+	mlx_hook(game.win, 2, 1L << 0, key_press, 	game.player);
+	mlx_hook(game.win, 3, 1L << 1, key_release, game.player);
+	mlx_loop_hook(game.mlx, draw_loop, &game);
 	mlx_loop(game.mlx);
 	show_struct_map(map);
 	return (0);
