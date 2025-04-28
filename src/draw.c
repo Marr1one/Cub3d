@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maissat <maissat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:42:09 by maissat           #+#    #+#             */
-/*   Updated: 2025/04/25 19:09:57 by maissat          ###   ########.fr       */
+/*   Updated: 2025/04/28 21:39:23 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,33 +84,51 @@ int	touch(float ray_x, float ray_y, t_map map)
 	return (0);
 }
 
-int	draw_loop(t_game *game)
+float	distance(float delta_x, float delta_y)
 {
-	float ray_x;
-	float ray_y;
-	float cos_angle;
-	float sin_angle;
-	
-	t_player *player;
+	return (sqrt(delta_x * delta_x + delta_y * delta_y));
+}
 
-	player = game->player;
+void draw_ray(t_player *player, t_game *game, float start_x, int i)
+{
+    float cos_angle = cos(start_x);
+    float sin_angle = sin(start_x);
+    float ray_x = player->x;
+    float ray_y = player->y;
 
-	clear_image(game);
-	move_player(player);
-	draw_map(game);
-	draw_square(player->x, player->y, 0x00FF00, 10, game);
-	ray_x = player->x;
-	ray_y = player->y;
-	cos_angle = cos(player->angle);
-	sin_angle = sin(player->angle);
-
-	while (!touch(ray_x, ray_y, *(game->map)))
+    while(!touch(ray_x, ray_y, *(game->map)))
+    {
+        //put_pixel(ray_x, ray_y, 0xFF0000, game);
+        ray_x += cos_angle;
+        ray_y += sin_angle;
+    }
+	float dist = distance(ray_x -  player->x, ray_y - player->y);
+	float height = (64 / dist) * (WIDTH / 2 );
+	int	start_y = (HEIGHT - height) / 2 ;
+	int end = start_y + height;
+	while (start_y < end)
 	{
-		put_pixel(ray_x, ray_y, 0xFF0000, game);
-		ray_x += cos_angle;
-		ray_y += sin_angle;
+		put_pixel(i, start_y, 0x0db8e, game);
+		start_y ++;
 	}
-	mlx_put_image_to_window(game->mlx, game->win, game->img, 0, 0);
-	
-	return (0);
+}
+
+int draw_loop(t_game *game)
+{
+    t_player *player = game->player;
+    move_player(player);
+    clear_image(game);
+	//draw_square(player->x, player->y, 0x00FF00, 10, game);
+	//draw_map(game);
+    float fraction = PI / 3 / WIDTH;
+    float start_x = player->angle - PI / 6;
+    int i = 0;
+    while(i < WIDTH)
+    {
+        draw_ray(player, game, start_x, i);
+        start_x += fraction;
+        i++;
+    }
+    mlx_put_image_to_window(game->mlx, game->win, game->img, 0, 0);
+    return 0;
 }
