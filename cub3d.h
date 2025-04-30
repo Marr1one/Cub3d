@@ -6,7 +6,7 @@
 /*   By: braugust <braugust@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 18:50:38 by root              #+#    #+#             */
-/*   Updated: 2025/04/30 18:19:27 by braugust         ###   ########.fr       */
+/*   Updated: 2025/04/30 18:22:16 by braugust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ typedef struct s_player
 
 // COLISION
 
+int can_move(t_map *map, float x, float y);
 int is_walkable(t_map *map, float x, float y);
 
 // CHECK
@@ -90,7 +91,7 @@ int		draw_loop(t_game *game);
 void	init_player(t_player *player);
 int 	key_press(int keycode, t_player *player);
 int 	key_release(int keycode, t_player *player);
-void    move_player(t_player *player);
+void    move_player(t_player *player, t_map *map);
 
 //RAYCASTING
 
