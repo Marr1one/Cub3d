@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 17:15:24 by maissat           #+#    #+#             */
-/*   Updated: 2025/04/30 13:30:40 by root             ###   ########.fr       */
+/*   Updated: 2025/04/30 17:41:32 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,20 @@
 //	player->left_rotate = 0;
 //	player->right_rotate = 0;
 //}
-void	init_player(t_player *player)
+void	init_player(t_player *player, t_map map)
 {
-	player->x = WIDTH / 2;
-	player->y = HEIGHT / 2;
-	player->angle = PI / 2;
+	
+	player->x = map.player->x * 64 + 64 / 2;
+	player->y = map.player->y * 64 + 64 / 2;
 
+	if (map.orientation == 'N')
+		player->angle = 3 * PI / 2;
+	else if (map.orientation == 'S')
+		player->angle = PI / 2;
+	else if (map.orientation == 'E')
+		player->angle = 0;
+	else if (map.orientation == 'W')
+		player->angle = PI;
 	player->key_up = 0;
 	player->key_down = 0;
 	player->key_left = 0;
@@ -50,12 +58,9 @@ void	init_player(t_player *player)
 	player->right_rotate = 0;
 }
 
-void	init_game(t_game *game)
+void	init_game(t_game *game, t_map map)
 {
-	game->player = malloc(sizeof(t_player));
-	if (!game->player)
-    	return ;
-	init_player(game->player);
+	init_player(game->player, map);
 	game->mlx = mlx_init();
 	game->win = mlx_new_window(game->mlx, WIDTH, HEIGHT, "CUB3D");
 	game->img = mlx_new_image(game->mlx, WIDTH, HEIGHT);

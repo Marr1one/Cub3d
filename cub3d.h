@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 18:50:38 by root              #+#    #+#             */
-/*   Updated: 2025/04/30 13:29:03 by root             ###   ########.fr       */
+/*   Updated: 2025/04/30 16:58:14 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef struct s_map
 	int		width;
 	char	*name;
 	char 	**tab;
+	struct s_player *player;
 	char	*no_texture;
 	char	*so_texture;
 	char	*we_texture;
@@ -77,14 +78,14 @@ int		draw_loop(t_game *game);
 
 //PLAYER
 
-void	init_player(t_player *player);
+void	init_player(t_player *player, t_map map);
 int 	key_press(int keycode, t_player *player);
 int 	key_release(int keycode, t_player *player);
 void	move_player(t_player *player);
 
 //RAYCASTING
 
-void	init_game(t_game *game);
+void	init_game(t_game *game, t_map map);
 void	put_pixel(int x, int y, int color, t_game *game);
 
 //UTILS

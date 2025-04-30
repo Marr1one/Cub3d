@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 18:34:05 by root              #+#    #+#             */
-/*   Updated: 2025/04/30 13:29:36 by root             ###   ########.fr       */
+/*   Updated: 2025/04/30 16:50:59 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,11 +148,15 @@ int	check_chars(t_map *map)
 				if (direction == 0 && (map->tab[i][j] == 'N' || map->tab[i][j] == 'S'))
 				{
 					map->orientation = map->tab[i][j];
+					map->player->x = j;
+					map->player->y = i;
 					direction = 1;
 				}
 				else if (direction == 0 && (map->tab[i][j] == 'E' || map->tab[i][j] == 'W'))
 				{
 					map->orientation = map->tab[i][j];
+					map->player->x = j;
+					map->player->y = i;
 					direction = 1;
 				}
 				else
