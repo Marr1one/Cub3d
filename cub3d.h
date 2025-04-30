@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maissat <maissat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 18:50:38 by root              #+#    #+#             */
-/*   Updated: 2025/04/25 18:29:30 by maissat          ###   ########.fr       */
+/*   Updated: 2025/04/30 13:29:03 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ typedef struct s_map
 	char	*so_texture;
 	char	*we_texture;
 	char	*ea_texture;
+	char	orientation;
 	int		floor_color[3];
 	int		ceiling_color[3];
 }	t_map;
@@ -109,7 +110,7 @@ void	show_struct_map(t_map map);
 
 //CHECKERS
 
-int		check_chars(t_map map);
+int		check_chars(t_map *map);
 int		check_name(char *str);
 int		check_map(char *map_name, t_map *map);
 int		check_borders(t_map map);

@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:42:09 by maissat           #+#    #+#             */
-/*   Updated: 2025/04/28 21:39:23 by root             ###   ########.fr       */
+/*   Updated: 2025/04/30 03:10:46 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,13 +83,20 @@ int	touch(float ray_x, float ray_y, t_map map)
 	 	return (1);
 	return (0);
 }
-
 float	distance(float delta_x, float delta_y)
 {
 	return (sqrt(delta_x * delta_x + delta_y * delta_y));
 }
 
-void draw_ray(t_player *player, t_game *game, float start_x, int i)
+float	fix_distance(float delta_x, float delta_y, t_game game)
+{
+	float angle = atan2(delta_y, delta_x) - game.player->angle;
+	float fix_dist = distance(delta_x, delta_y) * cos(angle);
+	return (fix_dist);
+}
+
+
+void draw_column(t_player *player, t_game *game, float start_x, int i)
 {
     float cos_angle = cos(start_x);
     float sin_angle = sin(start_x);
@@ -102,7 +109,7 @@ void draw_ray(t_player *player, t_game *game, float start_x, int i)
         ray_x += cos_angle;
         ray_y += sin_angle;
     }
-	float dist = distance(ray_x -  player->x, ray_y - player->y);
+	float dist = fix_distance(ray_x -  player->x, ray_y - player->y, *game);
 	float height = (64 / dist) * (WIDTH / 2 );
 	int	start_y = (HEIGHT - height) / 2 ;
 	int end = start_y + height;
@@ -125,7 +132,7 @@ int draw_loop(t_game *game)
     int i = 0;
     while(i < WIDTH)
     {
-        draw_ray(player, game, start_x, i);
+        draw_column(player, game, start_x, i);
         start_x += fraction;
         i++;
     }
