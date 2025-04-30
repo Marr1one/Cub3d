@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: braugust <braugust@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 18:34:05 by root              #+#    #+#             */
-/*   Updated: 2025/04/24 19:54:41 by root             ###   ########.fr       */
+/*   Updated: 2025/04/30 17:56:31 by braugust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,5 +162,37 @@ int	check_chars(t_map map)
 	}
 	if (!direction)
 		return (printf("Error\nNeed direction for the player\n"), 1);
+	return (0);
+}
+
+int	valid_path(const char *path)
+{
+	int	fd;
+	const char *ext;
+
+	if (!path || !*path)
+		return (printf("Erorr path empty !\n"), 1);
+	fd = open(path, O_RDONLY);
+	if (fd < 0)
+		return (printf("Erorr cannot open txt file !\n"), 1);
+	close(fd);
+	ext = ft_strrchr(path, '.');
+	if (!ext)
+		return(printf("Error txt file has no extension\n"), 1);
+	if (ft_strcmp((char *)ext, ".xpm") != 0)
+		return(printf("Error txt file must be .xpm\n"), 1);
+	return (0);
+}
+
+int	check_all_textures(const t_map *map)
+{
+	if (valid_path(map->no_texture))
+		return (1);
+	if (valid_path(map->so_texture))
+		return (1);
+	if (valid_path(map->we_texture))
+		return (1);
+	if (valid_path(map->ea_texture))
+		return (1);
 	return (0);
 }

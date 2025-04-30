@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maissat <maissat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: braugust <braugust@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 18:50:38 by root              #+#    #+#             */
-/*   Updated: 2025/04/25 18:29:30 by maissat          ###   ########.fr       */
+/*   Updated: 2025/04/30 18:19:27 by braugust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #include "math.h"
 #include "minilibx-linux/mlx.h"
 
+# define PLAYER_RADIUS 12.0f
 # define WIDTH 1280
 # define HEIGHT 720
 # define W 119
@@ -69,6 +70,16 @@ typedef struct s_player
 	int		right_rotate;
 }	t_player;
 
+// COLISION
+
+int is_walkable(t_map *map, float x, float y);
+
+// CHECK
+
+int	check_all_textures(const t_map *map);
+int		valid_path(const char *path);
+
+
 //DRAW
 
 void	draw_square(int x, int y, int color, int size, t_game *game);
@@ -79,7 +90,7 @@ int		draw_loop(t_game *game);
 void	init_player(t_player *player);
 int 	key_press(int keycode, t_player *player);
 int 	key_release(int keycode, t_player *player);
-void	move_player(t_player *player);
+void    move_player(t_player *player);
 
 //RAYCASTING
 
@@ -106,6 +117,7 @@ char 	*ft_substr(char *str, int start, int end);
 int		ft_atoi(char *str);
 void	show_int_tab(int *tab);
 void	show_struct_map(t_map map);
+char	*ft_strrchr(const char *s, int c);
 
 //CHECKERS
 
