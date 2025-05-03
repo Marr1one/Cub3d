@@ -6,12 +6,12 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:42:09 by maissat           #+#    #+#             */
-/*   Updated: 2025/04/30 17:34:49 by root             ###   ########.fr       */
+/*   Updated: 2025/05/04 00:24:11 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
-
+	
 void	clear_image(t_game *game)
 {
 	ft_memset(game->data, 0, WIDTH * HEIGHT * (game->bbp / 8));
@@ -98,6 +98,7 @@ float	fix_distance(float delta_x, float delta_y, t_game game)
 
 void draw_column(t_player *player, t_game *game, float start_x, int i)
 {
+	(void)i;
     float cos_angle = cos(start_x);
     float sin_angle = sin(start_x);
     float ray_x = player->x;
