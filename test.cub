@@ -1,11 +1,8 @@
 
-
-
-
-SO ./path_so
-NO ./path_no
-EA ./path_ea
-WE ./path_we
+SO ./path_so.xpm
+NO ./path_no.xpm
+EA ./path_ea.xpm
+WE ./path_we.xpm
 
 F 220,100,0
 C 100,50,5

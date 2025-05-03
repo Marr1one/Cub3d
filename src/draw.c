@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: braugust <braugust@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:42:09 by maissat           #+#    #+#             */
-/*   Updated: 2025/05/04 00:24:11 by root             ###   ########.fr       */
+/*   Updated: 2025/04/30 18:22:35 by braugust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ void draw_column(t_player *player, t_game *game, float start_x, int i)
 int draw_loop(t_game *game)
 {
     t_player *player = game->player;
-    move_player(player);
+    move_player(player, game->map);
     clear_image(game);
 	//draw_square(player->x, player->y, 0x00FF00, 10, game);
 	//draw_map(game);

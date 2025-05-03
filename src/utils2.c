@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: braugust <braugust@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 20:25:05 by root              #+#    #+#             */
-/*   Updated: 2025/04/24 19:53:43 by root             ###   ########.fr       */
+/*   Updated: 2025/04/29 19:46:21 by braugust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,4 +103,22 @@ char *ft_substr(char *str, int start, int end)
 	}
 	res[i] = '\0';
 	return (res);
+}
+
+char    *ft_strrchr(const char *s, int c)
+{
+    int     i;
+
+    i = 0;
+    while (s[i])
+            i++;
+    while (i > 0)
+    {
+            if (s[i] == (char)c)
+                    return ((char *)(&s[i]));
+            i--;
+    }
+    if (s[i] == (char)c)
+            return ((char *)(&s[i]));
+    return (0);
 }
