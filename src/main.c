@@ -142,17 +142,19 @@ int	main(int argc, char **argv)
 	
 	ft_memset(&game, 0, sizeof(t_game));
 	ft_memset(&map, 0, sizeof(t_map));
+	map.player = malloc(sizeof(t_player));
 	if (argc != 2)
 		return (printf("Usage: ./cube3d map.cub\n"), 1);
 	if (check_map(argv[1], &map) == 1)
 		return (1);
+	show_struct_map(map);
 	printf("on arrive ici sans encombre!\n");
 	game.map = &map;
-	init_game(&game);
+	game.player = map.player;
+	init_game(&game, map);
 	mlx_hook(game.win, 2, 1L << 0, key_press, 	game.player);
 	mlx_hook(game.win, 3, 1L << 1, key_release, game.player);
 	mlx_loop_hook(game.mlx, draw_loop, &game);
 	mlx_loop(game.mlx);
-	show_struct_map(map);
 	return (0);
 }

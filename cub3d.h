@@ -49,10 +49,12 @@ typedef struct s_map
 	int		width;
 	char	*name;
 	char 	**tab;
+	struct s_player *player;
 	char	*no_texture;
 	char	*so_texture;
 	char	*we_texture;
 	char	*ea_texture;
+	char	orientation;
 	int		floor_color[3];
 	int		ceiling_color[3];
 }	t_map;
@@ -88,14 +90,14 @@ int		draw_loop(t_game *game);
 
 //PLAYER
 
-void	init_player(t_player *player);
+void	init_player(t_player *player, t_map map);
 int 	key_press(int keycode, t_player *player);
 int 	key_release(int keycode, t_player *player);
 void    move_player(t_player *player, t_map *map);
 
 //RAYCASTING
 
-void	init_game(t_game *game);
+void	init_game(t_game *game, t_map map);
 void	put_pixel(int x, int y, int color, t_game *game);
 
 //UTILS
@@ -122,7 +124,7 @@ char	*ft_strrchr(const char *s, int c);
 
 //CHECKERS
 
-int		check_chars(t_map map);
+int		check_chars(t_map *map);
 int		check_name(char *str);
 int		check_map(char *map_name, t_map *map);
 int		check_borders(t_map map);

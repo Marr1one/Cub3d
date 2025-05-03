@@ -123,14 +123,14 @@ int	check_map(char *map_name, t_map *map)
 	create_tab(map);
 	if (parse_texture(map) != 0)
 		return (1);
-	if (check_chars(*map) != 0)
+	if (check_chars(map) != 0)
 		return (1);
 	if (check_borders(*map) != 0)
 		return (1);
 	return (0);
 }
 
-int	check_chars(t_map map)
+int	check_chars(t_map *map)
 {
 	int	i;
 	int	j;
@@ -138,20 +138,30 @@ int	check_chars(t_map map)
 
 	i = 0;
 	direction = 0;
-	while (map.tab[i])
+	while (map->tab[i])
 	{
 		j = 0;
-		while (map.tab[i][j])
+		while (map->tab[i][j])
 		{
-			if (map.tab[i][j] != '1' && map.tab[i][j] != '0'  && map.tab[i][j] != ' ' && map.tab[i][j] != '\n')
+			if (map->tab[i][j] != '1' && map->tab[i][j] != '0'  && map->tab[i][j] != ' ' && map->tab[i][j] != '\n')
 			{
-				if (direction == 0 && (map.tab[i][j] == 'N' || map.tab[i][j] == 'S'))
+				if (direction == 0 && (map->tab[i][j] == 'N' || map->tab[i][j] == 'S'))
+				{
+					map->orientation = map->tab[i][j];
+					map->player->x = j;
+					map->player->y = i;
 					direction = 1;
-				else if (direction == 0 && (map.tab[i][j] == 'E' || map.tab[i][j] == 'W'))
+				}
+				else if (direction == 0 && (map->tab[i][j] == 'E' || map->tab[i][j] == 'W'))
+				{
+					map->orientation = map->tab[i][j];
+					map->player->x = j;
+					map->player->y = i;
 					direction = 1;
+				}
 				else
 				{
-					if (direction == 1 && is_direction(map.tab[i][j]))
+					if (direction == 1 && is_direction(map->tab[i][j]))
 						return (printf("Error\nMultiple player direction\n"), 1);
 					return (printf("Error\nInvalid character in map\n"), 1);
 				}

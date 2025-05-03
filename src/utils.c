@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 19:11:23 by root              #+#    #+#             */
-/*   Updated: 2025/04/24 19:53:39 by root             ###   ########.fr       */
+/*   Updated: 2025/04/30 13:30:17 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,6 +151,7 @@ void	show_struct_map(t_map map)
 	printf("map height => %d\n", map.height);
 	printf("map width => %d\n", map.width);
 	printf("map name => %s\n", map.name);
+	printf("map orientation => {%c}\n", map.orientation);
 	printf("la map ! -----------------\n");
 	show_tab(map.tab);
 	printf("---------\n");
