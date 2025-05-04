@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: braugust <braugust@student.42.fr>          +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 18:50:38 by root              #+#    #+#             */
-/*   Updated: 2025/04/30 18:22:16 by braugust         ###   ########.fr       */
+/*   Updated: 2025/05/04 15:52:06 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 #include "math.h"
 #include "minilibx-linux/mlx.h"
 
-# define PLAYER_RADIUS 12.0f
 # define WIDTH 1280
 # define HEIGHT 720
 # define W 119
@@ -29,6 +28,8 @@
 # define PI 3.1415926535
 # define ROT_LEFT 65361
 # define ROT_RIGHT 65363
+# define PLAYER_RADIUS 12.0f
+# define ECHAP 65307
 
 typedef struct s_game
 {
@@ -121,6 +122,7 @@ int		ft_atoi(char *str);
 void	show_int_tab(int *tab);
 void	show_struct_map(t_map map);
 char	*ft_strrchr(const char *s, int c);
+int		close_window_cross(void);
 
 //CHECKERS
 
