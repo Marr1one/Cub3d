@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 18:48:51 by root              #+#    #+#             */
-/*   Updated: 2025/05/04 16:27:18 by root             ###   ########.fr       */
+/*   Updated: 2025/05/04 00:46:43 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,7 @@
 void fill_texture(t_map *map, char *trimmed)
 {
 	if (ft_strncmp(trimmed, "NO.", 3) == 0)
-	{
 		map->no_texture = ft_strduptext(trimmed + 2);
-	}
 	if (ft_strncmp(trimmed, "SO.", 3) == 0)
 		map->so_texture = ft_strduptext(trimmed + 2);
 	if (ft_strncmp(trimmed, "WE.", 3) == 0)
@@ -110,12 +108,10 @@ int	parse_texture(t_map *map)
 			if (space_before(line))
 				return (printf("Error\nSpace before texture\n"), 1);
 			trimmed = skip_spaces(line);
-			printf("trimmed => {%s}\n", trimmed);
 			fill_texture(map, trimmed);
 		}
 		else if (is_color_line(line) != 0)
 		{
-			printf("is color line => line => {%s}\n", line);
 			choice = is_color_line(line);
 			if (space_before(line))
 				return (printf("Error\nSpace before color\n"), 1);
@@ -132,11 +128,12 @@ int	parse_texture(t_map *map)
 		line = get_next_line(fd);
 	}
 	close(fd);
-	if (check_all_textures(map))
-		return (1);
+	//if (check_all_textures(map))
+	//	return (1);
 	return (0);
 	
 }
+
 
 int	main(int argc, char **argv)
 {
@@ -157,7 +154,6 @@ int	main(int argc, char **argv)
 	init_game(&game, map);
 	mlx_hook(game.win, 2, 1L << 0, key_press, 	game.player);
 	mlx_hook(game.win, 3, 1L << 1, key_release, game.player);
-	mlx_hook(game.win, 17, 0, close_window_cross, &game);
 	mlx_loop_hook(game.mlx, draw_loop, &game);
 	mlx_loop(game.mlx);
 	return (0);

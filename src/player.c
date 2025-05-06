@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: braugust <braugust@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:09:20 by maissat           #+#    #+#             */
-/*   Updated: 2025/05/04 15:50:38 by root             ###   ########.fr       */
+/*   Updated: 2025/04/30 18:51:11 by braugust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,8 +121,6 @@ void	move_player(t_player *player, t_map *map)
 int	key_press(int keycode, t_player *player)
 {
 	printf("key press: %d\n", keycode);
-	if (keycode == ECHAP)
-		exit(0); //ne pas oublier de free la memoire allouer !
 	if (keycode == W)
 		player->key_up = 1;
 	if (keycode == S)

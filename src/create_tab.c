@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 15:10:30 by maissat           #+#    #+#             */
-/*   Updated: 2025/05/04 13:04:56 by root             ###   ########.fr       */
+/*   Updated: 2025/04/30 13:25:43 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void create_tab(t_map *map)
             free(line);
             break;
         }
+        
         free(line);
         line = get_next_line(fd);
     }
