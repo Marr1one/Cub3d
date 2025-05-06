@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: braugust <braugust@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 18:48:51 by root              #+#    #+#             */
-/*   Updated: 2025/05/04 00:46:43 by root             ###   ########.fr       */
+/*   Updated: 2025/04/29 20:28:23 by braugust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,8 +128,8 @@ int	parse_texture(t_map *map)
 		line = get_next_line(fd);
 	}
 	close(fd);
-	//if (check_all_textures(map))
-	//	return (1);
+	if (check_all_textures(map))
+		return (1);
 	return (0);
 	
 }
