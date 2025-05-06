@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 18:48:51 by root              #+#    #+#             */
-/*   Updated: 2025/05/04 16:27:18 by root             ###   ########.fr       */
+/*   Updated: 2025/05/06 18:58:37 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,7 +154,12 @@ int	main(int argc, char **argv)
 	printf("on arrive ici sans encombre!\n");
 	game.map = &map;
 	game.player = map.player;
+	printf("map addr =>{%p}\n", game.map);
 	init_game(&game, map);
+	printf("mlx: %p\n", game.mlx);
+	printf("win: %p\n", game.win);
+	printf("img: %p\n", game.img);
+	printf("player: %p (x: %f, y: %f)\n", game.player, game.player->x, game.player->y);
 	mlx_hook(game.win, 2, 1L << 0, key_press, 	game.player);
 	mlx_hook(game.win, 3, 1L << 1, key_release, game.player);
 	mlx_hook(game.win, 17, 0, close_window_cross, &game);

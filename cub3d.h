@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 18:50:38 by root              #+#    #+#             */
-/*   Updated: 2025/05/04 15:52:06 by root             ###   ########.fr       */
+/*   Updated: 2025/05/06 16:39:14 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@
 # define ROT_RIGHT 65363
 # define PLAYER_RADIUS 12.0f
 # define ECHAP 65307
+
+
 
 typedef struct s_game
 {
