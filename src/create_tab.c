@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_tab.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: braugust <braugust@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 15:10:30 by maissat           #+#    #+#             */
-/*   Updated: 2025/04/30 13:25:43 by root             ###   ########.fr       */
+/*   Updated: 2025/05/14 18:57:05 by braugust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ void create_tab(t_map *map)
             free(line);
             break;
         }
-        
         free(line);
         line = get_next_line(fd);
     }

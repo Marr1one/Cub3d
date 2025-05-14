@@ -6,12 +6,11 @@
 /*   By: braugust <braugust@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 18:34:05 by root              #+#    #+#             */
-/*   Updated: 2025/04/30 17:56:31 by braugust         ###   ########.fr       */
+/*   Updated: 2025/05/14 18:55:55 by braugust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
-
 
 int	is_direction(char c)
 {
@@ -177,20 +176,22 @@ int	check_chars(t_map *map)
 
 int	valid_path(const char *path)
 {
-	int	fd;
-	const char *ext;
+	int		fd;
+	char	*ext;
 
+	printf("path teste => {%s}\n", path);
 	if (!path || !*path)
-		return (printf("Erorr path empty !\n"), 1);
+		return (printf("Error\n path empty !\n"), 1);
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
-		return (printf("Erorr cannot open txt file !\n"), 1);
+		return (printf("Erorr\n cannot open txt file !\n"), 1);
 	close(fd);
 	ext = ft_strrchr(path, '.');
 	if (!ext)
-		return(printf("Error txt file has no extension\n"), 1);
+		return(printf("Error\n txt file has no extension\n"), 1);
+	printf("ext = {%s}\n", ext);
 	if (ft_strcmp((char *)ext, ".xpm") != 0)
-		return(printf("Error txt file must be .xpm\n"), 1);
+		return(printf("Error\n txt file must be .xpm\n"), 1);
 	return (0);
 }
 

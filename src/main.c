@@ -6,7 +6,7 @@
 /*   By: braugust <braugust@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 18:48:51 by root              #+#    #+#             */
-/*   Updated: 2025/04/29 20:28:23 by braugust         ###   ########.fr       */
+/*   Updated: 2025/05/14 18:58:29 by braugust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 void fill_texture(t_map *map, char *trimmed)
 {
 	if (ft_strncmp(trimmed, "NO.", 3) == 0)
+	{
 		map->no_texture = ft_strduptext(trimmed + 2);
+	}
 	if (ft_strncmp(trimmed, "SO.", 3) == 0)
 		map->so_texture = ft_strduptext(trimmed + 2);
 	if (ft_strncmp(trimmed, "WE.", 3) == 0)
@@ -108,10 +110,12 @@ int	parse_texture(t_map *map)
 			if (space_before(line))
 				return (printf("Error\nSpace before texture\n"), 1);
 			trimmed = skip_spaces(line);
+			printf("trimmed => {%s}\n", trimmed);
 			fill_texture(map, trimmed);
 		}
 		else if (is_color_line(line) != 0)
 		{
+			printf("is color line => line => {%s}\n", line);
 			choice = is_color_line(line);
 			if (space_before(line))
 				return (printf("Error\nSpace before color\n"), 1);
@@ -134,7 +138,6 @@ int	parse_texture(t_map *map)
 	
 }
 
-
 int	main(int argc, char **argv)
 {
 	t_map map;
@@ -151,9 +154,15 @@ int	main(int argc, char **argv)
 	printf("on arrive ici sans encombre!\n");
 	game.map = &map;
 	game.player = map.player;
+	printf("map addr =>{%p}\n", game.map);
 	init_game(&game, map);
+	printf("mlx: %p\n", game.mlx);
+	printf("win: %p\n", game.win);
+	printf("img: %p\n", game.img);
+	printf("player: %p (x: %f, y: %f)\n", game.player, game.player->x, game.player->y);
 	mlx_hook(game.win, 2, 1L << 0, key_press, 	game.player);
 	mlx_hook(game.win, 3, 1L << 1, key_release, game.player);
+	mlx_hook(game.win, 17, 0, close_window_cross, &game);
 	mlx_loop_hook(game.mlx, draw_loop, &game);
 	mlx_loop(game.mlx);
 	return (0);
