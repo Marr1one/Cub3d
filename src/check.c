@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: maissat <maissat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 18:34:05 by root              #+#    #+#             */
-/*   Updated: 2025/05/04 15:42:52 by root             ###   ########.fr       */
+/*   Updated: 2025/05/15 16:38:24 by maissat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ int	check_map(char *map_name, t_map *map)
 		return (printf("Error\nName not valid!\n"), 1);
 	map->name = map_name;
 	map->height = get_height(map_name, map);
-	if (map->height < 0)
+	if (map->height <= 0)
 		return (1);
 	create_tab(map);
 	if (parse_texture(map) != 0)

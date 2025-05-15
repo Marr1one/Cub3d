@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: maissat <maissat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 18:48:51 by root              #+#    #+#             */
-/*   Updated: 2025/05/06 18:58:37 by root             ###   ########.fr       */
+/*   Updated: 2025/05/15 16:39:39 by maissat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,10 @@ void fill_color(t_map *map, char *str, char choice)
 				i++;
 			number = ft_substr(str, start, i);
 			color_rgb[j++] = ft_atoi(number);
+			free(number);
 		}
+		if (str[i] == '\0')
+			break;
 		i++;
 	}
 	j = 0;
@@ -126,11 +129,16 @@ int	parse_texture(t_map *map)
 		{
 			trimmed = skip_spaces(line);
 			if (trimmed[0] && trimmed[0] == '1')
+			{
+				free(trimmed);
 				break;
+			}
 		}
 		free(line);
+		free(trimmed);
 		line = get_next_line(fd);
 	}
+	free(line);
 	close(fd);
 	if (check_all_textures(map))
 		return (1);
@@ -150,16 +158,10 @@ int	main(int argc, char **argv)
 		return (printf("Usage: ./cube3d map.cub\n"), 1);
 	if (check_map(argv[1], &map) == 1)
 		return (1);
-	show_struct_map(map);
-	printf("on arrive ici sans encombre!\n");
+	//show_struct_map(map);
 	game.map = &map;
 	game.player = map.player;
-	printf("map addr =>{%p}\n", game.map);
 	init_game(&game, map);
-	printf("mlx: %p\n", game.mlx);
-	printf("win: %p\n", game.win);
-	printf("img: %p\n", game.img);
-	printf("player: %p (x: %f, y: %f)\n", game.player, game.player->x, game.player->y);
 	mlx_hook(game.win, 2, 1L << 0, key_press, 	game.player);
 	mlx_hook(game.win, 3, 1L << 1, key_release, game.player);
 	mlx_hook(game.win, 17, 0, close_window_cross, &game);
