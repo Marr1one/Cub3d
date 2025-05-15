@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: maissat <maissat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:42:09 by maissat           #+#    #+#             */
-/*   Updated: 2025/05/06 19:35:27 by root             ###   ########.fr       */
+/*   Updated: 2025/05/15 20:01:33 by maissat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,6 +210,23 @@ void draw_column(t_player *player, t_game *game, float ray_angle, int i)
 		put_pixel(i, y, color, game);
 }
 
+void	draw_ceiling_and_floor(t_game *game)
+{
+	int x, y;
+	int mid = HEIGHT / 2;
+
+	for (y = 0; y < HEIGHT; y++)
+	{
+		for (x = 0; x < WIDTH; x++)
+		{
+			if (y < mid)
+				put_pixel(x, y, 0x87CEEB, game); // ciel bleu clair
+			else
+				put_pixel(x, y, 0x2E2B2B, game); // sol gris sombre
+		}
+	}
+}
+
 int draw_loop(t_game *game)
 {
     t_player *player = game->player;
@@ -217,6 +234,8 @@ int draw_loop(t_game *game)
     clear_image(game);
 	//draw_square(player->x, player->y, 0x00FF00, 10, game);
 	//draw_map(game);
+	draw_ceiling_and_floor(game);
+	
     float fraction = PI / 3 / WIDTH;
     float start_x = player->angle - PI / 6;
     int i = 0;

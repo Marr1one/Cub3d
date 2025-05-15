@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: maissat <maissat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:09:20 by maissat           #+#    #+#             */
-/*   Updated: 2025/05/04 15:50:38 by root             ###   ########.fr       */
+/*   Updated: 2025/05/15 19:49:44 by maissat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,8 @@ void	move_player(t_player *player, t_map *map)
 	float	dy;
 	float	dx;
 
-	speed = 1.0;
-	angle_speed = 0.05;
+	speed = 0.5;
+	angle_speed = 0.01;
 	cos_a = cos(player->angle);
 	sin_a = sin(player->angle);
 	if (player->left_rotate)
