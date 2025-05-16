@@ -6,7 +6,7 @@
 /*   By: braugust <braugust@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:42:09 by maissat           #+#    #+#             */
-/*   Updated: 2025/05/14 18:57:28 by braugust         ###   ########.fr       */
+/*   Updated: 2025/05/16 02:39:00 by braugust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,7 +223,7 @@ int draw_loop(t_game *game)
     int i = 0;
     while(i < WIDTH)
     {
-        draw_column(player, game, start_x, i);
+        draw_column_textured(player, game, start_x, i);
         start_x += fraction;
         i++;
     }

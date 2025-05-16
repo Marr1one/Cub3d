@@ -6,7 +6,7 @@
 /*   By: braugust <braugust@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 17:15:24 by maissat           #+#    #+#             */
-/*   Updated: 2025/05/14 19:03:22 by braugust         ###   ########.fr       */
+/*   Updated: 2025/05/16 02:35:42 by braugust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,4 +87,6 @@ void	init_game(t_game *game, t_map map)
 	game->img = mlx_new_image(game->mlx, WIDTH, HEIGHT);
 	game->data = mlx_get_data_addr(game->img, &game->bbp, &game->size_line, &game->endian);
 	mlx_put_image_to_window(game->mlx, game->win, game->img, 0, 0);
+    init_textures(game, &map);
+    mlx_put_image_to_window(game->mlx, game->win, game->img, 0, 0);
 }

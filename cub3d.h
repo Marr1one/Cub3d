@@ -6,7 +6,7 @@
 /*   By: braugust <braugust@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 18:50:38 by root              #+#    #+#             */
-/*   Updated: 2025/05/14 19:04:30 by braugust         ###   ########.fr       */
+/*   Updated: 2025/05/16 02:40:16 by braugust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,17 @@
 # define ROT_RIGHT 65363
 # define ECHAP 65307
 
+typedef struct s_texture
+{
+    void    *img;
+    char    *data;
+    int     width;
+    int     height;
+    int     bpp;
+    int     size_line;
+    int     endian; 
+}					t_texture;
+
 typedef struct s_game
 {
 	void			*mlx;
@@ -42,6 +53,10 @@ typedef struct s_game
 	char			*data;
 	struct s_player	*player;
 	struct s_map	*map;
+	t_texture    *no;
+    t_texture    *so;
+    t_texture    *we;
+    t_texture    *ea;
 }					t_game;
 
 typedef struct s_map
@@ -72,6 +87,13 @@ typedef struct s_player
 	int				left_rotate;
 	int				right_rotate;
 }					t_player;
+
+// TEXTURES
+
+t_texture *load_texture(void *mlx, char *path);
+void init_textures(t_game *game, t_map *map);
+void draw_column_textured(t_player *player, t_game *game,
+                          float ray_angle, int x);
 
 // COLISION
 
