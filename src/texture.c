@@ -6,7 +6,7 @@
 /*   By: braugust <braugust@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 10:40:26 by braugust          #+#    #+#             */
-/*   Updated: 2025/05/16 02:40:24 by braugust         ###   ########.fr       */
+/*   Updated: 2025/05/20 03:47:26 by braugust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,107 +41,178 @@
 // 	return (0);
 // }
 
-t_texture *load_texture(void *mlx, char *path)
+t_texture	*load_texture(void *mlx, char *path)
 {
-    t_texture *tex = malloc(sizeof(*tex));
-    if (!tex)
-        return NULL;
-    tex->img = mlx_xpm_file_to_image(mlx, path, &tex->width, &tex->height);
-    if (!tex->img)
-    {
-        free(tex);
-        return NULL;
-    }
-    tex->data = mlx_get_data_addr(tex->img,
-                                  &tex->bpp,
-                                  &tex->size_line,
-                                  &tex->endian);
-    return tex;
+	t_texture	*tex;
+
+	tex = malloc(sizeof(*tex));
+	if (!tex)
+		return (NULL);
+	tex->img = mlx_xpm_file_to_image(mlx, path, &tex->width, &tex->height);
+	if (!tex->img)
+	{
+		free(tex);
+		return (NULL);
+	}
+	tex->data = mlx_get_data_addr(tex->img, &tex->bpp, &tex->size_line,
+			&tex->endian);
+	return (tex);
 }
 
-void init_textures(t_game *game, t_map *map)
+void	init_textures(t_game *game, t_map *map)
 {
-    game->no = load_texture(game->mlx, map->no_texture);
-    game->so = load_texture(game->mlx, map->so_texture);
-    game->we = load_texture(game->mlx, map->we_texture);
-    game->ea = load_texture(game->mlx, map->ea_texture);
-    if (!game->no || !game->so || !game->we || !game->ea)
-    {
-        fprintf(stderr, "Error\nImpossible de charger une ou plusieurs textures\n");
-        exit(1);
-    }
+	game->no = load_texture(game->mlx, map->no_texture);
+	game->so = load_texture(game->mlx, map->so_texture);
+	game->we = load_texture(game->mlx, map->we_texture);
+	game->ea = load_texture(game->mlx, map->ea_texture);
+	if (!game->no || !game->so || !game->we || !game->ea)
+	{
+		fprintf(stderr,
+			"Error\nImpossible de charger une ou plusieurs textures\n");
+		exit(1);
+	}
 }
 
-void draw_column_textured(t_player *player, t_game *game,
-                          float ray_angle, int x)
+void	draw_column_textured(t_player *player, t_game *game, float ray_angle,
+		int x)
 {
-    // 1) DDA pour trouver hit, side, dist, step_x, step_y
-    float ray_dir_x = cosf(ray_angle);
-    float ray_dir_y = sinf(ray_angle);
-    int map_x = (int)(player->x / 64);
-    int map_y = (int)(player->y / 64);
-    float delta_dist_x = fabsf(1.0f / ray_dir_x);
-    float delta_dist_y = fabsf(1.0f / ray_dir_y);
-    int step_x = (ray_dir_x < 0) ? -1 : 1;
-    int step_y = (ray_dir_y < 0) ? -1 : 1;
-    float side_dist_x = (ray_dir_x < 0)
-        ? ((player->x - map_x*64) / 64) * delta_dist_x
-        : (((map_x+1)*64 - player->x) / 64) * delta_dist_x;
-    float side_dist_y = (ray_dir_y < 0)
-        ? ((player->y - map_y*64) / 64) * delta_dist_y
-        : (((map_y+1)*64 - player->y) / 64) * delta_dist_y;
-    int hit = 0, side = 0;
-    while (!hit)
-    {
-        if (side_dist_x < side_dist_y)
-        {
-            side_dist_x += delta_dist_x;
-            map_x += step_x;
-            side = 0;
-        }
-        else
-        {
-            side_dist_y += delta_dist_y;
-            map_y += step_y;
-            side = 1;
-        }
-        if (game->map->tab[map_y][map_x] == '1')
-            hit = 1;
-    }
-    float perp_dist = (side == 0)
-        ? (side_dist_x - delta_dist_x) * 64
-        : (side_dist_y - delta_dist_y) * 64;
-    perp_dist *= cosf(ray_angle - player->angle);
+	float			ray_dir_x;
+	float			ray_dir_y;
+	int				map_x;
+	int				map_y;
+	int				hit = 0, side;
+	float			perp_dist;
+	t_texture		*tex;
+	float			wall_x;
+	int				tex_x;
+	int				line_height;
+	int				start_y;
+	int				end_y;
+	int				y;
+	int				d;
+	int				tex_y;
+	int				idx;
+	unsigned char	b;
+	unsigned char	g;
+	unsigned char	r;
+	int				color;
 
-    // 2) Sélection de la bonne texture
-    t_texture *tex;
-    if (side == 0)
-        tex = (step_x > 0 ? game->we : game->ea);
-    else
-        tex = (step_y > 0 ? game->so : game->no);
-
-    // 3) Calcul de l’abscisse dans la texture
-    float wall_x = (side == 0)
-        ? (player->y + perp_dist*ray_dir_y) / 64.0f
-        : (player->x + perp_dist*ray_dir_x) / 64.0f;
-    wall_x -= floorf(wall_x);
-    int tex_x = (int)(wall_x * tex->width);
-    if ((side == 0 && ray_dir_x > 0) || (side == 1 && ray_dir_y < 0))
-        tex_x = tex->width - tex_x - 1;
-
-    // 4) Projection et échantillonnage vertical
-    int line_height = (int)((64.0f / perp_dist) * (WIDTH / 2));
-    int start_y    = (HEIGHT - line_height) / 2;
-    int end_y      = start_y + line_height;
-    for (int y = start_y; y < end_y; y++)
-    {
-        int d = (y * 256) - (HEIGHT * 128) + (line_height * 128);
-        int tex_y = ((d * tex->height) / line_height) / 256;
-        int idx   = tex_y * tex->size_line + tex_x * (tex->bpp/8);
-        unsigned char b = tex->data[idx];
-        unsigned char g = tex->data[idx+1];
-        unsigned char r = tex->data[idx+2];
-        int color = (r << 16) | (g << 8) | b;
-        put_pixel(x, y, color, game);
-    }
+	ray_dir_x = cosf(ray_angle);
+	ray_dir_y = sinf(ray_angle);
+	map_x = (int)(player->x / 64);
+	map_y = (int)(player->y / 64);
+	float delta_dist_x, delta_dist_y;
+	int step_x, step_y;
+	float side_dist_x, side_dist_y;
+	hit = 0, side = 0;
+	if (ray_dir_x != 0)
+		delta_dist_x = fabsf(1.0f / ray_dir_x);
+	else
+		delta_dist_x = 1e30;
+	if (ray_dir_y != 0)
+		delta_dist_y = fabsf(1.0f / ray_dir_y);
+	else
+		delta_dist_y = 1e30;
+	if (ray_dir_x < 0)
+	{
+		step_x = -1;
+		side_dist_x = ((player->x - map_x * 64) / 64) * delta_dist_x;
+	}
+	else
+	{
+		step_x = 1;
+		side_dist_x = (((map_x + 1) * 64 - player->x) / 64) * delta_dist_x;
+	}
+	if (ray_dir_y < 0)
+	{
+		step_y = -1;
+		side_dist_y = ((player->y - map_y * 64) / 64) * delta_dist_y;
+	}
+	else
+	{
+		step_y = 1;
+		side_dist_y = (((map_y + 1) * 64 - player->y) / 64) * delta_dist_y;
+	}
+	while (!hit)
+	{
+		if (side_dist_x < side_dist_y)
+		{
+			side_dist_x += delta_dist_x;
+			map_x += step_x;
+			side = 0;
+		}
+		else
+		{
+			side_dist_y += delta_dist_y;
+			map_y += step_y;
+			side = 1;
+		}
+		if (game->map->tab[map_y][map_x] == '1')
+			hit = 1;
+	}
+	if (side == 0)
+		perp_dist = (side_dist_x - delta_dist_x) * 64;
+	else
+		perp_dist = (side_dist_y - delta_dist_y) * 64;
+	perp_dist *= cosf(ray_angle - player->angle);
+	tex = NULL;
+	if (side == 0)
+	{
+		if (step_x > 0)
+			tex = game->we;
+		else
+			tex = game->ea;
+	}
+	else
+	{
+		if (step_y > 0)
+			tex = game->so;
+		else
+			tex = game->no;
+	}
+	if (side == 0)
+		wall_x = (player->y + perp_dist * ray_dir_y) / 64.0f;
+	else
+		wall_x = (player->x + perp_dist * ray_dir_x) / 64.0f;
+	wall_x -= floorf(wall_x);
+	tex_x = (int)(wall_x * tex->width);
+	if ((side == 0 && ray_dir_x > 0) || (side == 1 && ray_dir_y < 0))
+		tex_x = tex->width - tex_x - 1;
+	int ceil_col = 0x87CEEB;  // bleu ciel
+	int floor_col = 0x222222; // gris foncé
+	line_height = (int)((64.0f / perp_dist) * (WIDTH / 2));
+	start_y = (HEIGHT - line_height) / 2;
+	end_y = start_y + line_height;
+	if (start_y < 0)
+		start_y = 0;
+	if (end_y >= HEIGHT)
+		end_y = HEIGHT - 1;
+	// Plafond
+	y = 0;
+	while (y < start_y)
+	{
+		put_pixel(x, y, ceil_col, game);
+		y++;
+	}
+	// Mur texturé
+	y = start_y;
+	while (y < end_y)
+	{
+		d = (y * 256) - (HEIGHT * 128) + (line_height * 128);
+		tex_y = ((d * tex->height) / line_height) / 256;
+		idx = tex_y * tex->size_line + tex_x * (tex->bpp / 8);
+		b = tex->data[idx];
+		g = tex->data[idx + 1];
+		r = tex->data[idx + 2];
+		color = (r << 16) | (g << 8) | b;
+		put_pixel(x, y, color, game);
+		y++;
+	}
+	// Sol
+	y = end_y;
+	while (y < HEIGHT)
+	{
+		put_pixel(x, y, floor_col, game);
+		y++;
+	}
 }
