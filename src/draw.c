@@ -6,7 +6,7 @@
 /*   By: maissat <maissat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:42:09 by maissat           #+#    #+#             */
-/*   Updated: 2025/05/22 15:42:32 by maissat          ###   ########.fr       */
+/*   Updated: 2025/05/22 15:47:38 by maissat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,6 +216,7 @@ void draw_column(t_player *player, t_game *game, float ray_angle, int i)
 	// Dessin de la colonne verticale
 	for (int y = start_y; y < end_y; y++)
 		put_pixel(i, y, color, game);
+}
 //    while(!touch(ray_x, ray_y, *(game->map)))
 //    {
 //        //put_pixel(ray_x, ray_y, 0xFF0000, game);
@@ -234,94 +235,94 @@ void draw_column(t_player *player, t_game *game, float ray_angle, int i)
 //	}
 //}
 
-void draw_column(t_player *player, t_game *game, float ray_angle, int i)
-{
-	float ray_dir_x = cos(ray_angle);
-	float ray_dir_y = sin(ray_angle);
+//void draw_column(t_player *player, t_game *game, float ray_angle, int i)
+//{
+//	float ray_dir_x = cos(ray_angle);
+//	float ray_dir_y = sin(ray_angle);
 
-	// Position du joueur en cases
-	int map_x = (int)(player->x / 64);
-	int map_y = (int)(player->y / 64);
+//	// Position du joueur en cases
+//	int map_x = (int)(player->x / 64);
+//	int map_y = (int)(player->y / 64);
 
-	// Distance que le rayon doit parcourir pour atteindre le prochain carré en X ou Y
-	float delta_dist_x = fabs(1.0f / ray_dir_x);
-	float delta_dist_y = fabs(1.0f / ray_dir_y);
+//	// Distance que le rayon doit parcourir pour atteindre le prochain carré en X ou Y
+//	float delta_dist_x = fabs(1.0f / ray_dir_x);
+//	float delta_dist_y = fabs(1.0f / ray_dir_y);
 
-	int step_x;
-	if (ray_dir_x < 0)
-		step_x = -1;
-	else 
-		step_x =  1;
-	int step_y;
-	if (ray_dir_y < 0)
-		step_y = -1;
-	else 
-		step_y =  1;
+//	int step_x;
+//	if (ray_dir_x < 0)
+//		step_x = -1;
+//	else 
+//		step_x =  1;
+//	int step_y;
+//	if (ray_dir_y < 0)
+//		step_y = -1;
+//	else 
+//		step_y =  1;
 
-	float side_dist_x;
-	if (ray_dir_x < 0)
-		side_dist_x = ((player->x - map_x * 64) / 64) * delta_dist_x;
-	else
-		side_dist_x = (((map_x + 1) * 64 - player->x) / 64) * delta_dist_x;
-	float side_dist_y;
-	if (ray_dir_y < 0)
-		side_dist_y = (player->y - map_y * 64) / 64 * delta_dist_y;
-	else
-		side_dist_y = ((map_y + 1) * 64 - player->y) / 64 * delta_dist_y;
+//	float side_dist_x;
+//	if (ray_dir_x < 0)
+//		side_dist_x = ((player->x - map_x * 64) / 64) * delta_dist_x;
+//	else
+//		side_dist_x = (((map_x + 1) * 64 - player->x) / 64) * delta_dist_x;
+//	float side_dist_y;
+//	if (ray_dir_y < 0)
+//		side_dist_y = (player->y - map_y * 64) / 64 * delta_dist_y;
+//	else
+//		side_dist_y = ((map_y + 1) * 64 - player->y) / 64 * delta_dist_y;
 
-	int hit = 0;
-	int side = 0;
+//	int hit = 0;
+//	int side = 0;
 
-	while (!hit)
-	{
-		if (side_dist_x < side_dist_y)
-		{
-			side_dist_x += delta_dist_x;
-			map_x += step_x;
-			side = 0;
-		}
-		else
-		{
-			side_dist_y += delta_dist_y;
-			map_y += step_y;
-			side = 1;
-		}
-		if (game->map->tab[map_y][map_x] == '1')
-			hit = 1;
-	}
+//	while (!hit)
+//	{
+//		if (side_dist_x < side_dist_y)
+//		{
+//			side_dist_x += delta_dist_x;
+//			map_x += step_x;
+//			side = 0;
+//		}
+//		else
+//		{
+//			side_dist_y += delta_dist_y;
+//			map_y += step_y;
+//			side = 1;
+//		}
+//		if (game->map->tab[map_y][map_x] == '1')
+//			hit = 1;
+//	}
 
-	float dist;
-	if (side == 0)
-		dist = (side_dist_x - delta_dist_x) * 64;
-	else
-		dist = (side_dist_y - delta_dist_y) * 64;
-	dist *= cos(ray_angle - player->angle);
-	// Hauteur de la colonne
-	float height = (64 / dist) * (WIDTH / 2);
-	int start_y = (HEIGHT - height) / 2;
-	int end_y = start_y + height;
+//	float dist;
+//	if (side == 0)
+//		dist = (side_dist_x - delta_dist_x) * 64;
+//	else
+//		dist = (side_dist_y - delta_dist_y) * 64;
+//	dist *= cos(ray_angle - player->angle);
+//	// Hauteur de la colonne
+//	float height = (64 / dist) * (WIDTH / 2);
+//	int start_y = (HEIGHT - height) / 2;
+//	int end_y = start_y + height;
 
-	// Couleur selon la direction
-	int color;
-	if (side == 0)
-	{
-		if (step_x > 0)
-			color = 0x00FF00; // Est → vert
-		else
-			color = 0x0000FF; // Ouest → bleu
-	}
-	else
-	{
-		if (step_y > 0)
-			color = 0xFFFFFF; // Sud → blanc
-		else
-			color = 0xFF0000; // Nord → rouge
-	}
+//	// Couleur selon la direction
+//	int color;
+//	if (side == 0)
+//	{
+//		if (step_x > 0)
+//			color = 0x00FF00; // Est → vert
+//		else
+//			color = 0x0000FF; // Ouest → bleu
+//	}
+//	else
+//	{
+//		if (step_y > 0)
+//			color = 0xFFFFFF; // Sud → blanc
+//		else
+//			color = 0xFF0000; // Nord → rouge
+//	}
 
-	// Dessin de la colonne verticale
-	for (int y = start_y; y < end_y; y++)
-		put_pixel(i, y, color, game);
-}
+//	// Dessin de la colonne verticale
+//	for (int y = start_y; y < end_y; y++)
+//		put_pixel(i, y, color, game);
+//}
 
 void	draw_ceiling_and_floor(t_game *game)
 {
