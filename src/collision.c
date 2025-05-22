@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   collision.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: braugust <braugust@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 17:48:51 by braugust          #+#    #+#             */
-/*   Updated: 2025/05/04 13:02:28 by root             ###   ########.fr       */
+/*   Updated: 2025/05/14 18:56:50 by braugust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
+
 
 int	is_walkable(t_map *map, float x, float y)
 {

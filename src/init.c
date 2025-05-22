@@ -6,7 +6,7 @@
 /*   By: maissat <maissat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 17:15:24 by maissat           #+#    #+#             */
-/*   Updated: 2025/05/15 16:20:16 by maissat          ###   ########.fr       */
+/*   Updated: 2025/05/22 15:41:53 by maissat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,21 +58,21 @@ void	init_player(t_player *player, t_map map)
 	player->right_rotate = 0;
 }
 
-//void	init_texture(t_game *game, t_map *map)
-//{
-//	game->no_text->img = mlx_xpm_file_to_image(game->mlx, map->no_texture, &game->no_text->width, &game->no_text->height);
-//	game->so_text->img = mlx_xpm_file_to_image(game->mlx, map->so_texture, &game->so_text->width, &game->so_text->height);
-//	game->ea_text->img = mlx_xpm_file_to_image(game->mlx, map->ea_texture, &game->ea_text->width, &game->ea_text->height);
-//	game->we_text->img = mlx_xpm_file_to_image(game->mlx, map->we_texture, &game->we_text->width, &game->we_text->height);
-//	//if (!game->no_text.img || !game->so_text.img || !game->ea_text.img || !game->we_text.img) {
-//    //    printf("Erreur : impossible de charger une texture\n");
-//    //    exit(1);
-//    //}
-//	game->no_text->data = mlx_get_data_addr(game->no_text->img, &game->no_text->bpp, &game->no_text->size_line, &game->no_text->endian);
-//	game->so_text->data = mlx_get_data_addr(game->so_text->img, &game->so_text->bpp, &game->so_text->size_line, &game->so_text->endian);
-//	game->ea_text->data = mlx_get_data_addr(game->ea_text->img, &game->ea_text->bpp, &game->ea_text->size_line, &game->ea_text->endian);
-//	game->we_text->data = mlx_get_data_addr(game->we_text->img, &game->we_text->bpp, &game->we_text->size_line, &game->we_text->endian);
-//}
+// void	init_texture(t_game *game, t_map *map)
+// {
+// 	game->no_text->img = mlx_xpm_file_to_image(game->mlx, map->no_texture, &game->no_text->width, &game->no_text->height);
+// 	game->so_text->img = mlx_xpm_file_to_image(game->mlx, map->so_texture, &game->so_text->width, &game->so_text->height);
+// 	game->ea_text->img = mlx_xpm_file_to_image(game->mlx, map->ea_texture, &game->ea_text->width, &game->ea_text->height);
+// 	game->we_text->img = mlx_xpm_file_to_image(game->mlx, map->we_texture, &game->we_text->width, &game->we_text->height);
+// 	//if (!game->no_text.img || !game->so_text.img || !game->ea_text.img || !game->we_text.img) {
+//     //    printf("Erreur : impossible de charger une texture\n");
+//     //    exit(1);
+//     //}
+// 	game->no_text->data = mlx_get_data_addr(game->no_text->img, &game->no_text->bpp, &game->no_text->size_line, &game->no_text->endian);
+// 	game->so_text->data = mlx_get_data_addr(game->so_text->img, &game->so_text->bpp, &game->so_text->size_line, &game->so_text->endian);
+// 	game->ea_text->data = mlx_get_data_addr(game->ea_text->img, &game->ea_text->bpp, &game->ea_text->size_line, &game->ea_text->endian);
+// 	game->we_text->data = mlx_get_data_addr(game->we_text->img, &game->we_text->bpp, &game->we_text->size_line, &game->we_text->endian);
+// }
 
 void	init_game(t_game *game, t_map map)
 {
@@ -87,4 +87,6 @@ void	init_game(t_game *game, t_map map)
 	game->img = mlx_new_image(game->mlx, WIDTH, HEIGHT);
 	game->data = mlx_get_data_addr(game->img, &game->bbp, &game->size_line, &game->endian);
 	mlx_put_image_to_window(game->mlx, game->win, game->img, 0, 0);
+    init_textures(game, &map);
+    mlx_put_image_to_window(game->mlx, game->win, game->img, 0, 0);
 }

@@ -5,10 +5,11 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: maissat <maissat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/25 16:09:20 by maissat           #+#    #+#             */
-/*   Updated: 2025/05/15 19:49:44 by maissat          ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2025/05/22 15:43:21 by maissat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../cub3d.h"
 
@@ -70,7 +71,6 @@
 //         player->y += cos_angle * speed;
 //     }
 // }
-
 void	move_player(t_player *player, t_map *map)
 {
 	float	speed;

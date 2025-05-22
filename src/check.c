@@ -5,13 +5,13 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: maissat <maissat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/14 18:34:05 by root              #+#    #+#             */
-/*   Updated: 2025/05/15 16:38:24 by maissat          ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2025/05/22 15:44:59 by maissat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
 
+#include "../cub3d.h"
 
 int	is_direction(char c)
 {
