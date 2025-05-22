@@ -5,11 +5,10 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: maissat <maissat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/05/22 15:43:21 by maissat          ###   ########.fr       */
+/*   Created: 2025/05/22 17:29:12 by maissat           #+#    #+#             */
+/*   Updated: 2025/05/22 17:31:11 by maissat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../cub3d.h"
 
@@ -82,8 +81,8 @@ void	move_player(t_player *player, t_map *map)
 	float	dy;
 	float	dx;
 
-	speed = 0.5;
-	angle_speed = 0.01;
+	speed = 0.75;
+	angle_speed = 0.03;
 	cos_a = cos(player->angle);
 	sin_a = sin(player->angle);
 	if (player->left_rotate)
@@ -100,13 +99,25 @@ void	move_player(t_player *player, t_map *map)
 		dx = 0;
 		dy = 0;
 		if (player->key_up)
-			dx += cos_a * speed, dy += sin_a * speed;
+		{
+			dx += cos_a * speed;
+			dy += sin_a * speed;
+		}
 		if (player->key_down)
-			dx -= cos_a * speed, dy -= sin_a * speed;
+		{
+			dx -= cos_a * speed;
+			dy -= sin_a * speed;
+		}
 		if (player->key_left)
-			dx += sin_a * speed, dy -= cos_a * speed;
+		{
+			dx += sin_a * speed;
+			dy -= cos_a * speed;
+		}
 		if (player->key_right)
-			dx -= sin_a * speed, dy += cos_a * speed;
+		{
+			dx -= sin_a * speed;
+			dy += cos_a * speed;
+		}
 		new_x = player->x + dx;
 		new_y = player->y;
 		if (can_move(map, new_x, new_y))
@@ -120,9 +131,8 @@ void	move_player(t_player *player, t_map *map)
 
 int	key_press(int keycode, t_player *player)
 {
-	printf("key press: %d\n", keycode);
 	if (keycode == ECHAP)
-		exit(0); //ne pas oublier de free la memoire allouer !
+		exit(0);
 	if (keycode == W)
 		player->key_up = 1;
 	if (keycode == S)

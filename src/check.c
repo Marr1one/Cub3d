@@ -5,11 +5,10 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: maissat <maissat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/05/22 15:44:59 by maissat          ###   ########.fr       */
+/*   Created: 2025/05/22 17:04:56 by maissat           #+#    #+#             */
+/*   Updated: 2025/05/22 17:51:34 by maissat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../cub3d.h"
 
@@ -43,8 +42,9 @@ int	check_borders(t_map map)
 			j++;
 		if (map.tab[map.height - 1][j] != '1')
 		{
-			if (map.tab[map.height - 1][j] == '\n' || map.tab[map.height - 1][j] == '\0')
-				break;
+			if (map.tab[map.height - 1][j] == '\n' || map.tab[map.height
+				- 1][j] == '\0')
+				break ;
 			return (printf("Error\nBottom not closed\n"), 1);
 		}
 		j++;
@@ -53,11 +53,12 @@ int	check_borders(t_map map)
 	while (map.tab[i])
 	{
 		j = 0;
-		while (map.tab[i][j] != '\0' &&  map.tab[i][j] != '\n')
+		while (map.tab[i][j] != '\0' && map.tab[i][j] != '\n')
 			j++;
 		if (j > 2 && map.tab[i][j - 1] != '1')
 		{
-			return (printf("Error\nRight segment not closed on line %d\n", i), 1);
+			return (printf("Error\nRight segment not closed on line %d\n", i),
+				1);
 		}
 		i++;
 	}
@@ -85,9 +86,11 @@ int	check_borders(t_map map)
 					return (printf("Error\nmap no closed on line %d\n", i), 1);
 				if (map.tab[i + 1] && (ft_strlen(map.tab[i + 1]) < j))
 					return (printf("Error\nmap no closed on line %d\n", i), 1);
-				if (map.tab[i + 1] && (map.tab[i + 1][j] != '1' && map.tab[i + 1][j] != '0' && is_direction(map.tab[i + 1][j]) == 0))
+				if (map.tab[i + 1] && (map.tab[i + 1][j] != '1' && map.tab[i
+						+ 1][j] != '0' && is_direction(map.tab[i + 1][j]) == 0))
 					return (printf("Error\nmap no closed on line %d\n", i), 1);
-				if (map.tab[i - 1] && (map.tab[i - 1][j] != '1' && map.tab[i - 1][j] != '0' && is_direction(map.tab[i - 1][j]) == 0))
+				if (map.tab[i - 1] && (map.tab[i - 1][j] != '1' && map.tab[i
+						- 1][j] != '0' && is_direction(map.tab[i - 1][j]) == 0))
 					return (printf("Error\nmap no closed on line %d\n", i), 1);
 			}
 			j++;
@@ -99,7 +102,7 @@ int	check_borders(t_map map)
 
 int	check_name(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (str[0] == '.')
@@ -143,16 +146,19 @@ int	check_chars(t_map *map)
 		j = 0;
 		while (map->tab[i][j])
 		{
-			if (map->tab[i][j] != '1' && map->tab[i][j] != '0'  && map->tab[i][j] != ' ' && map->tab[i][j] != '\n')
+			if (map->tab[i][j] != '1' && map->tab[i][j] != '0'
+				&& map->tab[i][j] != ' ' && map->tab[i][j] != '\n')
 			{
-				if (direction == 0 && (map->tab[i][j] == 'N' || map->tab[i][j] == 'S'))
+				if (direction == 0 && (map->tab[i][j] == 'N'
+					|| map->tab[i][j] == 'S'))
 				{
 					map->orientation = map->tab[i][j];
 					map->player->x = j;
 					map->player->y = i;
 					direction = 1;
 				}
-				else if (direction == 0 && (map->tab[i][j] == 'E' || map->tab[i][j] == 'W'))
+				else if (direction == 0 && (map->tab[i][j] == 'E'
+					|| map->tab[i][j] == 'W'))
 				{
 					map->orientation = map->tab[i][j];
 					map->player->x = j;
@@ -162,7 +168,8 @@ int	check_chars(t_map *map)
 				else
 				{
 					if (direction == 1 && is_direction(map->tab[i][j]))
-						return (printf("Error\nMultiple player direction\n"), 1);
+						return (printf("Error\nMultiple player direction\n"),
+							1);
 					return (printf("Error\nInvalid character in map\n"), 1);
 				}
 			}
@@ -189,10 +196,10 @@ int	valid_path(const char *path)
 	close(fd);
 	ext = ft_strrchr(path, '.');
 	if (!ext)
-		return(printf("Error\n txt file has no extension\n"), 1);
+		return (printf("Error\n txt file has no extension\n"), 1);
 	printf("ext = {%s}\n", ext);
 	if (ft_strcmp((char *)ext, ".xpm") != 0)
-		return(printf("Error\n txt file must be .xpm\n"), 1);
+		return (printf("Error\n txt file must be .xpm\n"), 1);
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: maissat <maissat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 18:50:38 by root              #+#    #+#             */
-/*   Updated: 2025/05/22 15:43:48 by maissat          ###   ########.fr       */
+/*   Updated: 2025/05/22 17:51:52 by maissat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,13 @@
 
 typedef struct s_texture
 {
-    void    *img;
-    char    *data;
-    int     width;
-    int     height;
-    int     bpp;
-    int     size_line;
-    int     endian; 
+	void			*img;
+	char			*data;
+	int				width;
+	int				height;
+	int				bpp;
+	int				size_line;
+	int				endian;
 }					t_texture;
 
 typedef struct s_game
@@ -53,10 +53,10 @@ typedef struct s_game
 	char			*data;
 	struct s_player	*player;
 	struct s_map	*map;
-	t_texture    *no;
-    t_texture    *so;
-    t_texture    *we;
-    t_texture    *ea;
+	t_texture		*no;
+	t_texture		*so;
+	t_texture		*we;
+	t_texture		*ea;
 }					t_game;
 
 typedef struct s_map
@@ -90,10 +90,10 @@ typedef struct s_player
 
 // TEXTURES
 
-t_texture *load_texture(void *mlx, char *path);
-void init_textures(t_game *game, t_map *map);
-void draw_column_textured(t_player *player, t_game *game,
-                          float ray_angle, int x);
+t_texture			*load_texture(void *mlx, char *path);
+void				init_textures(t_game *game, t_map *map);
+void				draw_column_textured(t_player *player, t_game *game,
+						float ray_angle, int x);
 
 // COLISION
 

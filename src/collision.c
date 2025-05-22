@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   collision.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: braugust <braugust@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maissat <maissat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 17:48:51 by braugust          #+#    #+#             */
-/*   Updated: 2025/05/14 18:56:50 by braugust         ###   ########.fr       */
+/*   Updated: 2025/05/22 17:50:29 by maissat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
-
 
 int	is_walkable(t_map *map, float x, float y)
 {
@@ -27,7 +26,6 @@ int	is_walkable(t_map *map, float x, float y)
 	if (map->tab[cell_y][cell_x] == '1')
 		return (0);
 	return (1);
-		
 }
 
 int	can_move(t_map *map, float x, float y)

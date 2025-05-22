@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: maissat <maissat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 19:11:23 by root              #+#    #+#             */
-/*   Updated: 2025/04/30 13:30:17 by root             ###   ########.fr       */
+/*   Updated: 2025/05/22 17:33:58 by maissat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-char *ft_strduptext(char *str)
+char	*ft_strduptext(char *str)
 {
-	int	i;
-	char *dup;
+	int		i;
+	char	*dup;
 
 	dup = malloc(sizeof(char) * (ft_strlen(str) + 1));
 	if (!dup)
@@ -30,10 +30,10 @@ char *ft_strduptext(char *str)
 	return (dup);
 }
 
-char *ft_strduptab(char *str, t_map *map)
+char	*ft_strduptab(char *str, t_map *map)
 {
-	int	i;
-	char *dup;
+	int		i;
+	char	*dup;
 
 	dup = malloc(sizeof(char) * (map->width + 1));
 	if (!dup)
@@ -75,6 +75,7 @@ int	ft_strlen(char *str)
 		i++;
 	return (i);
 }
+
 int	ft_strcmp(char *s1, char *s2)
 {
 	int	i;
@@ -96,7 +97,7 @@ int	check_len(char *s1, char *s2)
 	return (0);
 }
 
-int	ft_strncmp(char *s1, char *s2, int n )
+int	ft_strncmp(char *s1, char *s2, int n)
 {
 	int	i;
 
@@ -188,12 +189,12 @@ int	get_height(char *map_name, t_map *map)
 	count = 0;
 	line = get_next_line(fd);
 	while (line)
-    {
+	{
 		i = 0;
 		if (map_started == 0)
 		{
 			while (line[i] == ' ')
-					i++;
+				i++;
 			if (line[i] == '1')
 				map_started = 1;
 		}
@@ -207,18 +208,18 @@ int	get_height(char *map_name, t_map *map)
 				if (line[i] == '\n' || line[i] == '\0')
 				{
 					free(line);
-					break;
+					break ;
 				}
 				printf("Error\nLeft segment open\n");
 				free(line);
 				return (-1);
 			}
 			map->width = ft_max(map->width, ft_strlen(line));
-            count++;
+			count++;
 		}
-        free(line);
-        line = get_next_line(fd);
-    }
+		free(line);
+		line = get_next_line(fd);
+	}
 	close(fd);
 	return (count);
 }

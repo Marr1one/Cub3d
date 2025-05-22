@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   texture.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: braugust <braugust@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maissat <maissat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 10:40:26 by braugust          #+#    #+#             */
-/*   Updated: 2025/05/20 03:47:26 by braugust         ###   ########.fr       */
+/*   Updated: 2025/05/22 17:49:05 by maissat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	draw_column_textured(t_player *player, t_game *game, float ray_angle,
 	float			ray_dir_y;
 	int				map_x;
 	int				map_y;
-	int				hit = 0, side;
+	int				hit;
 	float			perp_dist;
 	t_texture		*tex;
 	float			wall_x;
@@ -96,15 +96,23 @@ void	draw_column_textured(t_player *player, t_game *game, float ray_angle,
 	unsigned char	g;
 	unsigned char	r;
 	int				color;
+	int				side;
+	int				ceil_col;
+	int				floor_col;
+	int				step_x;
+	int				step_y;
+	float			side_dist_x;
+	float			side_dist_y;
+	float			delta_dist_x;
+	float			delta_dist_y;
 
+	hit = 0;
 	ray_dir_x = cosf(ray_angle);
 	ray_dir_y = sinf(ray_angle);
 	map_x = (int)(player->x / 64);
 	map_y = (int)(player->y / 64);
-	float delta_dist_x, delta_dist_y;
-	int step_x, step_y;
-	float side_dist_x, side_dist_y;
-	hit = 0, side = 0;
+	hit = 0;
+	side = 0;
 	if (ray_dir_x != 0)
 		delta_dist_x = fabsf(1.0f / ray_dir_x);
 	else
@@ -178,8 +186,8 @@ void	draw_column_textured(t_player *player, t_game *game, float ray_angle,
 	tex_x = (int)(wall_x * tex->width);
 	if ((side == 0 && ray_dir_x > 0) || (side == 1 && ray_dir_y < 0))
 		tex_x = tex->width - tex_x - 1;
-	int ceil_col = 0x87CEEB;  // bleu ciel
-	int floor_col = 0x222222; // gris foncé
+	ceil_col = 0x87CEEB;// bleu ciel
+	floor_col = 0x222222;// gris
 	line_height = (int)((64.0f / perp_dist) * (WIDTH / 2));
 	start_y = (HEIGHT - line_height) / 2;
 	end_y = start_y + line_height;

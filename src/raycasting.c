@@ -6,17 +6,16 @@
 /*   By: maissat <maissat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 19:44:22 by root              #+#    #+#             */
-/*   Updated: 2025/04/25 17:57:50 by maissat          ###   ########.fr       */
+/*   Updated: 2025/05/22 17:32:05 by maissat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-
 void	put_pixel(int x, int y, int color, t_game *game)
 {
 	int	index;
-	
+
 	if (x > WIDTH || y > HEIGHT || x < 0 || y < 0)
 		return ;
 	index = y * game->size_line + x * (game->bbp / 8);

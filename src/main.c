@@ -6,13 +6,13 @@
 /*   By: maissat <maissat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 18:48:51 by root              #+#    #+#             */
-/*   Updated: 2025/05/22 15:45:08 by maissat          ###   ########.fr       */
+/*   Updated: 2025/05/22 17:07:41 by maissat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-void fill_texture(t_map *map, char *trimmed)
+void	fill_texture(t_map *map, char *trimmed)
 {
 	if (ft_strncmp(trimmed, "NO.", 3) == 0)
 	{
@@ -26,16 +26,19 @@ void fill_texture(t_map *map, char *trimmed)
 		map->ea_texture = ft_strduptext(trimmed + 2);
 }
 
-void fill_color(t_map *map, char *str, char choice)
+void	fill_color(t_map *map, char *str, char choice)
 {
 	int		i;
 	int		j;
-	int 	start;
-	int 	color_rgb[3] = {0};
+	int		start;
+	int		color_rgb[3];
 	char	*number;
-		
+
 	i = 1;
 	j = 0;
+	color_rgb[0] = 0;
+	color_rgb[1] = 0;
+	color_rgb[2] = 0;
 	while (str[i])
 	{
 		if (is_numeric(str[i]))
@@ -48,7 +51,7 @@ void fill_color(t_map *map, char *str, char choice)
 			free(number);
 		}
 		if (str[i] == '\0')
-			break;
+			break ;
 		i++;
 	}
 	j = 0;
@@ -101,9 +104,9 @@ int	parse_texture(t_map *map)
 {
 	int		fd;
 	char	*line;
-	char 	*trimmed;
+	char	*trimmed;
 	char	choice;
-	
+
 	fd = open(map->name, O_RDONLY);
 	line = get_next_line(fd);
 	while (line)
@@ -131,7 +134,7 @@ int	parse_texture(t_map *map)
 			if (trimmed[0] && trimmed[0] == '1')
 			{
 				free(trimmed);
-				break;
+				break ;
 			}
 		}
 		free(line);
@@ -143,14 +146,13 @@ int	parse_texture(t_map *map)
 	if (check_all_textures(map))
 		return (1);
 	return (0);
-	
 }
 
 int	main(int argc, char **argv)
 {
-	t_map map;
-	t_game game;
-	
+	t_map	map;
+	t_game	game;
+
 	ft_memset(&game, 0, sizeof(t_game));
 	ft_memset(&map, 0, sizeof(t_map));
 	map.player = malloc(sizeof(t_player));
@@ -158,16 +160,11 @@ int	main(int argc, char **argv)
 		return (printf("Usage: ./cube3d map.cub\n"), 1);
 	if (check_map(argv[1], &map) == 1)
 		return (1);
-	//show_struct_map(map);
+	show_struct_map(map);
 	game.map = &map;
 	game.player = map.player;
-	printf("map addr =>{%p}\n", game.map);
 	init_game(&game, map);
-	printf("mlx: %p\n", game.mlx);
-	printf("win: %p\n", game.win);
-	printf("img: %p\n", game.img);
-	printf("player: %p (x: %f, y: %f)\n", game.player, game.player->x, game.player->y);
-	mlx_hook(game.win, 2, 1L << 0, key_press, 	game.player);
+	mlx_hook(game.win, 2, 1L << 0, key_press, game.player);
 	mlx_hook(game.win, 3, 1L << 1, key_release, game.player);
 	mlx_hook(game.win, 17, 0, close_window_cross, &game);
 	mlx_loop_hook(game.mlx, draw_loop, &game);
