@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   texture.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maissat <maissat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: braugust <braugust@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 10:40:26 by braugust          #+#    #+#             */
-/*   Updated: 2025/05/22 17:49:05 by maissat          ###   ########.fr       */
+/*   Updated: 2025/05/23 12:19:20 by braugust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ void	init_textures(t_game *game, t_map *map)
 		exit(1);
 	}
 }
-
 void	draw_column_textured(t_player *player, t_game *game, float ray_angle,
 		int x)
 {
@@ -80,10 +79,19 @@ void	draw_column_textured(t_player *player, t_game *game, float ray_angle,
 	float			ray_dir_y;
 	int				map_x;
 	int				map_y;
-	int				hit;
+	float			delta_dist_x;
+	float			delta_dist_y;
+	int				step_x;
+	int				step_y;
+	float			side_dist_x;
+	float			side_dist_y;
+	int				hit = 0, side;
+	float			raw_dist;
+	float			hit_x;
+	float			hit_y;
+	float			wall_x;
 	float			perp_dist;
 	t_texture		*tex;
-	float			wall_x;
 	int				tex_x;
 	int				line_height;
 	int				start_y;
@@ -96,51 +104,20 @@ void	draw_column_textured(t_player *player, t_game *game, float ray_angle,
 	unsigned char	g;
 	unsigned char	r;
 	int				color;
-	int				side;
-	int				ceil_col;
-	int				floor_col;
-	int				step_x;
-	int				step_y;
-	float			side_dist_x;
-	float			side_dist_y;
-	float			delta_dist_x;
-	float			delta_dist_y;
 
-	hit = 0;
 	ray_dir_x = cosf(ray_angle);
 	ray_dir_y = sinf(ray_angle);
 	map_x = (int)(player->x / 64);
 	map_y = (int)(player->y / 64);
-	hit = 0;
-	side = 0;
-	if (ray_dir_x != 0)
-		delta_dist_x = fabsf(1.0f / ray_dir_x);
-	else
-		delta_dist_x = 1e30;
-	if (ray_dir_y != 0)
-		delta_dist_y = fabsf(1.0f / ray_dir_y);
-	else
-		delta_dist_y = 1e30;
-	if (ray_dir_x < 0)
-	{
-		step_x = -1;
-		side_dist_x = ((player->x - map_x * 64) / 64) * delta_dist_x;
-	}
-	else
-	{
-		step_x = 1;
-		side_dist_x = (((map_x + 1) * 64 - player->x) / 64) * delta_dist_x;
-	}
-	if (ray_dir_y < 0)
-	{
-		step_y = -1;
-		side_dist_y = ((player->y - map_y * 64) / 64) * delta_dist_y;
-	}
-	else
-	{
-		step_y = 1;
-		side_dist_y = (((map_y + 1) * 64 - player->y) / 64) * delta_dist_y;
-	}
+	delta_dist_x = (ray_dir_x != 0) ? fabsf(1.0f / ray_dir_x) : 1e30;
+	delta_dist_y = (ray_dir_y != 0) ? fabsf(1.0f / ray_dir_y) : 1e30;
+	step_x = (ray_dir_x < 0) ? -1 : 1;
+	step_y = (ray_dir_y < 0) ? -1 : 1;
+	side_dist_x = (ray_dir_x < 0) ? ((player->x - map_x * 64) / 64)
+		* delta_dist_x : (((map_x + 1) * 64 - player->x) / 64) * delta_dist_x;
+	side_dist_y = (ray_dir_y < 0) ? ((player->y - map_y * 64) / 64)
+		* delta_dist_y : (((map_y + 1) * 64 - player->y) / 64) * delta_dist_y;
+	hit = 0, side = 0;
 	while (!hit)
 	{
 		if (side_dist_x < side_dist_y)
@@ -155,39 +132,50 @@ void	draw_column_textured(t_player *player, t_game *game, float ray_angle,
 			map_y += step_y;
 			side = 1;
 		}
+		if (map_x < 0 || map_x >= game->map->width || map_y < 0
+			|| map_y >= game->map->height)
+			return ;
 		if (game->map->tab[map_y][map_x] == '1')
 			hit = 1;
 	}
+	raw_dist = (side == 0) ? (side_dist_x - delta_dist_x) * 64 : (side_dist_y
+			- delta_dist_y) * 64;
+	hit_x = player->x + raw_dist * ray_dir_x;
+	hit_y = player->y + raw_dist * ray_dir_y;
 	if (side == 0)
-		perp_dist = (side_dist_x - delta_dist_x) * 64;
+		wall_x = hit_y / 64.0f;
 	else
-		perp_dist = (side_dist_y - delta_dist_y) * 64;
-	perp_dist *= cosf(ray_angle - player->angle);
-	tex = NULL;
-	if (side == 0)
-	{
-		if (step_x > 0)
-			tex = game->we;
-		else
-			tex = game->ea;
-	}
-	else
-	{
-		if (step_y > 0)
-			tex = game->so;
-		else
-			tex = game->no;
-	}
-	if (side == 0)
-		wall_x = (player->y + perp_dist * ray_dir_y) / 64.0f;
-	else
-		wall_x = (player->x + perp_dist * ray_dir_x) / 64.0f;
+		wall_x = hit_x / 64.0f;
 	wall_x -= floorf(wall_x);
-	tex_x = (int)(wall_x * tex->width);
+	if (wall_x < 0.0f)
+		wall_x = 0.0f;
+	perp_dist = raw_dist * cosf(ray_angle - player->angle);
+	tex = NULL;
+    if (side == 0)
+    {
+        if (step_x > 0)
+            tex = game->we;
+        else
+            tex = game->ea;
+    }
+    else
+    {
+        if (step_y > 0)
+            tex = game->so;
+        else
+            tex = game->no;
+    }
+	// Index horizontal dans la texture
+	tex_x = (int)(wall_x * (float)tex->width);
 	if ((side == 0 && ray_dir_x > 0) || (side == 1 && ray_dir_y < 0))
 		tex_x = tex->width - tex_x - 1;
-	ceil_col = 0x87CEEB;// bleu ciel
-	floor_col = 0x222222;// gris
+	if (tex_x < 0)
+		tex_x = 0;
+	if (tex_x >= tex->width)
+		tex_x = tex->width - 1;
+	// Couleurs plafond et sol
+	int ceil_col = 0x87CEEB;  // bleu ciel
+	int floor_col = 0x222222; // gris foncé
 	line_height = (int)((64.0f / perp_dist) * (WIDTH / 2));
 	start_y = (HEIGHT - line_height) / 2;
 	end_y = start_y + line_height;
@@ -198,17 +186,23 @@ void	draw_column_textured(t_player *player, t_game *game, float ray_angle,
 	// Plafond
 	y = 0;
 	while (y < start_y)
-	{
-		put_pixel(x, y, ceil_col, game);
-		y++;
-	}
+		put_pixel(x, y++, ceil_col, game);
 	// Mur texturé
 	y = start_y;
 	while (y < end_y)
 	{
 		d = (y * 256) - (HEIGHT * 128) + (line_height * 128);
 		tex_y = ((d * tex->height) / line_height) / 256;
+		if (tex_y < 0)
+			tex_y = 0;
+		if (tex_y >= tex->height)
+			tex_y = tex->height - 1;
 		idx = tex_y * tex->size_line + tex_x * (tex->bpp / 8);
+		if (idx < 0 || idx + 2 >= tex->size_line * tex->height)
+		{
+			y++;
+			continue ;
+		}
 		b = tex->data[idx];
 		g = tex->data[idx + 1];
 		r = tex->data[idx + 2];
@@ -219,8 +213,5 @@ void	draw_column_textured(t_player *player, t_game *game, float ray_angle,
 	// Sol
 	y = end_y;
 	while (y < HEIGHT)
-	{
-		put_pixel(x, y, floor_col, game);
-		y++;
-	}
+		put_pixel(x, y++, floor_col, game);
 }
