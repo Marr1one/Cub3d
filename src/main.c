@@ -6,87 +6,11 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 18:48:51 by root              #+#    #+#             */
-/*   Updated: 2025/05/26 12:17:19 by root             ###   ########.fr       */
+/*   Updated: 2025/05/26 14:58:25 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
-
-void	fill_texture(t_map *map, char *trimmed)
-{
-	if (ft_strncmp(trimmed, "NO.", 3) == 0)
-	{
-		map->no_texture = ft_strduptext(trimmed + 2);
-	}
-	if (ft_strncmp(trimmed, "SO.", 3) == 0)
-		map->so_texture = ft_strduptext(trimmed + 2);
-	if (ft_strncmp(trimmed, "WE.", 3) == 0)
-		map->we_texture = ft_strduptext(trimmed + 2);
-	if (ft_strncmp(trimmed, "EA.", 3) == 0)
-		map->ea_texture = ft_strduptext(trimmed + 2);
-}
-
-void	fill_color(t_map *map, char *str, char choice)
-{
-	int		i;
-	int		j;
-	int		start;
-	int		color_rgb[3];
-	char	*number;
-
-	i = 1;
-	j = 0;
-	color_rgb[0] = 0;
-	color_rgb[1] = 0;
-	color_rgb[2] = 0;
-	while (str[i])
-	{
-		if (is_numeric(str[i]))
-		{
-			start = i;
-			while (is_numeric(str[i]))
-				i++;
-			number = ft_substr(str, start, i);
-			color_rgb[j++] = ft_atoi(number);
-			free(number);
-		}
-		if (str[i] == '\0')
-			break ;
-		i++;
-	}
-	j = 0;
-	while (j < 3)
-	{
-		if (choice == 'F')
-			map->floor_color[j] = color_rgb[j];
-		if (choice == 'C')
-			map->ceiling_color[j] = color_rgb[j];
-		j++;
-	}
-}
-
-int	is_texture_line(char *line)
-{
-	if (str_in_str(line, "NO"))
-		return (1);
-	else if (str_in_str(line, "SO"))
-		return (1);
-	else if (str_in_str(line, "WE"))
-		return (1);
-	else if (str_in_str(line, "EA"))
-		return (1);
-	return (0);
-}
-
-int	is_color_line(char *line)
-{
-	if (str_in_str(line, "F"))
-		return ('F');
-	else if (str_in_str(line, "C"))
-		return ('C');
-	else
-		return (0);
-}
 
 void	show_int_tab(int *tab)
 {

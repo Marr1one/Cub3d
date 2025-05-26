@@ -1,14 +1,12 @@
 
 
-
-
 SO ./path_so.xpm
 NO ./path_no.xpm
 EA ./path_ea.xpm
 WE ./path_we.xpm
 
-F 220,100,0
-C 0,30,100
+F 128,128,128
+C 50,50,200
 
 1111111111111111111
 10N1001001001000001

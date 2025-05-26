@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maissat <maissat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 18:50:38 by root              #+#    #+#             */
-/*   Updated: 2025/05/22 17:51:52 by maissat          ###   ########.fr       */
+/*   Updated: 2025/05/26 18:54:46 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,12 +88,20 @@ typedef struct s_player
 	int				right_rotate;
 }					t_player;
 
+// COLORS
+
+void	fill_rgb(char *str, int color_rgb[3]);
+void	fill_color(t_map *map, char *str, char choice);
+int		is_color_line(char *line);
+
 // TEXTURES
 
 t_texture			*load_texture(void *mlx, char *path);
 void				init_textures(t_game *game, t_map *map);
 void				draw_column_textured(t_player *player, t_game *game,
 						float ray_angle, int x);
+void	fill_texture(t_map *map, char *trimmed);
+int	is_texture_line(char *line);
 
 // COLISION
 

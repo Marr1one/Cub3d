@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:42:09 by maissat           #+#    #+#             */
-/*   Updated: 2025/05/26 13:16:16 by root             ###   ########.fr       */
+/*   Updated: 2025/05/26 14:38:27 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,9 +136,9 @@ void	draw_ceiling_and_floor(t_game *game)
 		while (x < WIDTH)
 		{
 			if (y < HEIGHT / 2)
-				put_pixel(x, y, floor_color, game);
-			else
 				put_pixel(x, y, ceiling_color, game);
+			else
+				put_pixel(x, y, floor_color, game);
 			x++;
 		}
 		y++;
