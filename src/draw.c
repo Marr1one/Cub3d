@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:42:09 by maissat           #+#    #+#             */
-/*   Updated: 2025/05/26 12:21:27 by root             ###   ########.fr       */
+/*   Updated: 2025/05/26 12:44:54 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -332,23 +332,50 @@ float	fix_distance(float delta_x, float delta_y, t_game game)
 //		put_pixel(i, y, color, game);
 //}
 
+/**
+ * Convertit des composantes RGB (0-255 chacune) en une valeur hexadécimale.
+ * Format retourné : 0xRRGGBB (stocké dans un entier non signé)
+ */
+unsigned int rgb_to_hex_int(int r, int g, int b)
+{
+    // On s'assure que chaque composante est bien comprise entre 0 et 255
+    // (important si jamais on passe des valeurs invalides)
+    if (r < 0) r = 0;
+    if (r > 255) r = 255;
+    if (g < 0) g = 0;
+    if (g > 255) g = 255;
+    if (b < 0) b = 0;
+    if (b > 255) b = 255;
+
+    // Décalage des bits :
+    // r << 16 place les 8 bits de R dans la position des bits rouges (RR______)
+    // g << 8  place les 8 bits de G juste après (__GG____)
+    // b       reste à droite (______BB)
+
+    unsigned int hex = (r << 16) | (g << 8) | b;
+
+    return hex;
+}
+
 void	draw_ceiling_and_floor(t_game *game)
 {
-	int	mid;
 	int	x;
 	int	y;
-
-	mid = HEIGHT / 2;
+	unsigned int floor_color;
+	unsigned int ceiling_color;
+	
+	floor_color = rgb_to_hex_int(game->map->floor_color[0], game->map->floor_color[1], game->map->floor_color[2]);
+	ceiling_color = rgb_to_hex_int(game->map->ceiling_color[0], game->map->ceiling_color[1], game->map->ceiling_color[2]);
 	y = 0;
 	while (y < HEIGHT)
 	{
 		x = 0;
 		while (x < WIDTH)
 		{
-			if (y < mid)
-				put_pixel(x, y, 0x87CEEB, game); // ciel bleu clair
+			if (y < HEIGHT / 2)
+				put_pixel(x, y, floor_color, game); // ciel bleu clair
 			else
-				put_pixel(x, y, 0x2E2B2B, game); // sol gris sombre
+				put_pixel(x, y, ceiling_color, game); // sol gris sombre
 			x++;
 		}
 		y++;
@@ -367,6 +394,7 @@ int	draw_loop(t_game *game)
 	clear_image(game);
 	// draw_square(player->x, player->y, 0x00FF00, 10, game);
 	// draw_map(game);
+	draw_ceiling_and_floor(game);
 	fraction = PI / 3 / WIDTH;
 	start_x = player->angle - PI / 6;
 	i = 0;

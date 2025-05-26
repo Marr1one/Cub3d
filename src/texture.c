@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   texture.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: braugust <braugust@student.42.fr>          +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 10:40:26 by braugust          #+#    #+#             */
-/*   Updated: 2025/05/23 12:26:02 by braugust         ###   ########.fr       */
+/*   Updated: 2025/05/26 12:43:53 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,8 +190,8 @@ void draw_column_textured(t_player *player, t_game *game, float ray_angle, int x
         tex_x = tex->width - 1;
 
     // Couleurs plafond et sol
-    int ceil_col = 0x87CEEB;
-    int floor_col = 0x222222;
+    //int ceil_col = 0x87CEEB;
+    //int floor_col = 0x222222;
 
     int line_height = (int)((64.0f / perp_dist) * (WIDTH / 2));
     int start_y = (HEIGHT - line_height) / 2;
@@ -203,8 +203,8 @@ void draw_column_textured(t_player *player, t_game *game, float ray_angle, int x
 
     // Plafond
     int y = 0;
-    while (y < start_y)
-        put_pixel(x, y++, ceil_col, game);
+    //while (y < start_y)
+    //    put_pixel(x, y++, ceil_col, game);
 
     // Mur texturé
     y = start_y;
@@ -231,7 +231,7 @@ void draw_column_textured(t_player *player, t_game *game, float ray_angle, int x
     }
 
     // Sol
-    y = end_y;
-    while (y < HEIGHT)
-        put_pixel(x, y++, floor_col, game);
+    //y = end_y;
+    //while (y < HEIGHT)
+    //    put_pixel(x, y++, floor_col, game);
 }
