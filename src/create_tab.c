@@ -3,50 +3,65 @@
 /*                                                        :::      ::::::::   */
 /*   create_tab.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maissat <maissat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 15:10:30 by maissat           #+#    #+#             */
-/*   Updated: 2025/05/22 17:49:38 by maissat          ###   ########.fr       */
+/*   Updated: 2025/05/26 12:22:43 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
+int	loop_tab(t_map *map, char *line, int *map_started, int *j)
+{
+	int	i;
+
+	i = 0;
+	while (line[i] && line[i] == ' ')
+		i++;
+	if (line[i] == '1')
+	{
+		*map_started = 1;
+		map->tab[(*j)++] = ft_strduptab(line, map);
+	}
+	else if (*map_started && (line[i] == '\0' || line[i] == '\n'))
+	{
+		free(line);
+		return (1);
+	}
+	return (0);
+}
+
+int	malloc_tab(t_map *map)
+{
+	char	**tab;
+
+	tab = malloc(sizeof(char *) * (map->height + 1));
+	if (!tab)
+		return (1);
+	map->tab = tab;
+	return (0);
+}
+
 void	create_tab(t_map *map)
 {
 	char	*line;
 	int		map_started;
-	char	**tab;
 	int		fd;
-	int		i;
 	int		j;
 
 	map_started = 0;
-	tab = malloc(sizeof(char *) * (map->height + 1));
-	if (!tab)
+	if (malloc_tab(map) != 0)
 		return ;
-	map->tab = tab;
 	fd = open(map->name, O_RDONLY);
 	if (fd < 0)
 		return ;
-	i = 0;
 	j = 0;
 	line = get_next_line(fd);
 	while (line)
 	{
-		i = 0;
-		while (line[i] && line[i] == ' ')
-			i++;
-		if (line[i] == '1')
-		{
-			map_started = 1;
-			map->tab[j++] = ft_strduptab(line, map);
-		}
-		else if (map_started && (line[i] == '\0' || line[i] == '\n'))
-		{
-			free(line);
+		if (loop_tab(map, line, &map_started, &j) != 0)
 			break ;
-		}
 		free(line);
 		line = get_next_line(fd);
 	}

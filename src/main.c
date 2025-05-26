@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maissat <maissat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 18:48:51 by root              #+#    #+#             */
-/*   Updated: 2025/05/22 17:07:41 by maissat          ###   ########.fr       */
+/*   Updated: 2025/05/26 12:17:19 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,12 +116,12 @@ int	parse_texture(t_map *map)
 			if (space_before(line))
 				return (printf("Error\nSpace before texture\n"), 1);
 			trimmed = skip_spaces(line);
-			printf("trimmed => {%s}\n", trimmed);
+			//printf("trimmed => {%s}\n", trimmed);
 			fill_texture(map, trimmed);
 		}
 		else if (is_color_line(line) != 0)
 		{
-			printf("is color line => line => {%s}\n", line);
+			//printf("is color line => line => {%s}\n", line);
 			choice = is_color_line(line);
 			if (space_before(line))
 				return (printf("Error\nSpace before color\n"), 1);

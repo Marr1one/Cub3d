@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: braugust <braugust@student.42.fr>          +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:42:09 by maissat           #+#    #+#             */
-/*   Updated: 2025/05/23 07:45:51 by braugust         ###   ########.fr       */
+/*   Updated: 2025/05/26 12:21:27 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	draw_square(int x, int y, int color, int size, t_game *game)
 		put_pixel(x + i, y + size, color, game);
 		i++;
 	}
-	// mlx_put_image_to_window(game->mlx, game->win, game->img, 0, 0);
+	 mlx_put_image_to_window(game->mlx, game->win, game->img, 0, 0);
 }
 
 void	draw_map(t_game *game)
@@ -64,7 +64,7 @@ void	draw_map(t_game *game)
 		while (tab[i][j])
 		{
 			if (tab[i][j] == '1')
-				draw_square(j * 64, i * 64, color, 64, game);
+				draw_square(j * 32, i * 32, color, 64, game);
 			j++;
 		}
 		i++;
