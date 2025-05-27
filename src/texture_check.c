@@ -6,7 +6,7 @@
 /*   By: braugust <braugust@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:57:20 by root              #+#    #+#             */
-/*   Updated: 2025/05/27 10:29:07 by braugust         ###   ########.fr       */
+/*   Updated: 2025/05/27 12:46:32 by braugust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,36 @@ int	is_texture_line(char *line)
 	else if (str_in_str(line, "EA"))
 		return (1);
 	return (0);
+}
+
+t_texture	*load_texture(void *mlx, char *path)
+{
+	t_texture	*tex;
+
+	tex = malloc(sizeof(*tex));
+	if (!tex)
+		return (NULL);
+	tex->img = mlx_xpm_file_to_image(mlx, path, &tex->width, &tex->height);
+	if (!tex->img)
+	{
+		free(tex);
+		return (NULL);
+	}
+	tex->data = mlx_get_data_addr(tex->img, &tex->bpp, &tex->size_line,
+			&tex->endian);
+	return (tex);
+}
+
+void	init_textures(t_game *game, t_map *map)
+{
+	game->no = load_texture(game->mlx, map->no_texture);
+	game->so = load_texture(game->mlx, map->so_texture);
+	game->we = load_texture(game->mlx, map->we_texture);
+	game->ea = load_texture(game->mlx, map->ea_texture);
+	if (!game->no || !game->so || !game->we || !game->ea)
+	{
+		fprintf(stderr,
+			"Error\nImpossible de charger une ou plusieurs textures\n");
+		exit(1);
+	}
 }

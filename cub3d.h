@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: braugust <braugust@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 18:50:38 by root              #+#    #+#             */
-/*   Updated: 2025/05/26 18:54:46 by root             ###   ########.fr       */
+/*   Updated: 2025/05/27 12:45:57 by braugust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,9 @@ typedef struct s_texture
 	int				bpp;
 	int				size_line;
 	int				endian;
+	int				tex_x;
+	int				tex_y;
+	int				lh;
 }					t_texture;
 
 typedef struct s_game
@@ -86,13 +89,31 @@ typedef struct s_player
 	int				key_right;
 	int				left_rotate;
 	int				right_rotate;
+	float			dx;
+	float			dy;
 }					t_player;
+
+typedef struct s_ray
+{
+	float			ray_dir_x;
+	float			ray_dir_y;
+	int				map_x;
+	int				map_y;
+	int				step_x;
+	int				step_y;
+	float			side_dist_x;
+	float			side_dist_y;
+	float			delta_dist_x;
+	float			delta_dist_y;
+	int				side;
+	float			raw_dist;
+}					t_ray;
 
 // COLORS
 
-void	fill_rgb(char *str, int color_rgb[3]);
-void	fill_color(t_map *map, char *str, char choice);
-int		is_color_line(char *line);
+void				fill_rgb(char *str, int color_rgb[3]);
+void				fill_color(t_map *map, char *str, char choice);
+int					is_color_line(char *line);
 
 // TEXTURES
 
@@ -100,8 +121,12 @@ t_texture			*load_texture(void *mlx, char *path);
 void				init_textures(t_game *game, t_map *map);
 void				draw_column_textured(t_player *player, t_game *game,
 						float ray_angle, int x);
-void	fill_texture(t_map *map, char *trimmed);
-int	is_texture_line(char *line);
+void				fill_texture(t_map *map, char *trimmed);
+int					is_texture_line(char *line);
+float				get_wall_x(t_ray *ray, t_player *pl);
+float				get_perp_dist(t_ray *ray, t_player *pl, float angle);
+t_texture			*choose_tex(t_game *g, t_ray *r);
+int					get_tex_x(t_ray *r, t_texture *tex, float wall_x);
 
 // COLISION
 
@@ -125,11 +150,16 @@ void				init_player(t_player *player, t_map map);
 int					key_press(int keycode, t_player *player);
 int					key_release(int keycode, t_player *player);
 void				move_player(t_player *player, t_map *map);
+void				rotate_player(t_player *player);
+void				get_player_move_delta(t_player *player, float speed);
 
 // RAYCASTING
 
 void				init_game(t_game *game, t_map map);
 void				put_pixel(int x, int y, int color, t_game *game);
+int					dda_while_loop(t_ray *ray, t_game *game);
+int					raycast_wall(t_player *player, t_game *game,
+						float ray_angle, t_ray *ray);
 
 // UTILS
 void				create_tab(t_map *map);
@@ -153,6 +183,7 @@ void				show_int_tab(int *tab);
 void				show_struct_map(t_map map);
 char				*ft_strrchr(const char *s, int c);
 int					close_window_cross(void);
+int					ft_max(int a, int b);
 
 // CHECKERS
 

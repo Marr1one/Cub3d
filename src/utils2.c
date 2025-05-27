@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maissat <maissat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: braugust <braugust@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 20:25:05 by root              #+#    #+#             */
-/*   Updated: 2025/05/22 17:35:28 by maissat          ###   ########.fr       */
+/*   Updated: 2025/05/27 12:47:30 by braugust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,11 @@ char	*skip_spaces(char *str)
 	char	*res;
 
 	len = 0;
-	i = 0;
-	while (str[i] && str[i] != '\n')
+	i = -1;
+	while (str[++i] && str[i] != '\n')
 	{
 		if (str[i] != ' ' && str[i] != '\t')
 			len++;
-		i++;
 	}
 	res = malloc(sizeof(char) * (len + 1));
 	if (!res)
@@ -87,41 +86,4 @@ int	ft_atoi(char *str)
 		i++;
 	}
 	return (n);
-}
-
-char	*ft_substr(char *str, int start, int end)
-{
-	char	*res;
-	int		i;
-
-	i = 0;
-	res = malloc(sizeof(char) * (end - start + 1));
-	if (!res)
-		return (NULL);
-	while (str[start] && start < end)
-	{
-		res[i] = str[start];
-		i++;
-		start++;
-	}
-	res[i] = '\0';
-	return (res);
-}
-
-char	*ft_strrchr(const char *s, int c)
-{
-	int	i;
-
-	i = 0;
-	while (s[i])
-		i++;
-	while (i > 0)
-	{
-		if (s[i] == (char)c)
-			return ((char *)(&s[i]));
-		i--;
-	}
-	if (s[i] == (char)c)
-		return ((char *)(&s[i]));
-	return (0);
 }
