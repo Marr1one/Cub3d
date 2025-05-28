@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 18:50:38 by root              #+#    #+#             */
-/*   Updated: 2025/05/26 18:54:46 by root             ###   ########.fr       */
+/*   Updated: 2025/05/27 13:03:58 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,6 +153,8 @@ void				show_int_tab(int *tab);
 void				show_struct_map(t_map map);
 char				*ft_strrchr(const char *s, int c);
 int					close_window_cross(void);
+int					rgb_to_hex_int(int r, int g, int b);
+
 
 // CHECKERS
 

@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 17:04:56 by maissat           #+#    #+#             */
-/*   Updated: 2025/05/26 12:16:51 by root             ###   ########.fr       */
+/*   Updated: 2025/05/28 12:56:52 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,13 +135,15 @@ int	tab_lenght(char **tab)
 int	check_map(char *map_name, t_map *map)
 {
 	if (check_name(map_name) == 1)
+	{
+		free(map->player);
 		return (printf("Error\nName not valid!\n"), 1);
+	}
 	map->name = map_name;
 	map->height = get_height(map_name, map);
 	if (map->height <= 0)
 		return (1);
 	create_tab(map);
-	printf("hauteur de la map => %d\n", tab_lenght(map->tab));
 	if (parse_texture(map) != 0)
 		return (1);
 	if (check_chars(map) != 0)
@@ -198,7 +200,6 @@ int	check_chars(t_map *map)
 			if (map->tab[i][j] != '1' && map->tab[i][j] != '0'
 				&& map->tab[i][j] != ' ' && map->tab[i][j] != '\n')
 			{
-				printf("dans le cas la => map->tab[i][j] == %c\n", map->tab[i][j]);
 				if (loop_check_chars(map, i, j, &direction) == 1)
 					return (1);
 			}
@@ -224,7 +225,6 @@ int	valid_path(const char *path)
 	ext = ft_strrchr(path, '.');
 	if (!ext)
 		return (printf("Error\n txt file has no extension\n"), 1);
-	printf("ext = {%s}\n", ext);
 	if (ft_strcmp((char *)ext, ".xpm") != 0)
 		return (printf("Error\n txt file must be .xpm\n"), 1);
 	return (0);

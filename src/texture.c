@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 10:40:26 by braugust          #+#    #+#             */
-/*   Updated: 2025/05/26 14:43:33 by root             ###   ########.fr       */
+/*   Updated: 2025/05/27 13:33:27 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,8 @@ void	init_textures(t_game *game, t_map *map)
 }
 void draw_column_textured(t_player *player, t_game *game, float ray_angle, int x)
 {
-    float ray_dir_x = cosf(ray_angle);
-    float ray_dir_y = sinf(ray_angle);
+    float ray_dir_x = cos(ray_angle);
+    float ray_dir_y = sin(ray_angle);
     int map_x = (int)(player->x / 64);
     int map_y = (int)(player->y / 64);
 
@@ -189,10 +189,6 @@ void draw_column_textured(t_player *player, t_game *game, float ray_angle, int x
     if (tex_x >= tex->width)
         tex_x = tex->width - 1;
 
-    // Couleurs plafond et sol
-    //int ceil_col = 0x87CEEB;
-    //int floor_col = 0x222222;
-
     int line_height = (int)((64.0f / perp_dist) * (WIDTH / 2));
     int start_y = (HEIGHT - line_height) / 2;
     int end_y = start_y + line_height;
@@ -201,12 +197,8 @@ void draw_column_textured(t_player *player, t_game *game, float ray_angle, int x
     if (end_y >= HEIGHT)
         end_y = HEIGHT - 1;
 
-    // Plafond
-    int y = 0;
-    //while (y < start_y)
-    //    put_pixel(x, y++, ceil_col, game);
-
     // Mur texturé
+	int y;
     y = start_y;
     while (y < end_y)
     {

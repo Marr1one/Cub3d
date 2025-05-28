@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:57:20 by root              #+#    #+#             */
-/*   Updated: 2025/05/26 14:58:08 by root             ###   ########.fr       */
+/*   Updated: 2025/05/28 12:49:27 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,7 @@
 void	fill_texture(t_map *map, char *trimmed)
 {
 	if (ft_strncmp(trimmed, "NO.", 3) == 0)
-	{
 		map->no_texture = ft_strduptext(trimmed + 2);
-	}
 	if (ft_strncmp(trimmed, "SO.", 3) == 0)
 		map->so_texture = ft_strduptext(trimmed + 2);
 	if (ft_strncmp(trimmed, "WE.", 3) == 0)

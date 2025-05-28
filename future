@@ -1,0 +1,58 @@
+FAIRE UN .SUPP POUR ENLEVER LES STILL REACHABLE MINILIBX
+
+
+// POUR LA MINIMAP
+
+void	draw_map(t_game *game)
+{
+	char	**tab;
+	int		color;
+	int		i;
+	int		j;
+
+	tab = game->map->tab;
+	color = 0x0000ff;
+	i = 0;
+	while (tab[i])
+	{
+		j = 0;
+		while (tab[i][j])
+		{
+			if (tab[i][j] == '1')
+				draw_square(j * 32, i * 32, color, 64, game);
+			j++;
+		}
+		i++;
+	}
+}
+
+void	draw_square(int x, int y, int color, int size, t_game *game)
+{
+	int	i;
+
+	i = 0;
+	while (i < size)
+	{
+		put_pixel(x + i, y, color, game);
+		i++;
+	}
+	i = 0;
+	while (i < size)
+	{
+		put_pixel(x, y + i, color, game);
+		i++;
+	}
+	i = 0;
+	while (i < size)
+	{
+		put_pixel(x + size, y + i, color, game);
+		i++;
+	}
+	i = 0;
+	while (i < size)
+	{
+		put_pixel(x + i, y + size, color, game);
+		i++;
+	}
+	mlx_put_image_to_window(game->mlx, game->win, game->img, 0, 0);
+}

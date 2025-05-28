@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 17:29:12 by maissat           #+#    #+#             */
-/*   Updated: 2025/05/25 14:49:03 by root             ###   ########.fr       */
+/*   Updated: 2025/05/27 13:06:35 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	move_player(t_player *player, t_map *map)
 	float	dx;
 
 	speed = 2;
-	angle_speed = 0.06;
+	angle_speed = 0.04;
 	cos_a = cos(player->angle);
 	sin_a = sin(player->angle);
 	if (player->left_rotate)

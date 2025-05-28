@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 17:48:51 by braugust          #+#    #+#             */
-/*   Updated: 2025/05/26 12:23:01 by root             ###   ########.fr       */
+/*   Updated: 2025/05/27 13:01:38 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,16 @@
 
 int	is_walkable(t_map *map, float x, float y)
 {
-	int	cell_x;
-	int	cell_y;
+	int	map_x;
+	int	map_y;
 
-	cell_x = (int)(x / 64);
-	cell_y = (int)(y / 64);
-	if (cell_y < 0 || cell_y >= map->height)
+	map_x = (int)(x / 64);
+	map_y = (int)(y / 64);
+	if (map_y < 0 || map_y >= map->height)
 		return (0);
-	if (cell_x < 0 || cell_x >= map->width)
+	if (map_x < 0 || map_x >= map->width)
 		return (0);
-	if (map->tab[cell_y][cell_x] == '1')
+	if (map->tab[map_y][map_x] == '1')
 		return (0);
 	return (1);
 }
