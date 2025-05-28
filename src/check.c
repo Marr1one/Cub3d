@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 17:04:56 by maissat           #+#    #+#             */
-/*   Updated: 2025/05/28 12:56:52 by root             ###   ########.fr       */
+/*   Updated: 2025/05/28 20:43:47 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,13 +220,13 @@ int	valid_path(const char *path)
 		return (printf("Error\n path empty !\n"), 1);
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
-		return (printf("Erorr\n cannot open txt file !\n"), 1);
+		return (printf("Erorr\n cannot open  %s !\n", path), 1);
 	close(fd);
 	ext = ft_strrchr(path, '.');
 	if (!ext)
-		return (printf("Error\n txt file has no extension\n"), 1);
+		return (printf("Error\n %s file has no extension\n", path), 1);
 	if (ft_strcmp((char *)ext, ".xpm") != 0)
-		return (printf("Error\n txt file must be .xpm\n"), 1);
+		return (printf("Error\n %s file must be .xpm\n", path), 1);
 	return (0);
 }
 
