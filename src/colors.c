@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   colors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: braugust <braugust@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:55:46 by root              #+#    #+#             */
-/*   Updated: 2025/05/26 14:58:20 by root             ###   ########.fr       */
+/*   Updated: 2025/05/29 13:12:47 by braugust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ void	fill_rgb(char *str, int color_rgb[3])
 
 void	fill_color(t_map *map, char *str, char choice)
 {
-	int		j;
-	int		color_rgb[3];
+	int	j;
+	int	color_rgb[3];
 
 	color_rgb[0] = 0;
 	color_rgb[1] = 0;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: braugust <braugust@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:42:09 by maissat           #+#    #+#             */
-/*   Updated: 2025/05/27 12:13:46 by root             ###   ########.fr       */
+/*   Updated: 2025/05/29 13:12:55 by braugust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,10 @@ float	fix_distance(float delta_x, float delta_y, t_game game)
 
 void	draw_ceiling_and_floor(t_game *game)
 {
-	int				x;
-	int				y;
-	int				floor_color;
-	int				ceiling_color;
+	int	x;
+	int	y;
+	int	floor_color;
+	int	ceiling_color;
 
 	floor_color = rgb_to_hex_int(game->map->floor_color[0],
 			game->map->floor_color[1], game->map->floor_color[2]);

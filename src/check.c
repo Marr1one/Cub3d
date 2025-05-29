@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: braugust <braugust@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 17:04:56 by maissat           #+#    #+#             */
-/*   Updated: 2025/05/28 20:43:47 by root             ###   ########.fr       */
+/*   Updated: 2025/05/29 13:12:40 by braugust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ int	is_direction(char c)
 	return (0);
 }
 
-//LAST CHECK
+// LAST CHECK
 
-//int	check_top(t_map map)
+// int	check_top(t_map map)
 //{
 //	int	j;
 
@@ -37,51 +37,51 @@ int	is_direction(char c)
 //		j++;
 //	}
 //}
-	//j = 0;
-	//while (map.tab[map.height - 1][j])
-	//{
-	//	while (map.tab[map.height - 1][j] == ' ')
-	//		j++;
-	//	if (map.tab[map.height - 1][j] != '1')
-	//	{
-	//		if (map.tab[map.height - 1][j] == '\n' || map.tab[map.height
-	//			- 1][j] == '\0')
-	//			break ;
-	//		return (printf("Error\nBottom not closed\n"), 1);
-	//	}
-	//	j++;
-	//}
-	//i = 0;
-	//while (map.tab[i])
-	//{
-	//	j = 0;
-	//	while (map.tab[i][j] != '\0' && map.tab[i][j] != '\n')
-	//		j++;
-	//	if (j > 2 && map.tab[i][j - 1] != '1')
-	//	{
-	//		return (printf("Error\nRight segment not closed on line %d\n", i),
-	//			1);
-	//	}
-	//	i++;
-	//}
-	//i = 0;
-	//while (map.tab[i])
-	//{
-	//	j = 0;
-	//	while (map.tab[i][j] == ' ')
-	//		j++;
-	//	if (map.tab[i][j] != '1')
-	//	{
-	//		return (printf("Error\nLeft border not closed\n"), 1);
-	//	}
-	//	i++;
-	//}
+// j = 0;
+// while (map.tab[map.height - 1][j])
+//{
+//	while (map.tab[map.height - 1][j] == ' ')
+//		j++;
+//	if (map.tab[map.height - 1][j] != '1')
+//	{
+//		if (map.tab[map.height - 1][j] == '\n' || map.tab[map.height
+//			- 1][j] == '\0')
+//			break ;
+//		return (printf("Error\nBottom not closed\n"), 1);
+//	}
+//	j++;
+//}
+// i = 0;
+// while (map.tab[i])
+//{
+//	j = 0;
+//	while (map.tab[i][j] != '\0' && map.tab[i][j] != '\n')
+//		j++;
+//	if (j > 2 && map.tab[i][j - 1] != '1')
+//	{
+//		return (printf("Error\nRight segment not closed on line %d\n", i),
+//			1);
+//	}
+//	i++;
+//}
+// i = 0;
+// while (map.tab[i])
+//{
+//	j = 0;
+//	while (map.tab[i][j] == ' ')
+//		j++;
+//	if (map.tab[i][j] != '1')
+//	{
+//		return (printf("Error\nLeft border not closed\n"), 1);
+//	}
+//	i++;
+//}
 
 int	check_borders(t_map map)
 {
 	int	i;
 	int	j;
-	
+
 	i = -1;
 	while (map.tab[++i])
 	{
@@ -162,14 +162,13 @@ void	fill_player_data(t_map *map, int i, int j)
 
 int	loop_check_chars(t_map *map, int i, int j, int *direction)
 {
-	if (*direction == 0 && (map->tab[i][j] == 'N'
-					|| map->tab[i][j] == 'S'))
+	if (*direction == 0 && (map->tab[i][j] == 'N' || map->tab[i][j] == 'S'))
 	{
 		fill_player_data(map, i, j);
 		*direction = 1;
 	}
 	else if (*direction == 0 && (map->tab[i][j] == 'E'
-		|| map->tab[i][j] == 'W'))
+			|| map->tab[i][j] == 'W'))
 	{
 		fill_player_data(map, i, j);
 		*direction = 1;
@@ -177,8 +176,7 @@ int	loop_check_chars(t_map *map, int i, int j, int *direction)
 	else
 	{
 		if (*direction == 1 && is_direction(map->tab[i][j]))
-			return (printf("Error\nMultiple player direction\n"),
-				1);
+			return (printf("Error\nMultiple player direction\n"), 1);
 		return (printf("Error\nInvalid character in map\n"), 1);
 	}
 	return (0);
@@ -215,7 +213,7 @@ int	valid_path(const char *path)
 	int		fd;
 	char	*ext;
 
-	//printf("path teste => {%s}\n", path);
+	// printf("path teste => {%s}\n", path);
 	if (!path || !*path)
 		return (printf("Error\n path empty !\n"), 1);
 	fd = open(path, O_RDONLY);
