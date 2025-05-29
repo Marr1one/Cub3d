@@ -5,10 +5,11 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/04 15:51:29 by root              #+#    #+#             */
-/*   Updated: 2025/05/27 12:01:50 by root             ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2025/05/29 11:43:59 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../cub3d.h"
 
@@ -48,4 +49,41 @@ int	rgb_to_hex_int(int r, int g, int b)
 		b = 255;
 	hex = (r << 16) | (g << 8) | b;
 	return (hex);
+}
+
+char	*ft_substr(char *str, int start, int end)
+{
+	char	*res;
+	int		i;
+
+	i = 0;
+	res = malloc(sizeof(char) * (end - start + 1));
+	if (!res)
+		return (NULL);
+	while (str[start] && start < end)
+	{
+		res[i] = str[start];
+		i++;
+		start++;
+	}
+	res[i] = '\0';
+	return (res);
+}
+
+char	*ft_strrchr(const char *s, int c)
+{
+	int i;
+
+	i = 0;
+	while (s[i])
+		i++;
+	while (i > 0)
+	{
+		if (s[i] == (char)c)
+			return ((char *)(&s[i]));
+		i--;
+	}
+	if (s[i] == (char)c)
+		return ((char *)(&s[i]));
+	return (0);
 }

@@ -6,224 +6,70 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 10:40:26 by braugust          #+#    #+#             */
-/*   Updated: 2025/05/27 13:33:27 by root             ###   ########.fr       */
+/*   Updated: 2025/05/29 11:42:30 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-// // Charge un fichier XPM et remplit la structure texture
-// int	load_one_texture(void *mlx, t_texture *tex, const char *path)
-// {
-// 	// 1) Charge l’image
-// 	tex->img_ptr = mlx_xpm_file_to_image(mlx, (char *)path, &tex->width,
-// 			&tex->height);
-// 	if (!tex->img_ptr)
-// 		return (printf("Error\nCannot load texture %s\n", path), 1);
-// 	// 2) Récupère le buffer de pixels
-// 	tex->data = mlx_get_data_addr(tex->img_ptr, &tex->bpp, &tex->line_size,
-// 			&tex->bpp /* endian non utilisé ici */);
-// 	// Note : MLX rend parfois bpp et endian ; on stocke juste bpp et line_size
-// 	return (0);
-// }
-
-// // Charge toutes les textures du jeu
-// int	load_textures(t_game *game, t_map *map)
-// {
-// 	if (load_one_texture(game->mlx, &game->north, map->no_texture))
-// 		return (1);
-// 	if (load_one_texture(game->mlx, &game->south, map->so_texture))
-// 		return (1);
-// 	if (load_one_texture(game->mlx, &game->west, map->we_texture))
-// 		return (1);
-// 	if (load_one_texture(game->mlx, &game->east, map->ea_texture))
-// 		return (1);
-// 	return (0);
-// }
-
-t_texture	*load_texture(void *mlx, char *path)
+void	draw_column_pixel(t_texture *tex, t_game *g, int x, int y)
 {
+	int				d;
+	int				idx;
+	unsigned char	b;
+	unsigned char	g_c;
+	unsigned char	r_c;
+
+	d = (y * 256) - (HEIGHT * 128) + (tex->lh * 128);
+	tex->tex_y = ((d * tex->height) / tex->lh) / 256;
+	if (tex->tex_y < 0)
+		tex->tex_y = 0;
+	if (tex->tex_y >= tex->height)
+		tex->tex_y = tex->height - 1;
+	idx = tex->tex_y * tex->size_line + tex->tex_x * (tex->bpp / 8);
+	if (idx < 0 || idx + 2 >= tex->size_line * tex->height)
+		return ;
+	b = tex->data[idx];
+	g_c = tex->data[idx + 1];
+	r_c = tex->data[idx + 2];
+	put_pixel(x, y, (r_c << 16) | (g_c << 8) | b, g);
+}
+
+void	draw_column_loop(t_texture *tex, t_game *g, int x)
+{
+	int	start;
+	int	end;
+	int	y;
+
+	start = (HEIGHT - tex->lh) / 2;
+	if (start < 0)
+		start = 0;
+	end = start + tex->lh;
+	if (end >= HEIGHT)
+		end = HEIGHT - 1;
+	y = start;
+	while (y < end)
+	{
+		draw_column_pixel(tex, g, x, y);
+		y++;
+	}
+}
+
+void	draw_column_textured(t_player *pl, t_game *g, float angle, int x)
+{
+	t_ray		ray;
 	t_texture	*tex;
+	float		wall_x;
+	float		perp_dist;
+	int			line_h;
 
-	tex = malloc(sizeof(*tex));
-	if (!tex)
-		return (NULL);
-	tex->img = mlx_xpm_file_to_image(mlx, path, &tex->width, &tex->height);
-	if (!tex->img)
-	{
-		free(tex);
-		return (NULL);
-	}
-	tex->data = mlx_get_data_addr(tex->img, &tex->bpp, &tex->size_line,
-			&tex->endian);
-	return (tex);
-}
-
-void	init_textures(t_game *game, t_map *map)
-{
-	game->no = load_texture(game->mlx, map->no_texture);
-	game->so = load_texture(game->mlx, map->so_texture);
-	game->we = load_texture(game->mlx, map->we_texture);
-	game->ea = load_texture(game->mlx, map->ea_texture);
-	if (!game->no || !game->so || !game->we || !game->ea)
-	{
-		fprintf(stderr,
-			"Error\nImpossible de charger une ou plusieurs textures\n");
-		exit(1);
-	}
-}
-void draw_column_textured(t_player *player, t_game *game, float ray_angle, int x)
-{
-    float ray_dir_x = cos(ray_angle);
-    float ray_dir_y = sin(ray_angle);
-    int map_x = (int)(player->x / 64);
-    int map_y = (int)(player->y / 64);
-
-    // Initialisation DDA (sans ternaire)
-    float delta_dist_x;
-    if (ray_dir_x != 0)
-        delta_dist_x = fabsf(1.0f / ray_dir_x);
-    else
-        delta_dist_x = 1e30;
-
-    float delta_dist_y;
-    if (ray_dir_y != 0)
-        delta_dist_y = fabsf(1.0f / ray_dir_y);
-    else
-        delta_dist_y = 1e30;
-
-    int step_x;
-    if (ray_dir_x < 0)
-        step_x = -1;
-    else
-        step_x = 1;
-
-    int step_y;
-    if (ray_dir_y < 0)
-        step_y = -1;
-    else
-        step_y = 1;
-
-    float side_dist_x;
-    if (ray_dir_x < 0)
-        side_dist_x = ((player->x - map_x * 64) / 64) * delta_dist_x;
-    else
-        side_dist_x = (((map_x + 1) * 64 - player->x) / 64) * delta_dist_x;
-
-    float side_dist_y;
-    if (ray_dir_y < 0)
-        side_dist_y = ((player->y - map_y * 64) / 64) * delta_dist_y;
-    else
-        side_dist_y = (((map_y + 1) * 64 - player->y) / 64) * delta_dist_y;
-
-    int hit = 0, side = 0;
-
-    // DDA loop
-    while (!hit)
-    {
-        if (side_dist_x < side_dist_y)
-        {
-            side_dist_x += delta_dist_x;
-            map_x += step_x;
-            side = 0;
-        }
-        else
-        {
-            side_dist_y += delta_dist_y;
-            map_y += step_y;
-            side = 1;
-        }
-        if (map_x < 0 || map_x >= game->map->width ||
-            map_y < 0 || map_y >= game->map->height)
-            return;
-        if (game->map->tab[map_y][map_x] == '1')
-            hit = 1;
-    }
-
-    // Distance brute (sans fish-eye)
-    float raw_dist;
-    if (side == 0)
-        raw_dist = (side_dist_x - delta_dist_x) * 64;
-    else
-        raw_dist = (side_dist_y - delta_dist_y) * 64;
-
-    // Point d'impact (avant correction fish-eye)
-    float hit_x = player->x + raw_dist * ray_dir_x;
-    float hit_y = player->y + raw_dist * ray_dir_y;
-
-    float wall_x;
-    if (side == 0)
-        wall_x = hit_y / 64.0f;
-    else
-        wall_x = hit_x / 64.0f;
-    wall_x -= floorf(wall_x);
-    if (wall_x < 0.0f)
-        wall_x = 0.0f;
-
-    // Correction fish-eye pour la projection
-    float perp_dist = raw_dist * cosf(ray_angle - player->angle);
-
-    // Choix texture (sans ternaire)
-    t_texture *tex = NULL;
-    if (side == 0)
-    {
-        if (step_x > 0)
-            tex = game->we;
-        else
-            tex = game->ea;
-    }
-    else
-    {
-        if (step_y > 0)
-            tex = game->so;
-        else
-            tex = game->no;
-    }
-
-    // Index horizontal dans la texture
-    int tex_x = (int)(wall_x * (float)tex->width);
-    if ((side == 0 && ray_dir_x > 0) || (side == 1 && ray_dir_y < 0))
-        tex_x = tex->width - tex_x - 1;
-    if (tex_x < 0)
-        tex_x = 0;
-    if (tex_x >= tex->width)
-        tex_x = tex->width - 1;
-
-    int line_height = (int)((64.0f / perp_dist) * (WIDTH / 2));
-    int start_y = (HEIGHT - line_height) / 2;
-    int end_y = start_y + line_height;
-    if (start_y < 0)
-        start_y = 0;
-    if (end_y >= HEIGHT)
-        end_y = HEIGHT - 1;
-
-    // Mur texturé
-	int y;
-    y = start_y;
-    while (y < end_y)
-    {
-        int d = (y * 256) - (HEIGHT * 128) + (line_height * 128);
-        int tex_y = ((d * tex->height) / line_height) / 256;
-        if (tex_y < 0)
-            tex_y = 0;
-        if (tex_y >= tex->height)
-            tex_y = tex->height - 1;
-        int idx = tex_y * tex->size_line + tex_x * (tex->bpp / 8);
-        if (idx < 0 || idx + 2 >= tex->size_line * tex->height)
-        {
-            y++;
-            continue;
-        }
-        unsigned char b = tex->data[idx];
-        unsigned char g = tex->data[idx + 1];
-        unsigned char r = tex->data[idx + 2];
-        int color = (r << 16) | (g << 8) | b;
-        put_pixel(x, y, color, game);
-        y++;
-    }
-
-    // Sol
-    //y = end_y;
-    //while (y < HEIGHT)
-    //    put_pixel(x, y++, floor_col, game);
+	if (!raycast_wall(pl, g, angle, &ray))
+		return ;
+	wall_x = get_wall_x(&ray, pl);
+	perp_dist = get_perp_dist(&ray, pl, angle);
+	tex = choose_tex(g, &ray);
+	tex->tex_x = get_tex_x(&ray, tex, wall_x);
+	line_h = (int)((64.0f / perp_dist) * (WIDTH / 2));
+	tex->lh = line_h;
+	draw_column_loop(tex, g, x);
 }
