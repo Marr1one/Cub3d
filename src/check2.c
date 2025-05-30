@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: braugust <braugust@student.42.fr>          +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 08:13:15 by braugust          #+#    #+#             */
-/*   Updated: 2025/05/30 08:13:58 by braugust         ###   ########.fr       */
+/*   Updated: 2025/05/30 19:59:00 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	loop_check_chars(t_map *map, int i, int j, int *direction)
 		*direction = 1;
 	}
 	else if (*direction == 0 && (map->tab[i][j] == 'E'
-			|| map->tab[i][j] == 'W'))
+		|| map->tab[i][j] == 'W'))
 	{
 		fill_player_data(map, i, j);
 		*direction = 1;
@@ -72,7 +72,6 @@ int	valid_path(const char *path)
 	int		fd;
 	char	*ext;
 
-	// printf("path teste => {%s}\n", path);
 	if (!path || !*path)
 		return (printf("Error\n path empty !\n"), 1);
 	fd = open(path, O_RDONLY);

@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 18:50:38 by root              #+#    #+#             */
-/*   Updated: 2025/05/29 11:45:27 by root             ###   ########.fr       */
+/*   Updated: 2025/05/30 19:56:17 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # define ROT_LEFT 65361
 # define ROT_RIGHT 65363
 # define ECHAP 65307
+
 
 typedef struct s_texture
 {
@@ -163,6 +164,7 @@ int					raycast_wall(t_player *player, t_game *game,
 
 // UTILS
 void				create_tab(t_map *map);
+int					is_direction(char c);
 int					ft_strlen(char *str);
 int					ft_strcmp(char *s1, char *s2);
 int					ft_strlcmp(char *s1, char *s2);
