@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 17:15:24 by maissat           #+#    #+#             */
-/*   Updated: 2025/05/26 14:44:15 by root             ###   ########.fr       */
+/*   Updated: 2025/05/31 13:30:30 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	init_player(t_player *player, t_map map)
 {
+	
 	player->x = map.player->x * 64 + 64 / 2;
 	player->y = map.player->y * 64 + 64 / 2;
 	if (map.orientation == 'N')
@@ -26,6 +27,7 @@ void	init_player(t_player *player, t_map map)
 		player->angle = PI;
 	player->key_up = 0;
 	player->key_down = 0;
+	player->hp = 100;
 	player->key_left = 0;
 	player->key_right = 0;
 	player->left_rotate = 0;

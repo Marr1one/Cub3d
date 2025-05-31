@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 17:29:12 by maissat           #+#    #+#             */
-/*   Updated: 2025/05/29 11:40:13 by root             ###   ########.fr       */
+/*   Updated: 2025/05/31 13:26:28 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,26 @@ void	move_player(t_player *player, t_map *map)
 		get_player_move_delta(player, speed);
 		move_on_map(player, map, player->dx, player->dy);
 	}
+}
+
+int global_key_press(int keycode, t_game *game)
+{
+    if (game->game_state == MENU_STATE)
+    {
+        return menu_key_press(keycode, game);
+    }
+    else if (game->game_state == GAME_STATE)
+    {
+        // Retour au menu avec ESC
+        if (keycode == 65307) // ESC
+        {
+            game->game_state = MENU_STATE;
+            return (0);
+        }
+        // Utilise ta fonction key_press existante pour le jeu
+        return key_press(keycode, game->player);
+    }
+    return (0);
 }
 
 int	key_press(int keycode, t_player *player)

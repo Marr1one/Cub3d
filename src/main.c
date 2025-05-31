@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 18:48:51 by root              #+#    #+#             */
-/*   Updated: 2025/05/28 20:35:00 by root             ###   ########.fr       */
+/*   Updated: 2025/05/31 18:20:53 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,11 +82,15 @@ int	main(int argc, char **argv)
 		return (printf("Usage: ./cube3d map.cub\n"), 1);
 	if (check_map(argv[1], &map) == 1)
 		return (1);
-	show_struct_map(map);
+	//show_struct_map(map);
 	game.map = &map;
 	game.player = map.player;
+	game.game_state = MENU_STATE;
+	game.menu_selection = 0;
 	init_game(&game, map);
-	mlx_hook(game.win, 2, 1L << 0, key_press, game.player);
+	printf("ici tout va bien !\n");
+	//mlx_hook(game.win, 2, 1L << 0, key_press, game.player);
+	mlx_hook(game.win, 2, 1L << 0, global_key_press, &game);
 	mlx_hook(game.win, 3, 1L << 1, key_release, game.player);
 	mlx_hook(game.win, 17, 0, close_window_cross, &game);
 	mlx_loop_hook(game.mlx, draw_loop, &game);

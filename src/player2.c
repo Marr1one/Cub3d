@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: braugust <braugust@student.42.fr>          +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 12:44:51 by braugust          #+#    #+#             */
-/*   Updated: 2025/05/27 12:46:02 by braugust         ###   ########.fr       */
+/*   Updated: 2025/05/31 12:43:02 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	rotate_player(t_player *player)
 {
 	float	angle_speed;
 
-	angle_speed = 0.06;
+	angle_speed = 0.03;
 	if (player->left_rotate)
 		player->angle -= angle_speed;
 	if (player->right_rotate)

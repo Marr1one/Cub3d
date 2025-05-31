@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 18:50:38 by root              #+#    #+#             */
-/*   Updated: 2025/05/29 11:45:27 by root             ###   ########.fr       */
+/*   Updated: 2025/05/31 18:01:27 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,19 @@
 # define ROT_LEFT 65361
 # define ROT_RIGHT 65363
 # define ECHAP 65307
+# define GAME_HEIGHT (HEIGHT * 0.7)
+# define MINIMAP_TILE 14
+#define MENU_STATE 0
+#define GAME_STATE 1
+
+// Ajoute ces couleurs pour le menu
+#define COLOR_BLACK 0x000000
+#define COLOR_WHITE 0xFFFFFF
+#define COLOR_RED 0xFF0000
+#define COLOR_YELLOW 0xFFFF00
+#define COLOR_BLUE 0x0066CC
+
+
 
 typedef struct s_texture
 {
@@ -54,6 +67,8 @@ typedef struct s_game
 	int				bbp;
 	int				endian;
 	char			*data;
+	int				game_state; // 0 = menu, 1 = jeu
+    int				menu_selection; // 0 = PLAY sélectionné, 1 = EXIT sélectionné
 	struct s_player	*player;
 	struct s_map	*map;
 	t_texture		*no;
@@ -82,6 +97,7 @@ typedef struct s_player
 {
 	float			x;
 	float			y;
+	int				hp;
 	float			angle;
 	int				key_up;
 	int				key_down;
@@ -108,6 +124,18 @@ typedef struct s_ray
 	int				side;
 	float			raw_dist;
 }					t_ray;
+
+//MAIN MENU
+
+int					menu_key_press(int keycode, t_game *game);
+int					global_key_press(int keycode, t_game *game);
+
+
+//MINIMAP
+
+void				draw_square_minimap(int map_x, int map_y, int color, t_game *game, int x_offset, int y_offset);
+void				draw_player_on_minimap(t_game *game, int x_offset, int y_offset);
+int					touch(float ray_x, float ray_y, t_map map);
 
 // COLORS
 

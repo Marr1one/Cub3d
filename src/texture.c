@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 10:40:26 by braugust          #+#    #+#             */
-/*   Updated: 2025/05/29 11:42:30 by root             ###   ########.fr       */
+/*   Updated: 2025/05/30 20:09:30 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	draw_column_pixel(t_texture *tex, t_game *g, int x, int y)
 	unsigned char	g_c;
 	unsigned char	r_c;
 
-	d = (y * 256) - (HEIGHT * 128) + (tex->lh * 128);
+	d = (y * 256) - (GAME_HEIGHT * 128) + (tex->lh * 128);
 	tex->tex_y = ((d * tex->height) / tex->lh) / 256;
 	if (tex->tex_y < 0)
 		tex->tex_y = 0;
@@ -41,12 +41,12 @@ void	draw_column_loop(t_texture *tex, t_game *g, int x)
 	int	end;
 	int	y;
 
-	start = (HEIGHT - tex->lh) / 2;
+	start = (GAME_HEIGHT - tex->lh) / 2;
 	if (start < 0)
 		start = 0;
 	end = start + tex->lh;
-	if (end >= HEIGHT)
-		end = HEIGHT - 1;
+	if (end >= GAME_HEIGHT)
+		end = GAME_HEIGHT - 1;
 	y = start;
 	while (y < end)
 	{
