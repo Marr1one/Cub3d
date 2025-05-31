@@ -6,7 +6,7 @@
 /*   By: braugust <braugust@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 12:32:55 by braugust          #+#    #+#             */
-/*   Updated: 2025/05/27 12:46:53 by braugust         ###   ########.fr       */
+/*   Updated: 2025/05/31 10:37:41 by braugust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ t_texture	*choose_tex(t_game *g, t_ray *r)
 
 int	get_tex_x(t_ray *r, t_texture *tex, float wall_x)
 {
-	int tex_x;
+	int	tex_x;
 
 	tex_x = (int)(wall_x * (float)tex->width);
 	if ((r->side == 0 && r->ray_dir_x > 0) || (r->side == 1

@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   utils3.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: braugust <braugust@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/05/30 19:28:24 by root             ###   ########.fr       */
+/*   Created: 2025/04/25 17:15:24 by maissat           #+#    #+#             */
+/*   Updated: 2025/05/31 10:32:47 by braugust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../cub3d.h"
 
@@ -29,7 +28,6 @@ int	touch(float ray_x, float ray_y, t_map map)
 		return (1);
 	return (0);
 }
-
 
 int	rgb_to_hex_int(int r, int g, int b)
 {
@@ -72,7 +70,7 @@ char	*ft_substr(char *str, int start, int end)
 
 char	*ft_strrchr(const char *s, int c)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (s[i])
