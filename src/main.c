@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: braugust <braugust@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maissat <maissat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 18:48:51 by root              #+#    #+#             */
-/*   Updated: 2025/05/31 10:36:59 by braugust         ###   ########.fr       */
+/*   Updated: 2025/06/03 15:31:09 by maissat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,43 +24,42 @@ void	show_int_tab(int *tab)
 	}
 }
 
+int	loop_parse_text(char *line, t_map *map)
+{
+	char	choice;
+	char	*trimmed;
+
+	if (is_texture_line(line))
+	{
+		if (space_before(line))
+			return (printf("Error\nSpace before texture\n"), 1);
+		trimmed = skip_spaces(line);
+		fill_texture(map, trimmed);
+		return (free(trimmed), 0);
+	}
+	else if (is_color_line(line) != 0)
+	{
+		choice = is_color_line(line);
+		if (space_before(line))
+			return (printf("Error\nSpace before color\n"), 1);
+		trimmed = skip_spaces(line);
+		fill_color(map, trimmed, choice);
+		return (free(trimmed), 0);
+	}
+	return (0);
+}
+
 int	parse_texture(t_map *map)
 {
 	int		fd;
 	char	*line;
-	char	*trimmed;
-	char	choice;
 
 	fd = open(map->name, O_RDONLY);
 	line = get_next_line(fd);
 	while (line)
 	{
-		if (is_texture_line(line))
-		{
-			if (space_before(line))
-				return (printf("Error\nSpace before texture\n"), 1);
-			trimmed = skip_spaces(line);
-			fill_texture(map, trimmed);
-		}
-		else if (is_color_line(line) != 0)
-		{
-			choice = is_color_line(line);
-			if (space_before(line))
-				return (printf("Error\nSpace before color\n"), 1);
-			trimmed = skip_spaces(line);
-			fill_color(map, trimmed, choice);
-		}
-		else
-		{
-			trimmed = skip_spaces(line);
-			if (trimmed[0] && trimmed[0] == '1')
-			{
-				free(trimmed);
-				break ;
-			}
-		}
+		loop_parse_text(line, map);
 		free(line);
-		free(trimmed);
 		line = get_next_line(fd);
 	}
 	free(line);
