@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: maissat <maissat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 18:50:38 by root              #+#    #+#             */
-/*   Updated: 2025/05/30 19:56:17 by root             ###   ########.fr       */
+/*   Updated: 2025/06/03 15:37:39 by maissat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@
 # define ROT_LEFT 65361
 # define ROT_RIGHT 65363
 # define ECHAP 65307
-
 
 typedef struct s_texture
 {
@@ -141,8 +140,6 @@ int					valid_path(const char *path);
 
 // DRAW
 
-void				draw_square(int x, int y, int color, int size,
-						t_game *game);
 int					draw_loop(t_game *game);
 
 // PLAYER
