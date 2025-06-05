@@ -6,14 +6,15 @@
 /*   By: braugust <braugust@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 17:15:24 by maissat           #+#    #+#             */
-/*   Updated: 2025/05/31 10:32:47 by braugust         ###   ########.fr       */
+/*   Updated: 2025/06/05 08:43:29 by braugust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-int	close_window_cross(void)
+int	close_window_cross(t_game *game)
 {
+	free_all(game);
 	exit(0);
 }
 

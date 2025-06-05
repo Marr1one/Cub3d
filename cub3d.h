@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maissat <maissat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: braugust <braugust@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 18:50:38 by root              #+#    #+#             */
-/*   Updated: 2025/06/03 15:37:39 by maissat          ###   ########.fr       */
+/*   Updated: 2025/06/05 08:44:24 by braugust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,7 +181,7 @@ int					ft_atoi(char *str);
 void				show_int_tab(int *tab);
 void				show_struct_map(t_map map);
 char				*ft_strrchr(const char *s, int c);
-int					close_window_cross(void);
+int					close_window_cross(t_game *game);
 int					rgb_to_hex_int(int r, int g, int b);
 int					ft_max(int a, int b);
 
@@ -192,5 +192,9 @@ int					check_name(char *str);
 int					check_map(char *map_name, t_map *map);
 int					check_borders(t_map map);
 int					parse_texture(t_map *map);
+
+// FREE
+
+void				free_all(t_game *game);
 
 #endif
