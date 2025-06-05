@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: braugust <braugust@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maissat <maissat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 18:50:38 by root              #+#    #+#             */
-/*   Updated: 2025/06/05 08:44:24 by braugust         ###   ########.fr       */
+/*   Updated: 2025/06/05 16:17:44 by maissat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,6 +192,12 @@ int					check_name(char *str);
 int					check_map(char *map_name, t_map *map);
 int					check_borders(t_map map);
 int					parse_texture(t_map *map);
+int					check_top_border(t_map map);
+int					check_bottom_border(t_map map);
+int					check_right_border(t_map map);
+int					check_left_border(t_map map);
+int					check_zero_surroundings(t_map map, int i, int j);
+int					check_borders(t_map map);
 
 // FREE
 

@@ -1,7 +1,7 @@
 CC = cc -g3
 CFLAGS = -Wall -Wextra -Werror
 
-NAME = cub3d
+NAME = Cub3d
 OBJDIR = obj
 
 MLX_PATH = ./minilibx-linux

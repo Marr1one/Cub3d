@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: maissat <maissat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 08:13:15 by braugust          #+#    #+#             */
-/*   Updated: 2025/05/30 19:59:00 by root             ###   ########.fr       */
+/*   Updated: 2025/06/05 16:53:29 by maissat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	valid_path(const char *path)
 		return (printf("Error\n path empty !\n"), 1);
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
-		return (printf("Erorr\n cannot open  %s !\n", path), 1);
+		return (printf("Error\n cannot open  %s !\n", path), 1);
 	close(fd);
 	ext = ft_strrchr(path, '.');
 	if (!ext)

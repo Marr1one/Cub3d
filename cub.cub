@@ -1,0 +1,16 @@
+
+SO ./path_so.xpm
+NO 	./path_no.xpm
+EA ./path_ea.xpm
+WE ./path_we.xpm
+
+F 130,130,130
+C 135,206, 235
+
+     11111         
+    100W001
+     10001
+      101
+       1       
+
+
