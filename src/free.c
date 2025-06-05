@@ -6,7 +6,7 @@
 /*   By: braugust <braugust@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 08:39:56 by braugust          #+#    #+#             */
-/*   Updated: 2025/06/05 08:46:18 by braugust         ###   ########.fr       */
+/*   Updated: 2025/06/05 08:49:55 by braugust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,15 @@ void	free_map(t_map *map)
 	free(map->so_texture);
 	free(map->we_texture);
 	free(map->ea_texture);
+}
+
+void	free_texture(void *mlx, t_texture *tex)
+{
+	if (!tex)
+		return ;
+	if (tex->img)
+		mlx_destroy_image(mlx, tex->img);
+	free(tex);
 }
 
 void	free_game(t_game *game)
