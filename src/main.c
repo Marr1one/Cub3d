@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maissat <maissat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 18:48:51 by root              #+#    #+#             */
-/*   Updated: 2025/06/05 17:00:16 by maissat          ###   ########.fr       */
+/*   Updated: 2025/06/08 20:15:27 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,27 +24,81 @@ void	show_int_tab(int *tab)
 	}
 }
 
-int	loop_parse_text(char *line, t_map *map)
+int	is_space_line(char *line)
+{
+	int	i;
+
+	i = 0;
+	while (line[i])
+	{
+		if (line[i] != ' ')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+int	is_start_map(char *line)
+{
+	int	i;
+	
+	i = 0;
+	while (line[i])
+	{
+		if (line[i] != ' ')
+		{
+			if (line[i] != '1')
+				return (0);
+			return (1);
+		}
+		i++;
+	}
+	return (0);
+}
+
+int	loop_parse_text(char *line, t_map *map, int fd)
 {
 	char	choice;
 	char	*trimmed;
+	int		count;
 
+	count = 0;
 	if (is_texture_line(line))
 	{
-		if (space_before(line))
-			return (printf("Error\nSpace before texture\n"), 1);
-		trimmed = skip_spaces(line);
-		fill_texture(map, trimmed);
-		return (free(trimmed), 0);
+		while (is_texture_line(line) || is_space_line(line))
+		{
+			if (space_before(line))
+				return (printf("Error\nSpace before texture \n"), 1);
+			trimmed = skip_spaces(line);
+			fill_texture(map, trimmed);
+			count ++;
+			free(trimmed);
+			line = get_next_line(fd);
+		}
+		if (count != 4)
+			return (printf("Parsing problem in text! \na cette ligne =>{%s}\n", line), 1);
 	}
-	else if (is_color_line(line) != 0)
+	if (is_color_line(line) != 0)
 	{
-		choice = is_color_line(line);
-		if (space_before(line))
-			return (printf("Error\nSpace before color\n"), 1);
-		trimmed = skip_spaces(line);
-		fill_color(map, trimmed, choice);
-		return (free(trimmed), 0);
+		while (is_color_line(line) != 0 || is_space_line(line))
+		{
+			choice = is_color_line(line);
+			if (space_before(line))
+				return (printf("Error\nSpace before color\n"), 1);
+			trimmed = skip_spaces(line);
+			fill_color(map, trimmed, choice);
+			count++;
+			free(trimmed);
+			line = get_next_line(fd);
+		}
+		if (count != 2)
+			return (printf("Parsing problem in colorline\n a cette ligne =>{%s}\n", line), 1);
+	}
+	if (is_start_map(line) != 1)
+	{
+		if (line[0] == '\n')
+			return (0);
+		return (printf("probleme dans le .cub les gars\n a cette ligne =>{%s}\n", line), 1);
 	}
 	return (0);
 }
@@ -58,12 +112,21 @@ int	parse_texture(t_map *map)
 	line = get_next_line(fd);
 	while (line)
 	{
-		loop_parse_text(line, map);
+		if (loop_parse_text(line, map, fd) != 0)
+			return (1);
 		free(line);
 		line = get_next_line(fd);
 	}
 	free(line);
 	close(fd);
+	printf("no texture => {%s}\n", map->no_texture);
+	printf("so texture => {%s}\n", map->so_texture);
+	printf("we texture => {%s}\n", map->we_texture);
+	printf("ea texture => {%s}\n", map->ea_texture);
+	printf("ceiling color !------\n");
+	show_int_tab(map->ceiling_color);
+	printf("floor color !------\n");
+	show_int_tab(map->floor_color);
 	if (check_all_textures(map))
 		return (1);
 	return (0);

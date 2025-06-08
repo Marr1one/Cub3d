@@ -1,13 +1,10 @@
-map :
-
 
 C 135,206, 235
 F 130,130,130
-
+kkkkkk
 SO ./path_so.xpm
 NO 	./path_no.xpm
 EA ./path_ea.xpm
-kkhhh
 WE ./path_we.xpm
 
 
