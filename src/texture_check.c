@@ -3,25 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   texture_check.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: braugust <braugust@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:57:20 by root              #+#    #+#             */
-/*   Updated: 2025/05/29 11:41:31 by root             ###   ########.fr       */
+/*   Updated: 2025/06/09 17:07:50 by braugust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-void	fill_texture(t_map *map, char *trimmed)
+void	fill_texture(t_map *map, char *trimmed, int *count)
 {
 	if (ft_strncmp(trimmed, "NO.", 3) == 0)
+	{
+		(*count)++;
 		map->no_texture = ft_strduptext(trimmed + 2);
+	}
 	if (ft_strncmp(trimmed, "SO.", 3) == 0)
+	{
+		(*count)++;
 		map->so_texture = ft_strduptext(trimmed + 2);
+	}
 	if (ft_strncmp(trimmed, "WE.", 3) == 0)
+	{
+		(*count)++;
 		map->we_texture = ft_strduptext(trimmed + 2);
+	}
 	if (ft_strncmp(trimmed, "EA.", 3) == 0)
+	{
+		(*count)++;
 		map->ea_texture = ft_strduptext(trimmed + 2);
+	}
 }
 
 int	is_texture_line(char *line)

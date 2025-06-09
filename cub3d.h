@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maissat <maissat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: braugust <braugust@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 18:50:38 by root              #+#    #+#             */
-/*   Updated: 2025/06/05 16:17:44 by maissat          ###   ########.fr       */
+/*   Updated: 2025/06/09 17:52:27 by braugust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,8 +111,8 @@ typedef struct s_ray
 
 // COLORS
 
-void				fill_rgb(char *str, int color_rgb[3]);
-void				fill_color(t_map *map, char *str, char choice);
+int				fill_rgb(char *str, int color_rgb[3]);
+int				fill_color(t_map *map, char *str, char choice, int *count);
 int					is_color_line(char *line);
 
 // TEXTURES
@@ -121,7 +121,7 @@ t_texture			*load_texture(void *mlx, char *path);
 void				init_textures(t_game *game, t_map *map);
 void				draw_column_textured(t_player *player, t_game *game,
 						float ray_angle, int x);
-void				fill_texture(t_map *map, char *trimmed);
+void				fill_texture(t_map *map, char *trimmed, int *count);
 int					is_texture_line(char *line);
 float				get_wall_x(t_ray *ray, t_player *pl);
 float				get_perp_dist(t_ray *ray, t_player *pl, float angle);

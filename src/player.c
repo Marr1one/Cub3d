@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maissat <maissat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: braugust <braugust@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 17:29:12 by maissat           #+#    #+#             */
-/*   Updated: 2025/06/05 17:32:41 by maissat          ###   ########.fr       */
+/*   Updated: 2025/06/09 17:09:45 by braugust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	move_player(t_player *player, t_map *map)
 {
 	float	speed;
 
-	speed = 1.5;
+	speed = 3;
 	rotate_player(player);
 	if (player->key_up || player->key_down || player->key_left
 		|| player->key_right)
