@@ -6,7 +6,7 @@
 /*   By: maissat <maissat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 17:04:56 by maissat           #+#    #+#             */
-/*   Updated: 2025/06/05 15:49:32 by maissat          ###   ########.fr       */
+/*   Updated: 2025/06/12 19:26:49 by maissat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,43 @@ int	check_name(char *str)
 	return (0);
 }
 
+int	map_after_all(t_map map)
+{
+	int		fd;
+	char	*line;
+	int		map_finish;
+	int		map_start;
+	int		i;
+	
+	fd = open(map.name, O_RDONLY);
+	map_finish = 0;
+	map_start = 0;
+	line = get_next_line(fd);
+	while (line)
+	{
+		i = 0;
+		while (line && line[i] == ' ')
+			i++;
+		if (map_finish)
+		{
+			if (!is_space_line(line))
+			{
+				return (printf("ya des trucs apres map! a cette ligne ! => {%s}\n", line),1);
+				free(line);
+				close(fd);
+			}
+		}
+		if (line[i] == '1')
+			map_start = 1;
+		if (map_start && line[i] != '1')
+			map_finish = 1;
+		free(line);
+		line = get_next_line(fd);
+	}
+	close (fd);
+	return (0);
+}
+
 int	check_map(char *map_name, t_map *map)
 {
 	if (check_name(map_name) == 1)
@@ -84,6 +121,12 @@ int	check_map(char *map_name, t_map *map)
 	map->height = get_height(map_name, map);
 	if (map->height <= 0)
 		return (1);
+	if (map_after_all(*map) != 0)
+		return (printf("truc apres la map a la fin !\n"),1);
+	if (count_color_line(*map) != 2)
+		return (printf("pas assez ou trop de color_line\n"),1);
+	if (count_tex_line(*map) != 4)
+		return (printf("pas assez ou trop de text_line\n"),1);
 	create_tab(map);
 	if (parse_texture(map) != 0)
 		return (1);

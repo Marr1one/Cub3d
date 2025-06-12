@@ -3,48 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   texture_check.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: braugust <braugust@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maissat <maissat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:57:20 by root              #+#    #+#             */
-/*   Updated: 2025/06/09 17:07:50 by braugust         ###   ########.fr       */
+/*   Updated: 2025/06/12 17:23:27 by maissat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-void	fill_texture(t_map *map, char *trimmed, int *count)
+void	fill_texture(t_map *map, char *trimmed)
 {
 	if (ft_strncmp(trimmed, "NO.", 3) == 0)
-	{
-		(*count)++;
 		map->no_texture = ft_strduptext(trimmed + 2);
-	}
 	if (ft_strncmp(trimmed, "SO.", 3) == 0)
-	{
-		(*count)++;
 		map->so_texture = ft_strduptext(trimmed + 2);
-	}
 	if (ft_strncmp(trimmed, "WE.", 3) == 0)
-	{
-		(*count)++;
 		map->we_texture = ft_strduptext(trimmed + 2);
-	}
 	if (ft_strncmp(trimmed, "EA.", 3) == 0)
-	{
-		(*count)++;
 		map->ea_texture = ft_strduptext(trimmed + 2);
-	}
 }
 
 int	is_texture_line(char *line)
 {
-	if (str_in_str(line, "NO"))
+	int	i;
+
+	i = 0;
+	while (line && (line[i] == ' ' || line[i] == '\t'))
+		i++;
+	if (ft_strncmp(line + i, "NO", 2) == 0)
 		return (1);
-	else if (str_in_str(line, "SO"))
+	else if (ft_strncmp(line + i, "SO", 2) == 0)
 		return (1);
-	else if (str_in_str(line, "WE"))
+	else if (ft_strncmp(line + i, "EA", 2) == 0)
 		return (1);
-	else if (str_in_str(line, "EA"))
+	else if (ft_strncmp(line + i, "WE", 2) == 0)
 		return (1);
 	return (0);
 }

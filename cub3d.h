@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: braugust <braugust@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maissat <maissat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 18:50:38 by root              #+#    #+#             */
-/*   Updated: 2025/06/09 17:52:27 by braugust         ###   ########.fr       */
+/*   Updated: 2025/06/12 17:03:12 by maissat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ typedef struct s_ray
 // COLORS
 
 int				fill_rgb(char *str, int color_rgb[3]);
-int				fill_color(t_map *map, char *str, char choice, int *count);
+int				fill_color(t_map *map, char *str, char choice);
 int					is_color_line(char *line);
 
 // TEXTURES
@@ -121,7 +121,7 @@ t_texture			*load_texture(void *mlx, char *path);
 void				init_textures(t_game *game, t_map *map);
 void				draw_column_textured(t_player *player, t_game *game,
 						float ray_angle, int x);
-void				fill_texture(t_map *map, char *trimmed, int *count);
+void				fill_texture(t_map *map, char *trimmed);
 int					is_texture_line(char *line);
 float				get_wall_x(t_ray *ray, t_player *pl);
 float				get_perp_dist(t_ray *ray, t_player *pl, float angle);
@@ -161,6 +161,7 @@ int					raycast_wall(t_player *player, t_game *game,
 
 // UTILS
 void				create_tab(t_map *map);
+int					is_space_line(char *line);
 int					is_direction(char c);
 int					ft_strlen(char *str);
 int					ft_strcmp(char *s1, char *s2);
@@ -187,6 +188,8 @@ int					ft_max(int a, int b);
 
 // CHECKERS
 
+int					count_color_line(t_map map);
+int					count_tex_line(t_map map);
 int					check_chars(t_map *map);
 int					check_name(char *str);
 int					check_map(char *map_name, t_map *map);

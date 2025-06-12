@@ -6,7 +6,7 @@
 /*   By: maissat <maissat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 15:03:34 by maissat           #+#    #+#             */
-/*   Updated: 2024/10/23 19:29:05 by maissat          ###   ########.fr       */
+/*   Updated: 2025/06/12 18:02:24 by maissat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,40 +42,45 @@ char	*read_to_stash(int fd, char *stash)
 			break ;
 		buffer[byte_read] = '\0';
 		stash = update_stash(stash, buffer);
-		if (ft_search(stash, '\n') == 1)
+		if (ft_search(stash, '\n') != 0)
 			break ;
 	}
 	free(buffer);
 	return (stash);
 }
 
-char	*get_next_line(int fd)
+char *get_next_line(int fd)
 {
-	static char	*stash;
-	char		*line;
-	char		*temp;
-
-	if (fd < 0 || BUFFER_SIZE <= 0)
-		return (NULL);
-	if (!stash)
-	{
-		stash = malloc(1);
-		if (!stash)
-			return (NULL);
-		stash[0] = '\0';
-	}
-	stash = read_to_stash(fd, stash);
-	if (!stash || stash[0] == '\0')
-	{
-		free(stash);
-		stash = NULL;
-		return (NULL);
-	}
-	line = takeleft(stash);
-	temp = stash;
-	stash = takeright(stash);
-	free(temp);
-	return (line);
+    static char *stash;
+    char *line;
+    char *temp;
+    
+    if (fd < 0 || BUFFER_SIZE <= 0)
+        return (NULL);
+    
+    if (!stash)
+    {
+        stash = malloc(1);
+        if (!stash)
+            return (NULL);
+        stash[0] = '\0';
+    }
+    
+    stash = read_to_stash(fd, stash);
+    if (!stash || stash[0] == '\0')
+    {
+        if (stash)
+            free(stash);
+        stash = NULL;
+        return (NULL);
+    }
+    
+    line = takeleft(stash);
+    temp = stash;
+    stash = takeright(stash);
+    free(temp);
+    
+    return (line);
 }
 
 /*int main(void)

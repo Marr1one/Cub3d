@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: maissat <maissat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 17:15:24 by maissat           #+#    #+#             */
-/*   Updated: 2025/06/08 20:10:08 by root             ###   ########.fr       */
+/*   Updated: 2025/06/12 16:33:58 by maissat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,13 +63,6 @@ int	str_in_str(char *str, char *to_find)
 			return (1);
 		i++;
 	}
-	return (0);
-}
-
-int	space_before(char *line)
-{
-	if (line[0] == ' ')
-		return (1);
 	return (0);
 }
 
