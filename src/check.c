@@ -6,7 +6,7 @@
 /*   By: maissat <maissat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 17:04:56 by maissat           #+#    #+#             */
-/*   Updated: 2025/06/17 18:28:30 by maissat          ###   ########.fr       */
+/*   Updated: 2025/06/17 19:46:10 by maissat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,7 @@ int check_invalid_lines(t_map map)
 		free(line);
 		line = get_next_line(fd);
 	}
+	free(line);
 	close(fd);
 	return (0);
 }
@@ -146,10 +147,7 @@ int check_invalid_lines(t_map map)
 int	check_map(char *map_name, t_map *map)
 {
 	if (check_name(map_name) == 1)
-	{
-		free(map->player);
 		return (printf("Error\nName not valid!\n"), 1);
-	}
 	map->name = map_name;
 	map->height = get_height(map_name, map);
 	if (map->height <= 0)

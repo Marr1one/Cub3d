@@ -6,7 +6,7 @@
 /*   By: maissat <maissat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 18:48:51 by root              #+#    #+#             */
-/*   Updated: 2025/06/17 17:14:07 by maissat          ###   ########.fr       */
+/*   Updated: 2025/06/17 19:51:49 by maissat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	loop_parse_text(char *line, t_map *map, int fd)
 	while (line)
 	{
 		printf("line => {%s}\n",line);
-		if (is_color_line(line))
+		if (line && is_color_line(line))
 		{
 			while (line && is_color_line(line))
 			{
@@ -77,14 +77,17 @@ int	loop_parse_text(char *line, t_map *map, int fd)
 				if (!is_space_line(line))
 				{
 					if (fill_color(map, trimmed, choice))
+					{
+						free(line);
 						return (1);
+					}
 				}
 				free(trimmed);
 				free(line);
 				line = get_next_line(fd);
 			}
 		}
-		if (is_texture_line(line))
+		if (line && is_texture_line(line))
 		{
 			while (line && is_texture_line(line))
 			{	
@@ -97,13 +100,16 @@ int	loop_parse_text(char *line, t_map *map, int fd)
 				line = get_next_line(fd);
 			}
 		}
-		if (is_space_line(line))
+		if (line && is_space_line(line))
 		{
 			free(line);
 			line = get_next_line(fd);
 		}
-		if (!is_color_line(line) && !is_texture_line(line) && !is_space_line(line))
+		if (line && !is_color_line(line) && !is_texture_line(line) && !is_space_line(line))
+		{
+			free(line);
 			return (0);
+		}
 	}
 	return (0);
 }
@@ -182,9 +188,16 @@ int	main(int argc, char **argv)
 	ft_memset(&map, 0, sizeof(t_map));
 	map.player = malloc(sizeof(t_player));
 	if (argc != 2)
+	{
+		free(map.player);
 		return (printf("Usage: ./cube3d map.cub\n"), 1);
+	}
 	if (check_map(argv[1], &map) == 1)
+	{
+		free(map.player);
+		//free_all(&game);
 		return (1);
+	}
 	// show_struct_map(map);
 	game.map = &map;
 	game.player = map.player;
@@ -194,6 +207,6 @@ int	main(int argc, char **argv)
 	mlx_hook(game.win, 17, 0, close_window_cross, &game);
 	mlx_loop_hook(game.mlx, draw_loop, &game);
 	mlx_loop(game.mlx);
-	free_all(&game);
+	//free_all(&game);
 	return (0);
 }
