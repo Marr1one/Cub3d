@@ -6,7 +6,7 @@
 /*   By: maissat <maissat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 18:48:51 by root              #+#    #+#             */
-/*   Updated: 2025/06/12 19:26:33 by maissat          ###   ########.fr       */
+/*   Updated: 2025/06/17 17:14:07 by maissat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,12 +142,8 @@ int	count_color_line(t_map map)
 	line = get_next_line(fd);
 	while (line)
 	{
-		//printf("DEBUG line = > {%s}\n", line);
 		if (is_color_line(line) != 0)
-		{
-			//printf("COLOR LINE DETECTED => {%s}\n", line);
 			count++;
-		}
 		free(line);
 		line = get_next_line(fd);
 	}

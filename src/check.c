@@ -6,7 +6,7 @@
 /*   By: maissat <maissat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 17:04:56 by maissat           #+#    #+#             */
-/*   Updated: 2025/06/12 19:26:49 by maissat          ###   ########.fr       */
+/*   Updated: 2025/06/17 18:28:30 by maissat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,12 +94,13 @@ int	map_after_all(t_map map)
 		{
 			if (!is_space_line(line))
 			{
-				return (printf("ya des trucs apres map! a cette ligne ! => {%s}\n", line),1);
+				printf("ya des trucs apres map! a cette ligne ! => {%s}\n", line);
 				free(line);
 				close(fd);
+				return (1);
 			}
 		}
-		if (line[i] == '1')
+		if (!map_start && line[i] == '1')
 			map_start = 1;
 		if (map_start && line[i] != '1')
 			map_finish = 1;
@@ -107,6 +108,38 @@ int	map_after_all(t_map map)
 		line = get_next_line(fd);
 	}
 	close (fd);
+	return (0);
+}
+
+int check_invalid_lines(t_map map)
+{
+	int		fd;
+	char	*line;
+	int		i;
+	
+	fd = open(map.name, O_RDONLY);
+	if (fd < 0)
+		return (printf("Error\n Impossible to open %s\n", map.name), 1);
+	line = get_next_line(fd);
+	while (line)
+	{
+		if (!is_color_line(line) && !is_texture_line(line))
+		{
+			i = 0;
+			while (line && line[i] == ' ')
+				i++;
+			if (line[i] != '1' && line[i] != '\n' && line[i] != '\0')
+			{
+				printf("Error\n Invalid line detected => {%s}\n", line);
+				free(line);
+				close(fd);
+				return (1);
+			}
+		}
+		free(line);
+		line = get_next_line(fd);
+	}
+	close(fd);
 	return (0);
 }
 
@@ -127,6 +160,8 @@ int	check_map(char *map_name, t_map *map)
 		return (printf("pas assez ou trop de color_line\n"),1);
 	if (count_tex_line(*map) != 4)
 		return (printf("pas assez ou trop de text_line\n"),1);
+	if (check_invalid_lines(*map) != 0)
+		return (1);
 	create_tab(map);
 	if (parse_texture(map) != 0)
 		return (1);
