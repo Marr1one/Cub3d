@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maissat <maissat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 18:48:51 by root              #+#    #+#             */
-/*   Updated: 2025/06/17 19:51:49 by maissat          ###   ########.fr       */
+/*   Updated: 2025/06/22 22:25:18 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,12 @@ int	loop_parse_text(char *line, t_map *map, int fd)
 				{
 					if (fill_color(map, trimmed, choice))
 					{
-						free(line);
+						free(trimmed);
+						while (line)
+						{
+							free(line);
+							line = get_next_line(fd);
+						}
 						return (1);
 					}
 				}
@@ -107,7 +112,11 @@ int	loop_parse_text(char *line, t_map *map, int fd)
 		}
 		if (line && !is_color_line(line) && !is_texture_line(line) && !is_space_line(line))
 		{
-			free(line);
+			while (line)
+			{
+				free(line);
+				line = get_next_line(fd);
+			}
 			return (0);
 		}
 	}
@@ -179,6 +188,33 @@ int	count_tex_line(t_map map)
 	return (count);
 }
 
+void	free_text(t_map *map)
+{
+	if (map->no_texture)
+		free(map->no_texture);
+	if (map->so_texture)
+		free(map->so_texture);
+	if (map->ea_texture)
+		free(map->ea_texture);
+	if (map->we_texture)
+		free(map->we_texture);
+}
+
+void	free_tab(char **tab)
+{
+	int	i;
+
+	i = 0;
+	if (!tab)
+		return ;
+	while (tab[i])
+	{
+		free(tab[i]);
+		i++;
+	}
+	free(tab);
+}
+
 int	main(int argc, char **argv)
 {
 	t_map	map;
@@ -195,6 +231,8 @@ int	main(int argc, char **argv)
 	if (check_map(argv[1], &map) == 1)
 	{
 		free(map.player);
+		free_tab(map.tab);
+		free_text(&map);
 		//free_all(&game);
 		return (1);
 	}
