@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maissat <maissat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: braugust <braugust@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:42:09 by maissat           #+#    #+#             */
-/*   Updated: 2025/06/05 16:14:00 by maissat          ###   ########.fr       */
+/*   Updated: 2025/06/24 19:54:17 by braugust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,4 +81,16 @@ int	draw_loop(t_game *game)
 	}
 	mlx_put_image_to_window(game->mlx, game->win, game->img, 0, 0);
 	return (0);
+}
+
+void	consume_remaining_file(int fd)
+{
+	char	*line;
+
+	line = get_next_line(fd);
+	while (line)
+	{
+		free(line);
+		line = get_next_line(fd);
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: braugust <braugust@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 11:02:03 by braugust          #+#    #+#             */
-/*   Updated: 2025/05/27 12:46:09 by braugust         ###   ########.fr       */
+/*   Updated: 2025/06/24 19:53:04 by braugust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,12 +75,15 @@ int	parse_map_lines(int fd, t_map *map)
 		res = process_map_line(line, &map_started, map);
 		if (res == 1)
 		{
-			free(line);
-			break ;
+			consume_remaining_file(fd);
+			return (count);
 		}
-		if (res == -1)
-			return (free(line), -1);
-		if (res == 2)
+		else if (res == -1)
+		{
+			consume_remaining_file(fd);
+			return (-1);
+		}
+		else if (res == 2)
 			count++;
 		free(line);
 		line = get_next_line(fd);

@@ -6,7 +6,7 @@
 /*   By: braugust <braugust@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:57:20 by root              #+#    #+#             */
-/*   Updated: 2025/06/24 19:06:54 by braugust         ###   ########.fr       */
+/*   Updated: 2025/06/24 19:50:39 by braugust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	process_texture_lines(char **line, t_map *map, int fd)
 			printf("Error\nInvalid texture path: contains inner spaces => {%s}\n",
 				*line);
 			cleanup_remaining_lines(line, fd);
-			exit(1);
+			return ;
 		}
 		trimmed = skip_spaces(*line);
 		fill_texture(map, trimmed);

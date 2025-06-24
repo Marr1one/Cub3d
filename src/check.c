@@ -6,7 +6,7 @@
 /*   By: braugust <braugust@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 17:04:56 by maissat           #+#    #+#             */
-/*   Updated: 2025/06/24 16:46:23 by braugust         ###   ########.fr       */
+/*   Updated: 2025/06/24 19:53:33 by braugust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,13 +72,16 @@ int	check_name(char *str)
 		return (1);
 	return (0);
 }
-int	check_after_map_loop(int fd)
+
+int	map_after_all(t_map map)
 {
+	int		fd;
 	char	*line;
 	int		map_finish;
 	int		map_start;
 	int		i;
 
+	fd = open(map.name, O_RDONLY);
 	map_finish = 0;
 	map_start = 0;
 	line = get_next_line(fd);
@@ -91,9 +94,8 @@ int	check_after_map_loop(int fd)
 		{
 			if (!is_space_line(line))
 			{
-				printf("ya des trucs apres map! a cette ligne ! => {%s}\n",
-					line);
-				free(line);
+				consume_remaining_file(fd);
+				close(fd);
 				return (1);
 			}
 		}
@@ -104,20 +106,8 @@ int	check_after_map_loop(int fd)
 		free(line);
 		line = get_next_line(fd);
 	}
-	return (0);
-}
-
-int	map_after_all(t_map map)
-{
-	int	fd;
-	int	result;
-
-	fd = open(map.name, O_RDONLY);
-	if (fd < 0)
-		return (1);
-	result = check_after_map_loop(fd);
 	close(fd);
-	return (result);
+	return (0);
 }
 
 int	check_invalid_lines(t_map map)
@@ -139,8 +129,8 @@ int	check_invalid_lines(t_map map)
 				i++;
 			if (line[i] != '1' && line[i] != '\n' && line[i] != '\0')
 			{
-				printf("Error\n Invalid line detected => {%s}\n", line);
-				free(line);
+				printf("Error\n Invalid line detected\n");
+				consume_remaining_file(fd);
 				close(fd);
 				return (1);
 			}
@@ -162,11 +152,11 @@ int	check_map(char *map_name, t_map *map)
 	if (map->height <= 0)
 		return (1);
 	if (map_after_all(*map) != 0)
-		return (printf("truc apres la map a la fin !\n"), 1);
+		return (printf("Error\n map not at the end of .cub !\n"), 1);
 	if (count_color_line(*map) != 2)
-		return (printf("pas assez ou trop de color_line\n"), 1);
+		return (printf("Error\n Not the right number of color lines!\n"), 1);
 	if (count_tex_line(*map) != 4)
-		return (printf("pas assez ou trop de text_line\n"), 1);
+		return (printf("Error\n Not the right number of texture lines\n"), 1);
 	if (check_invalid_lines(*map) != 0)
 		return (1);
 	create_tab(map);

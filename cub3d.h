@@ -6,7 +6,7 @@
 /*   By: braugust <braugust@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 18:50:38 by root              #+#    #+#             */
-/*   Updated: 2025/06/24 19:09:26 by braugust         ###   ########.fr       */
+/*   Updated: 2025/06/24 19:37:50 by braugust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,6 +191,7 @@ char				*ft_strrchr(const char *s, int c);
 int					close_window_cross(t_game *game);
 int					rgb_to_hex_int(int r, int g, int b);
 int					ft_max(int a, int b);
+void				consume_remaining_file(int fd);
 
 // CHECKERS
 
