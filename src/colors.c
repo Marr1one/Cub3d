@@ -6,7 +6,7 @@
 /*   By: braugust <braugust@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:55:46 by root              #+#    #+#             */
-/*   Updated: 2025/06/24 16:25:25 by braugust         ###   ########.fr       */
+/*   Updated: 2025/06/24 17:22:56 by braugust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,37 +27,40 @@ int	is_color_line(char *line)
 		return (0);
 }
 
-int	fill_rgb(char *str, int color_rgb[3])
+int	extract_rgb_number(char *str, int *pos, int *color_value)
 {
-	int		i;
-	int		j;
 	int		start;
 	char	*number;
 	int		numero;
+
+	if (!is_numeric(str[*pos]))
+		return (printf("caracter not coform\n"), 1);
+	start = *pos;
+	while (is_numeric(str[*pos]))
+		(*pos)++;
+	if (str[*pos] != ',' && str[*pos] != '\n' && str[*pos] != '\0')
+		return (printf("DEBUG => autre chose que ,entre les chiffres,=> {%c}\n",
+				str[*pos]), 1);
+	number = ft_substr(str, start, *pos);
+	numero = ft_atoi(number);
+	free(number);
+	if (numero < 0 || numero > 255)
+		return (printf("RGB not in range 0-256\n"), 1);
+	*color_value = numero;
+	return (0);
+}
+
+int	fill_rgb(char *str, int color_rgb[3])
+{
+	int	i;
+	int	j;
 
 	i = 1;
 	j = 0;
 	while (str[i])
 	{
-		if (is_numeric(str[i]))
-		{
-			start = i;
-			while (is_numeric(str[i]))
-				i++;
-			if (str[i] != ',')
-			{
-				if (str[i] != '\n' && str[i] != '\0')
-					return (printf("DEBUG => autre chose que ,entre les chiffres, => {%c}\n", str[i]), 1);
-			}
-			number = ft_substr(str, start, i);
-			numero = ft_atoi(number);
-			if (numero < 0 || numero > 255)
-				return (printf("RGB not in range 0-256\n"), 1);
-			color_rgb[j++] = numero;
-			free(number);
-		}
-		else if (!is_numeric(str[i]))
-			return (printf("caracter not coform\n"), 1);
+		if (extract_rgb_number(str, &i, &color_rgb[j++]) != 0)
+			return (1);
 		if (str[i] == '\0')
 			break ;
 		i++;

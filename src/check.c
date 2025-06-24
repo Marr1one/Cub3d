@@ -6,7 +6,7 @@
 /*   By: braugust <braugust@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 17:04:56 by maissat           #+#    #+#             */
-/*   Updated: 2025/06/24 16:24:29 by braugust         ###   ########.fr       */
+/*   Updated: 2025/06/24 16:46:23 by braugust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,16 +72,13 @@ int	check_name(char *str)
 		return (1);
 	return (0);
 }
-
-int	map_after_all(t_map map)
+int	check_after_map_loop(int fd)
 {
-	int		fd;
 	char	*line;
 	int		map_finish;
 	int		map_start;
 	int		i;
 
-	fd = open(map.name, O_RDONLY);
 	map_finish = 0;
 	map_start = 0;
 	line = get_next_line(fd);
@@ -97,7 +94,6 @@ int	map_after_all(t_map map)
 				printf("ya des trucs apres map! a cette ligne ! => {%s}\n",
 					line);
 				free(line);
-				close(fd);
 				return (1);
 			}
 		}
@@ -108,8 +104,20 @@ int	map_after_all(t_map map)
 		free(line);
 		line = get_next_line(fd);
 	}
-	close(fd);
 	return (0);
+}
+
+int	map_after_all(t_map map)
+{
+	int	fd;
+	int	result;
+
+	fd = open(map.name, O_RDONLY);
+	if (fd < 0)
+		return (1);
+	result = check_after_map_loop(fd);
+	close(fd);
+	return (result);
 }
 
 int	check_invalid_lines(t_map map)

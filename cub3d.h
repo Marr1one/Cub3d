@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maissat <maissat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: braugust <braugust@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 18:50:38 by root              #+#    #+#             */
-/*   Updated: 2025/06/12 17:03:12 by maissat          ###   ########.fr       */
+/*   Updated: 2025/06/24 17:13:47 by braugust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,9 @@ typedef struct s_ray
 
 int				fill_rgb(char *str, int color_rgb[3]);
 int				fill_color(t_map *map, char *str, char choice);
-int					is_color_line(char *line);
+int				is_color_line(char *line);
+int				parse_and_store_color(char *str, int *i, int *j, int rgb[3]);
+
 
 // TEXTURES
 
