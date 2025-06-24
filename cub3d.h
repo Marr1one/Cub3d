@@ -6,7 +6,7 @@
 /*   By: braugust <braugust@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 18:50:38 by root              #+#    #+#             */
-/*   Updated: 2025/06/24 19:37:50 by braugust         ###   ########.fr       */
+/*   Updated: 2025/06/25 01:58:07 by braugust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,11 @@ t_texture			*choose_tex(t_game *g, t_ray *r);
 int					get_tex_x(t_ray *r, t_texture *tex, float wall_x);
 int					validate_texture_line_no_inner_spaces(char *line);
 
+//MAP
+
+int					map_after_all(t_map map);
+int					check_invalid_lines(t_map map);
+
 // COLISION
 
 int					can_move(t_map *map, float x, float y);
@@ -172,6 +177,7 @@ int					is_direction(char c);
 int					ft_strlen(char *str);
 int					ft_strcmp(char *s1, char *s2);
 int					ft_strlcmp(char *s1, char *s2);
+int					process_map_line(char *line, int *map_start, int *map_finish);
 void				*ft_memset(void *b, int c, size_t len);
 char				*ft_strdup(char *str);
 char				*ft_strduptab(char *str, t_map *map);

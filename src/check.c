@@ -6,7 +6,7 @@
 /*   By: braugust <braugust@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 17:04:56 by maissat           #+#    #+#             */
-/*   Updated: 2025/06/24 19:53:33 by braugust         ###   ########.fr       */
+/*   Updated: 2025/06/25 01:56:32 by braugust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,76 +70,6 @@ int	check_name(char *str)
 		return (1);
 	if (ft_strcmp(str + i, ".cub") != 0)
 		return (1);
-	return (0);
-}
-
-int	map_after_all(t_map map)
-{
-	int		fd;
-	char	*line;
-	int		map_finish;
-	int		map_start;
-	int		i;
-
-	fd = open(map.name, O_RDONLY);
-	map_finish = 0;
-	map_start = 0;
-	line = get_next_line(fd);
-	while (line)
-	{
-		i = 0;
-		while (line && line[i] == ' ')
-			i++;
-		if (map_finish)
-		{
-			if (!is_space_line(line))
-			{
-				consume_remaining_file(fd);
-				close(fd);
-				return (1);
-			}
-		}
-		if (!map_start && line[i] == '1')
-			map_start = 1;
-		if (map_start && line[i] != '1')
-			map_finish = 1;
-		free(line);
-		line = get_next_line(fd);
-	}
-	close(fd);
-	return (0);
-}
-
-int	check_invalid_lines(t_map map)
-{
-	int		fd;
-	char	*line;
-	int		i;
-
-	fd = open(map.name, O_RDONLY);
-	if (fd < 0)
-		return (printf("Error\n Impossible to open %s\n", map.name), 1);
-	line = get_next_line(fd);
-	while (line)
-	{
-		if (!is_color_line(line) && !is_texture_line(line))
-		{
-			i = 0;
-			while (line && line[i] == ' ')
-				i++;
-			if (line[i] != '1' && line[i] != '\n' && line[i] != '\0')
-			{
-				printf("Error\n Invalid line detected\n");
-				consume_remaining_file(fd);
-				close(fd);
-				return (1);
-			}
-		}
-		free(line);
-		line = get_next_line(fd);
-	}
-	free(line);
-	close(fd);
 	return (0);
 }
 
