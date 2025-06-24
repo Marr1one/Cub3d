@@ -3,14 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   texture_check.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maissat <maissat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: braugust <braugust@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:57:20 by root              #+#    #+#             */
-/*   Updated: 2025/06/12 17:23:27 by maissat          ###   ########.fr       */
+/*   Updated: 2025/06/24 19:06:54 by braugust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
+
+void	process_texture_lines(char **line, t_map *map, int fd)
+{
+	char	*trimmed;
+
+	while (*line && is_texture_line(*line))
+	{
+		if (validate_texture_line_no_inner_spaces(*line))
+		{
+			printf("Error\nInvalid texture path: contains inner spaces => {%s}\n",
+				*line);
+			cleanup_remaining_lines(line, fd);
+			exit(1);
+		}
+		trimmed = skip_spaces(*line);
+		fill_texture(map, trimmed);
+		free(trimmed);
+		free(*line);
+		*line = get_next_line(fd);
+	}
+}
 
 void	fill_texture(t_map *map, char *trimmed)
 {

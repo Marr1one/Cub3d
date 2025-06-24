@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maissat <maissat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: braugust <braugust@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 17:15:24 by maissat           #+#    #+#             */
-/*   Updated: 2025/06/12 16:33:58 by maissat          ###   ########.fr       */
+/*   Updated: 2025/06/24 19:24:47 by braugust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,4 +79,25 @@ int	ft_atoi(char *str)
 		i++;
 	}
 	return (n);
+}
+
+int	count_color_line(t_map map)
+{
+	int		fd;
+	char	*line;
+	int		count;
+
+	count = 0;
+	fd = open(map.name, O_RDONLY);
+	line = get_next_line(fd);
+	while (line)
+	{
+		if (is_color_line(line) != 0)
+			count++;
+		free(line);
+		line = get_next_line(fd);
+	}
+	close(fd);
+	printf("count a la fin de color_line ! count = {%d}\n", count);
+	return (count);
 }

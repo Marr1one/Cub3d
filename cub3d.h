@@ -6,7 +6,7 @@
 /*   By: braugust <braugust@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 18:50:38 by root              #+#    #+#             */
-/*   Updated: 2025/06/24 17:13:47 by braugust         ###   ########.fr       */
+/*   Updated: 2025/06/24 19:09:26 by braugust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,7 @@ float				get_wall_x(t_ray *ray, t_player *pl);
 float				get_perp_dist(t_ray *ray, t_player *pl, float angle);
 t_texture			*choose_tex(t_game *g, t_ray *r);
 int					get_tex_x(t_ray *r, t_texture *tex, float wall_x);
+int					validate_texture_line_no_inner_spaces(char *line);
 
 // COLISION
 
@@ -139,6 +140,9 @@ int					is_walkable(t_map *map, float x, float y);
 
 int					check_all_textures(const t_map *map);
 int					valid_path(const char *path);
+void				cleanup_remaining_lines(char **line, int fd);
+int					process_color_lines(char **line, t_map *map, int fd);
+void				process_texture_lines(char **line, t_map *map, int fd);
 
 // DRAW
 
@@ -207,5 +211,8 @@ int					check_borders(t_map map);
 // FREE
 
 void				free_all(t_game *game);
+void				free_text(t_map *map);
+void				free_tab(char **tab);
+
 
 #endif
