@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: braugust <braugust@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 18:48:51 by root              #+#    #+#             */
-/*   Updated: 2025/06/22 22:25:18 by root             ###   ########.fr       */
+/*   Updated: 2025/06/24 16:25:45 by braugust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	is_space_line(char *line)
 int	is_start_map(char *line)
 {
 	int	i;
-	
+
 	i = 0;
 	while (line[i])
 	{
@@ -64,10 +64,10 @@ int	loop_parse_text(char *line, t_map *map, int fd)
 {
 	char	choice;
 	char	*trimmed;
-	
+
 	while (line)
 	{
-		printf("line => {%s}\n",line);
+		printf("line => {%s}\n", line);
 		if (line && is_color_line(line))
 		{
 			while (line && is_color_line(line))
@@ -95,7 +95,7 @@ int	loop_parse_text(char *line, t_map *map, int fd)
 		if (line && is_texture_line(line))
 		{
 			while (line && is_texture_line(line))
-			{	
+			{
 				printf("dans la boucle while textline ou space\n");
 				printf("line = {%s}\n", line);
 				trimmed = skip_spaces(line);
@@ -110,7 +110,8 @@ int	loop_parse_text(char *line, t_map *map, int fd)
 			free(line);
 			line = get_next_line(fd);
 		}
-		if (line && !is_color_line(line) && !is_texture_line(line) && !is_space_line(line))
+		if (line && !is_color_line(line) && !is_texture_line(line)
+			&& !is_space_line(line))
 		{
 			while (line)
 			{
@@ -133,14 +134,14 @@ int	parse_texture(t_map *map)
 	if (loop_parse_text(line, map, fd) != 0)
 		return (1);
 	close(fd);
-	 printf("no texture => {%s}\n", map->no_texture);
-	 printf("so texture => {%s}\n", map->so_texture);
-	 printf("we texture => {%s}\n", map->we_texture);
-	 printf("ea texture => {%s}\n", map->ea_texture);
-	 printf("ceiling color !------\n");
-	 show_int_tab(map->ceiling_color);
-	 printf("floor color !------\n");
-	 show_int_tab(map->floor_color);
+	printf("no texture => {%s}\n", map->no_texture);
+	printf("so texture => {%s}\n", map->so_texture);
+	printf("we texture => {%s}\n", map->we_texture);
+	printf("ea texture => {%s}\n", map->ea_texture);
+	printf("ceiling color !------\n");
+	show_int_tab(map->ceiling_color);
+	printf("floor color !------\n");
+	show_int_tab(map->floor_color);
 	if (check_all_textures(map))
 		return (1);
 	return (0);
@@ -172,7 +173,7 @@ int	count_tex_line(t_map map)
 	int		fd;
 	char	*line;
 	int		count;
-	
+
 	count = 0;
 	fd = open(map.name, O_RDONLY);
 	line = get_next_line(fd);
@@ -233,7 +234,7 @@ int	main(int argc, char **argv)
 		free(map.player);
 		free_tab(map.tab);
 		free_text(&map);
-		//free_all(&game);
+		// free_all(&game);
 		return (1);
 	}
 	// show_struct_map(map);
@@ -245,6 +246,6 @@ int	main(int argc, char **argv)
 	mlx_hook(game.win, 17, 0, close_window_cross, &game);
 	mlx_loop_hook(game.mlx, draw_loop, &game);
 	mlx_loop(game.mlx);
-	//free_all(&game);
+	// free_all(&game);
 	return (0);
 }

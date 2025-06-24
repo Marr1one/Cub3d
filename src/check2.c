@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: braugust <braugust@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 08:13:15 by braugust          #+#    #+#             */
-/*   Updated: 2025/06/08 19:58:06 by root             ###   ########.fr       */
+/*   Updated: 2025/06/24 16:23:42 by braugust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ int	valid_path(const char *path)
 {
 	int		fd;
 	char	*ext;
-	printf("path => {%s}\n", path);
 
 	if (!path || !*path)
 		return (printf("Error\n path empty !\n"), 1);

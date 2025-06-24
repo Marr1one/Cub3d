@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maissat <maissat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: braugust <braugust@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 17:04:56 by maissat           #+#    #+#             */
-/*   Updated: 2025/06/17 19:46:10 by maissat          ###   ########.fr       */
+/*   Updated: 2025/06/24 16:24:29 by braugust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	map_after_all(t_map map)
 	int		map_finish;
 	int		map_start;
 	int		i;
-	
+
 	fd = open(map.name, O_RDONLY);
 	map_finish = 0;
 	map_start = 0;
@@ -94,7 +94,8 @@ int	map_after_all(t_map map)
 		{
 			if (!is_space_line(line))
 			{
-				printf("ya des trucs apres map! a cette ligne ! => {%s}\n", line);
+				printf("ya des trucs apres map! a cette ligne ! => {%s}\n",
+					line);
 				free(line);
 				close(fd);
 				return (1);
@@ -107,16 +108,16 @@ int	map_after_all(t_map map)
 		free(line);
 		line = get_next_line(fd);
 	}
-	close (fd);
+	close(fd);
 	return (0);
 }
 
-int check_invalid_lines(t_map map)
+int	check_invalid_lines(t_map map)
 {
 	int		fd;
 	char	*line;
 	int		i;
-	
+
 	fd = open(map.name, O_RDONLY);
 	if (fd < 0)
 		return (printf("Error\n Impossible to open %s\n", map.name), 1);
@@ -153,11 +154,11 @@ int	check_map(char *map_name, t_map *map)
 	if (map->height <= 0)
 		return (1);
 	if (map_after_all(*map) != 0)
-		return (printf("truc apres la map a la fin !\n"),1);
+		return (printf("truc apres la map a la fin !\n"), 1);
 	if (count_color_line(*map) != 2)
-		return (printf("pas assez ou trop de color_line\n"),1);
+		return (printf("pas assez ou trop de color_line\n"), 1);
 	if (count_tex_line(*map) != 4)
-		return (printf("pas assez ou trop de text_line\n"),1);
+		return (printf("pas assez ou trop de text_line\n"), 1);
 	if (check_invalid_lines(*map) != 0)
 		return (1);
 	create_tab(map);

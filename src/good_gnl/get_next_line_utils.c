@@ -3,20 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maissat <maissat@student.42.fr>            +#+  +:+       +#+        */
+/*   By: braugust <braugust@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 00:33:06 by maissat           #+#    #+#             */
-/*   Updated: 2025/06/12 18:03:25 by maissat          ###   ########.fr       */
+/*   Updated: 2025/06/24 16:26:35 by braugust         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*takeleft(char	*str)
+char	*takeleft(char *str)
 {
-	int		i = 0;
+	int		i;
 	char	*res;
 
+	i = 0;
 	while (str[i] && str[i] != '\n')
 		i++;
 	if (str[i] == '\n')
@@ -29,61 +30,53 @@ char	*takeleft(char	*str)
 	{
 		res[i] = str[i];
 		if (str[i++] == '\n')
-			break;
+			break ;
 	}
 	res[i] = '\0';
 	return (res);
 }
 
-
-char *takeright(char *str)
+char	*takeright(char *str)
 {
-    int i;
-    char *res;
-    int j;
-    int remaining_len;
-    
-    i = 0;
-    j = 0;
-    
-    // Trouver la position après le '\n'
-    while (str[i] && str[i] != '\n')
-        i++;
-    if (str[i] == '\n')
-        i++;
-    
-    // Calculer la taille restante
-    remaining_len = ft_strlen(str) - i;
-    res = malloc(sizeof(char) * (remaining_len + 1));
-    if (!res)
-        return (NULL);
-    
-    // Copier le reste
-    while (str[i])
-    {
-        res[j] = str[i];
-        i++;
-        j++;
-    }
-    res[j] = '\0';
-    return (res);
+	int		i;
+	char	*res;
+	int		j;
+	int		remaining_len;
+
+	i = 0;
+	j = 0;
+	while (str[i] && str[i] != '\n')
+		i++;
+	if (str[i] == '\n')
+		i++;
+	remaining_len = ft_strlen(str) - i;
+	res = malloc(sizeof(char) * (remaining_len + 1));
+	if (!res)
+		return (NULL);
+	while (str[i])
+	{
+		res[j] = str[i];
+		i++;
+		j++;
+	}
+	res[j] = '\0';
+	return (res);
 }
 
-int ft_search(char *str, char c)
+int	ft_search(char *str, char c)
 {
-    int i;
-    
-    if (!str)
-        return (0);
-    
-    i = 0;
-    while (str[i])
-    {
-        if (str[i] == c)
-            return (1);
-        i++;
-    }
-    return (0);  // Retourner 0 au lieu de -1
+	int	i;
+
+	if (!str)
+		return (0);
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == c)
+			return (1);
+		i++;
+	}
+	return (0);
 }
 
 char	*ft_strjoin(char *src, char *add)
