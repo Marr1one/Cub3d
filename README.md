@@ -1,4 +1,4 @@
-*Made by maissat as part of the 42 curriculum.*
+*Made by braugust and maissat as part of the 42 curriculum.*
 
 My first 3d video game using the ray-casting Technology. This project is a DOOM-like inspired by *Wolfenstein 3D*, built in C using the MiniLibX graphical library. It explores the concepts of raycasting, window management,
 and mathematical projections.
@@ -30,14 +30,14 @@ and mathematical projections.
 ## 💻 How to Run it
 
 1. Clone the repository:
-   ```bash
-   git clone https://github.com/Marr1one/Cub3d.git && cd cub3d
-   ```
-    Compile the project:
-  ```bash
-    make
-  ```
-  Start Cub3D with a map file:
-  ```bash
-    ./cub3D maps/valid_map.cub
-  ```
+```bash
+git clone https://github.com/Marr1one/Cub3d.git && cd cub3d
+```
+2. Compile the project:
+```bash
+make
+```
+3. Start Cub3D with a map file:
+```bash
+./cub3D maps/valid_map.cub
+```
