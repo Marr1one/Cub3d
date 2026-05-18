@@ -1,6 +1,6 @@
 *Made by braugust and maissat as part of the 42 curriculum.*
 
-My first 3d video game using the ray-casting Technology. This project is a DOOM-like inspired by *Wolfenstein 3D*, built in C using the MiniLibX graphical library. It explores the concepts of raycasting, window management,
+Our first 3d video game using the ray-casting Technology. This project is a DOOM-like inspired by *Wolfenstein 3D*, built in C using the MiniLibX graphical library. It explores the concepts of raycasting, window management,
 and mathematical projections.
 
 ---
